@@ -1,24 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import HeaderNavbar from "./HeaderNavbar";
 import HeaderSocial from "./HeaderSocial";
 
 function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <header className="bg-[#fef6f2] shadow-sm">
       <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <img src="/logo.svg" alt="Logo Consult" className="w-6 h-6" />
-          <span className="text-gray-800 font-medium text-lg">
-        Place for logo
-          </span>
+          <img src="/react.svg" alt="Logo Consult" className="w-6 h-6" />
+          <span className="text-gray-800 font-medium text-lg"></span>
         </div>
 
         {/* Navigație */}
-        <HeaderNavbar />
+        <HeaderNavbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
 
-        {/* Social media */}
-        <HeaderSocial />
+        {/* Social + burger */}
+        <div className="flex items-center gap-4">
+          <HeaderSocial />
+
+          {/* Buton burger (mobil) */}
+          <button
+            className="md:hidden text-amber-800 focus:outline-none"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            <svg
+              className="w-7 h-7"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {menuOpen ? (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              ) : (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              )}
+            </svg>
+          </button>
+        </div>
       </div>
     </header>
   );
