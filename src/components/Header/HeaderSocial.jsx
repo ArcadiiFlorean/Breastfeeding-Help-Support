@@ -3,7 +3,7 @@ import { FaFacebookF, FaInstagram, FaYoutube, FaWhatsapp } from "react-icons/fa"
 
 function HeaderSocial() {
   return (
-    <div className="hidden lg:flex items-center gap-4">
+    <div className="flex items-center gap-4">
       <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
         <FaFacebookF className="text-gray-600 hover:text-gray-900" />
       </a>
