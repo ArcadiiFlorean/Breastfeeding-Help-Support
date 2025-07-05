@@ -7,30 +7,30 @@ function Header() {
         
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <img src="/logo.svg" alt="Dataway logo" className="w-6 h-6" />
-          <span className="text-gray-800 font-medium text-lg">Dataway</span>
+          <img src="/logo.svg" alt="Logo Consult" className="w-6 h-6" />
+          <span className="text-gray-800 font-medium text-lg">Consult Marina</span>
         </div>
 
-        {/* Navigation */}
+        {/* Navigație */}
         <nav className="hidden md:flex gap-6 items-center text-gray-700 text-sm">
           <div className="relative group">
-            <button className="hover:text-gray-900">Support ▼</button>
-            {/* dropdown optional */}
+            <button className="hover:text-gray-900">Sprijin ▼</button>
+            {/* dropdown opțional */}
           </div>
-          <a href="#about" className="hover:text-gray-900">About</a>
-          <a href="#blog" className="hover:text-gray-900">Blog</a>
+          <a href="#about" className="hover:text-gray-900">Despre</a>
+          <a href="#blog" className="hover:text-gray-900">Articole</a>
           <div className="relative group">
-            <button className="hover:text-gray-900">Help ▼</button>
-            {/* dropdown optional */}
+            <button className="hover:text-gray-900">Ajutor ▼</button>
+            {/* dropdown opțional */}
           </div>
         </nav>
 
-        {/* CTA button */}
+        {/* Buton programare */}
         <a
           href="#booking"
           className="bg-[#fbcbb2] hover:bg-[#f7b99b] text-gray-800 text-sm font-medium px-4 py-2 rounded transition"
         >
-          Book now
+          Programează-te
         </a>
       </div>
     </header>

@@ -6,41 +6,41 @@ function ContactOptions() {
     {
       icon: <FaEnvelope size={24} className="text-orange-500" />,
       title: "Email",
-      text: "Send your thoughts or concerns anytime.",
-      value: "hello@consultmarina.com",
-      link: "mailto:hello@consultmarina.com",
+      text: "Trimite întrebări sau gânduri oricând.",
+      value: "macociug@mail.com",
+      link: "mailto:macociug@mail.com",
     },
     {
       icon: <FaComments size={24} className="text-orange-500" />,
-      title: "Call",
-      text: "Available weekdays, 8am–5pm for support.",
-      value: "+1 (555) 321-7890",
-      link: "tel:+15553217890",
+      title: "Telefon",
+      text: "Disponibilă de luni până vineri, între orele 8:00–17:00.",
+      value: "+373 69 123 456",
+      link: "tel:+37369123456",
     },
     {
       icon: <FaMapMarkerAlt size={24} className="text-orange-500" />,
-      title: "Visit office",
-      text: "A calm, welcoming space awaits you.",
-      value: "101 Blossom Ave, SF, CA",
+      title: "Vizită la cabinet",
+      text: "Un spațiu liniștit și prietenos te așteaptă.",
+      value: "Str. Trandafirilor 7, Chișinău, Moldova",
     },
     {
       icon: <FaShoppingCart size={24} className="text-orange-500" />,
-      title: "Visit store",
-      text: "Explore gentle care essentials in person.",
-      value: "101 Blossom Ave, SF, CA",
+      title: "Vizitează magazinul",
+      text: "Descoperă produse de îngrijire blândă.",
+      value: "Str. Trandafirilor 7, Chișinău, Moldova",
     },
   ];
 
   return (
-     <section className="bg-[#fcf7ed] py-20 px-6 text-center">
+    <section className="bg-[#fcf7ed] py-20 px-6 text-center">
       <p className="text-sm font-medium text-gray-500 uppercase mb-3 tracking-wide">
-        Let’s connect
+        Hai să luăm legătura
       </p>
       <h2 className="text-3xl md:text-4xl font-semibold text-gray-800 mb-4">
-        Support is just a message away
+        Sprijinul e la un mesaj distanță
       </h2>
       <p className="text-gray-600 max-w-2xl mx-auto mb-12">
-        Reach out with questions or to book your session—I’m here for you.
+        Scrie-mi dacă ai întrebări, ai nevoie de sprijin sau dorești să programezi o ședință—sunt aici pentru tine.
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 max-w-6xl mx-auto">

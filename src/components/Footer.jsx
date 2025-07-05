@@ -12,7 +12,7 @@ function Footer() {
     <footer className="bg-[#1f3b3a] text-gray-300 py-10 px-6">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-6">
 
-        {/* Brand Logo */}
+        {/* Logo & Brand */}
         <div className="flex items-center gap-2">
           <div className="bg-white p-1 rounded">
             <span className="text-[#1f3b3a] font-bold text-xl">★</span>
@@ -22,20 +22,20 @@ function Footer() {
           </span>
         </div>
 
-        {/* Navigation Links */}
+        {/* Linkuri Navigație */}
         <nav className="flex flex-wrap justify-center gap-4 text-sm text-gray-200">
-          <a href="#about" className="hover:underline">About</a>
-          <a href="#support" className="hover:underline">Support</a>
-          <a href="#packages" className="hover:underline">Packages</a>
-          <a href="#booking" className="hover:underline">Booking</a>
-          <a href="#faq" className="hover:underline">FAQ</a>
+          <a href="#about" className="hover:underline">Despre</a>
+          <a href="#support" className="hover:underline">Sprijin</a>
+          <a href="#packages" className="hover:underline">Pachete</a>
+          <a href="#booking" className="hover:underline">Programare</a>
+          <a href="#faq" className="hover:underline">Întrebări</a>
           <a href="#contact" className="hover:underline">Contact</a>
-          <a href="#social" className="hover:underline">Social</a>
+          <a href="#social" className="hover:underline">Rețele</a>
         </nav>
 
-        {/* Copyright */}
+        {/* Drepturi de autor */}
         <p className="text-xs text-center w-full mt-4 lg:mt-0">
-          All rights reserved © 2025 Consult.
+          Toate drepturile rezervate © 2025 Consult.
         </p>
       </div>
     </footer>
