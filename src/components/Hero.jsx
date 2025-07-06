@@ -10,7 +10,7 @@ function Hero() {
       <img
         src="/flowers-bg.jpg"
         alt="Fundal flori"
-        className="absolute bottom-[80px] tablet:bottom-[185px] left-1/2 -translate-x-1/2 w-full max-w-[1500px] h-auto max-h-[220px] tablet:max-h-[280px] lg:max-h-[150px] object-cover object-bottom z-0 opacity-30"
+        className="absolute bottom-[80px] tablet:bottom-[80px] left-1/2 -translate-x-1/2 w-full max-w-[1500px] h-auto max-h-[260px] tablet:max-h-[280px] lg:max-h-[350px] object-cover object-bottom z-0 opacity-30"
       />
 
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 max-w-[1440px] mx-auto px-6 py-20 gap-12 items-center">

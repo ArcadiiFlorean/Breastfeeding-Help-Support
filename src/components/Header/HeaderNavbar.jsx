@@ -1,28 +1,20 @@
 import React from "react";
 
 function HeaderNavbar({ menuOpen, setMenuOpen }) {
-  const linkStyle = {
-    fontSize: "1em",
-    fontWeight: 400,
-    fontStyle: "normal",
-    color: "rgb(0, 0, 0)",
-    fontKerning: "none",
-    textDecoration: "none",
-  };
+  const commonClass = "text-[1em] font-normal font-robotoCondensed text-black hover:text-[#cb8645] no-underline transition-colors duration-200";
 
-  const commonClass = "OYPEnA";
 
   return (
     <>
       {/* Linkuri pe desktop/tabletă */}
-      <nav className="hidden tablet:flex gap-[60px] items-center text-gray-700 text-m font-robotoCondensed">
-        <a href="#page-0" className={commonClass} style={linkStyle}>Home</a>
-        <a href="#about" className={commonClass} style={linkStyle}>Despre mine</a>
-        <a href="#blog" className={commonClass} style={linkStyle}>Articole</a>
-        <a href="#contact" className={commonClass} style={linkStyle}>Prețuri</a>
-        <a href="#reviews" className={commonClass} style={linkStyle}>Recenzii</a>
-        <a href="#services" className={commonClass} style={linkStyle}>Cum te pot ajuta</a>
-        <a href="#faq" className={commonClass} style={linkStyle}>Contact</a>
+      <nav className="hidden tablet:flex gap-[30px] items-center text-gray-700 text-xl font-robotoCondensed">
+        <a href="#page-0" className={commonClass}>Home</a>
+        <a href="#about" className={commonClass}>Despre mine</a>
+        <a href="#blog" className={commonClass}>Articole</a>
+        <a href="#contact" className={commonClass}>Prețuri</a>
+        <a href="#reviews" className={commonClass}>Recenzii</a>
+        <a href="#services" className={commonClass}>Cum te pot ajuta</a>
+        <a href="#faq" className={commonClass}>Contact</a>
       </nav>
 
       {/* Meniu mobil/tabletă */}
@@ -42,7 +34,7 @@ function HeaderNavbar({ menuOpen, setMenuOpen }) {
                 <a
                   href={item.href}
                   onClick={() => setMenuOpen(false)}
-                  className="block px-4 py-2 rounded hover:bg-[#fef6f2] hover:text-[#b06b4c] transition-all duration-200"
+                  className="block px-4 py-2 rounded hover:bg-[#fef6f2] hover:text-[#cb8645] transition-all duration-200"
                 >
                   {item.label}
                 </a>
