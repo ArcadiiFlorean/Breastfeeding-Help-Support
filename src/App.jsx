@@ -7,13 +7,16 @@ import FAQSection from "./components/FAQSection";
 import Testimonials from "./components/Testimonials";
 import ContactOptions from "./components/ContactOptions";
 import Footer from "./components/Footer";
+import AboutMe from "./components/AboutMe";
 
 function App() {
   return (
     <>
       <Header />
-      <Hero />
+      <Hero /> 
+       <AboutMe />
       <SupportFeatures />
+    
       <SupportPackages />
       <FAQSection />
       <Testimonials />
