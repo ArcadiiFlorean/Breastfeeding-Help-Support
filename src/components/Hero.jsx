@@ -15,7 +15,8 @@ function Hero() {
 
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 max-w-[1440px] mx-auto px-6 py-20 gap-12 items-center">
         {/* TEXT PE STÂNGA */}
-    <div className="text-gray-800 max-w-3xl text-[1.25rem] lg:text-[1.5rem] leading-relaxed mb-[500px]">
+  <div className="text-gray-800 max-w-3xl text-[1.25rem] lg:text-[1.5rem] leading-relaxed mb-10 lg:mb-[500px]">
+
   <h1 className="text-3xl lg:text-8xl font-fjalla text-[#b06b4c]  leading-tight max-w-3xl ">
     Trusted Breastfeeding Help & Support
   </h1>
