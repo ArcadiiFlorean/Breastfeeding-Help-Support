@@ -7,12 +7,14 @@ function Header() {
 
   return (
     <header className="bg-[#fef6f2] shadow-sm pt-4">
-     <div className="max-w-[1440px] mx-auto px-6 py-4 flex justify-between items-center">
-
+      <div className="max-w-[1440px] mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <img src="Header_Logo.jpg" alt="Logo Consult" className="w-16 h-16 rounded-full border-2 border-white shadow"
-/>
+          <img
+            src="Header_Logo.jpg"
+            alt="Logo Consult"
+            className="w-16 h-16 rounded-full border-2 border-white shadow"
+          />
           <span className="text-gray-800 font-medium text-lg"></span>
         </div>
 
@@ -23,9 +25,9 @@ function Header() {
         <div className="flex items-center gap-4">
           <HeaderSocial />
 
-          {/* Buton burger (mobil) */}
+          {/* Buton burger (mobil/tabletă) */}
           <button
-            className="md:hidden text-amber-800 focus:outline-none"
+            className="block tablet:hidden text-amber-800 focus:outline-none"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
           >
