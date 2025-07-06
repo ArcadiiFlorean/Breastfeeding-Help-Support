@@ -11,7 +11,8 @@ function Header() {
 
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <img src="/react.svg" alt="Logo Consult" className="w-6 h-6" />
+          <img src="Header_Logo.jpg" alt="Logo Consult" className="w-16 h-16 rounded-full border-2 border-white shadow"
+/>
           <span className="text-gray-800 font-medium text-lg"></span>
         </div>
 
