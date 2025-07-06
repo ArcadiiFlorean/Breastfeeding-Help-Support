@@ -4,7 +4,7 @@ function PrimaryButton({ href, children }) {
   return (
     <a
       href={href}
-      className="bg-[#fbcbb2] hover:bg-[#f7b99b] text-gray-800 font-medium px-6 py-3 rounded transition"
+      className="bg-[#f7b99b] hover:bg-[#b06b4c] text-gray-800 hover:text-white font-medium px-6 py-3 rounded border border-[#f7b99b] transition duration-300 ease-in-out shadow-sm hover:shadow-md"
     >
       {children}
     </a>

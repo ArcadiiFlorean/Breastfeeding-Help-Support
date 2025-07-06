@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        fredoka: ['"Fredoka"', 'sans-serif'],
+        fjalla: ['"Fjalla One"', 'sans-serif'],
         robotoCondensed: ['"Roboto Condensed"', 'sans-serif'],
       },
     },

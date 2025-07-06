@@ -1,39 +1,50 @@
 import React from "react";
 import PrimaryButton from "./Buttons/PrimaryButton";
 import OutlineButton from "./Buttons/OutlineButton";
+import HeroImg from "/Hero_img-COPY.png"; // PNG transparent din /public
 
 function Hero() {
   return (
-    <section className="bg-[#fef6f2] py-20">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-10 items-center">
-        {/* Text în stânga */}
-        <div className="text-gray-800">
-          <h1 className="text-4xl lg:text-7xl font-semibold font-fredoka leading-tight mb-6 text-amber-800">
-            Ajutor și sprijin de încredere pentru alăptare
-          </h1>
+    <section className="relative bg-[#fef6f2] overflow-hidden">
+      {/* FUNDAL FLORI JOS */}
+      <img
+        src="/flowers-bg.jpg"
+        alt="Fundal flori"
+        className="absolute bottom-[80px] left-1/2 transform -translate-x-1/2 w-[1500px] h-[33vh] object-cover object-bottom z-0 opacity-30"
+      />
 
-          <p className="text-lg text-gray-700 font-robotoCondensed mb-8">
-            Sprijin blând și profesionist în alăptare pentru mame aflate la
-            început de drum sau în așteptarea bebelușului.
-            <br className="hidden md:block" />
-            Fii ascultată, sprijinită și încrezătoare — călătoria ta începe
-            chiar acum.
-          </p>
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 max-w-[1440px] mx-auto px-6 py-20 gap-12 items-center">
+        {/* TEXT PE STÂNGA */}
+    <div className="text-gray-800 max-w-3xl text-[1.25rem] lg:text-[1.5rem] leading-relaxed mb-[500px]">
+  <h1 className="text-3xl lg:text-8xl font-fjalla text-[#b06b4c]  leading-tight max-w-3xl ">
+    Trusted Breastfeeding Help & Support
+  </h1>
 
-          <div className="flex flex-wrap gap-4">
-            <PrimaryButton href="#booking">Programează-te</PrimaryButton>
-            <OutlineButton href="#learn">Află mai mult</OutlineButton>
-          </div>
-        </div>
+  <p className="text-3xl font-semibold text-gray-900 mb-6">
+    Compassionate, Certified Support for New Mothers at Every Step
+  </p>
 
-        {/* Imagine în dreapta */}
-        <div className="max-w-md mx-auto">
-          <img
-            src="Hero_img_2.jpg"
-            alt="Mame într-un spațiu liniștit"
-            className="rounded-xl w-full h-auto object-cover shadow-lg"
-          />
-        </div>
+  <p className="text-lg text-gray-700 mb-10">
+    Get expert lactation advice, personalized care, and confidence-boosting
+    support to help you and your baby thrive through every stage of breastfeeding.
+  </p>
+
+  <div className="flex flex-wrap gap-6">
+    <PrimaryButton href="#booking">Book a Free Consultation</PrimaryButton>
+    <OutlineButton href="#services">Explore my Services</OutlineButton>
+  </div>
+</div>
+
+
+        {/* IMAGINE DECUPATĂ */}
+  <div className="flex justify-center lg:justify-end relative">
+  <img
+    src={HeroImg}
+    alt="Consultant alăptare și bebeluș"
+    className="w-full max-w-[1000px] h-auto object-contain z-10"
+  />
+</div>
+
       </div>
     </section>
   );

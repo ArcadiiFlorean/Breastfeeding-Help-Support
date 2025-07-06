@@ -6,8 +6,9 @@ function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="bg-[#fef6f2] shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+    <header className="bg-[#fef6f2] shadow-sm pt-4">
+     <div className="max-w-[1440px] mx-auto px-6 py-4 flex justify-between items-center">
+
         {/* Logo */}
         <div className="flex items-center gap-2">
           <img src="/react.svg" alt="Logo Consult" className="w-6 h-6" />
