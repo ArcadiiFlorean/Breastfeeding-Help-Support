@@ -17,9 +17,10 @@ function Hero() {
         {/* TEXT PE STÂNGA */}
   <div className="text-gray-800 max-w-3xl text-[1.25rem] lg:text-[1.5rem] leading-relaxed mb-10 lg:mb-[500px]">
 
-  <h1 className="text-3xl lg:text-8xl font-fjalla text-[#b06b4c]  leading-tight max-w-3xl ">
-    Trusted Breastfeeding Help & Support
-  </h1>
+ <h1 className="text-6xl lg:text-8xl font-fjalla text-[#b06b4c] leading-tight max-w-3xl">
+  Trusted Breastfeeding Help & Support
+</h1>
+
 
   <p className="text-3xl font-semibold text-gray-900 mb-6">
     Compassionate, Certified Support for New Mothers at Every Step
