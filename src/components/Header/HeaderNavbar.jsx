@@ -40,31 +40,32 @@ function HeaderNavbar({ menuOpen, setMenuOpen }) {
       </nav>
 
       {/* Meniu mobil */}
-      {menuOpen && (
-        <div className="md:hidden absolute top-20 right-4 left-4 bg-white border rounded-lg shadow-lg py-4 px-6 space-y-3 z-50 text-gray-700 text-base font-robotoCondensed">
-          <a href="#page-0" onClick={() => setMenuOpen(false)} className={commonClass} style={linkStyle}>
-            Home
+{menuOpen && (
+  <div className="md:hidden absolute top-20 right-4 left-4 bg-white border rounded-xl shadow-lg py-6 px-4 z-50">
+    <ul className="space-y-4 text-gray-800 font-robotoCondensed text-base">
+      {[
+        { href: "#page-0", label: "Home" },
+        { href: "#about", label: "Despre mine" },
+        { href: "#blog", label: "Articole" },
+        { href: "#contact", label: "Prețuri" },
+        { href: "#reviews", label: "Recenzii" },
+        { href: "#services", label: "Cum te pot ajuta" },
+        { href: "#faq", label: "Contact" },
+      ].map((item) => (
+        <li key={item.href}>
+          <a
+            href={item.href}
+            onClick={() => setMenuOpen(false)}
+            className="block px-4 py-2 rounded hover:bg-[#fef6f2] hover:text-[#b06b4c] transition-all duration-200"
+          >
+            {item.label}
           </a>
-          <a href="#about" onClick={() => setMenuOpen(false)} className={commonClass} style={linkStyle}>
-            Despre mine
-          </a>
-          <a href="#blog" onClick={() => setMenuOpen(false)} className={commonClass} style={linkStyle}>
-            Articole
-          </a>
-          <a href="#contact" onClick={() => setMenuOpen(false)} className={commonClass} style={linkStyle}>
-            Prețuri
-          </a>
-          <a href="#reviews" onClick={() => setMenuOpen(false)} className={commonClass} style={linkStyle}>
-            Recenzii
-          </a>
-          <a href="#services" onClick={() => setMenuOpen(false)} className={commonClass} style={linkStyle}>
-            Cum te pot ajuta
-          </a>
-          <a href="#faq" onClick={() => setMenuOpen(false)} className={commonClass} style={linkStyle}>
-            Contact
-          </a>
-        </div>
-      )}
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
+
     </>
   );
 }
