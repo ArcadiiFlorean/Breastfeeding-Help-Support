@@ -6,15 +6,23 @@ import HeroImg from "/Hero_img-COPY.png"; // PNG transparent din /public
 function Hero() {
   return (
     <section className="relative bg-[#fef6f2] overflow-hidden">
+     <div className="max-w-7xl w-full mx-auto px-4 tablet:px-0">
+  <h1 className="text-4xl tablet:text-5xl lg:text-6xl font-fjalla text-[#b06b4c] tracking-wide text-center tablet:text-left">
+    Marina Cociug
+  </h1>
+</div>
+
       {/* FUNDAL FLORI JOS */}
       <img
         src="/flowers-bg.jpg"
         alt="Fundal flori"
         className="absolute bottom-[80px] tablet:bottom-[80px] left-1/2 -translate-x-1/2 w-full max-w-[1500px] h-auto max-h-[260px] tablet:max-h-[280px] lg:max-h-[350px] object-cover object-bottom z-0 opacity-30"
-      />
+      />  
 
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 max-w-[1440px] mx-auto px-6 py-20 gap-12 items-center">
+
+      <div className="relative z-10 flex flex-col-reverse tablet:grid tablet:grid-cols-2 max-w-[1440px] mx-auto px-6 py-20 gap-12 items-center">
         {/* TEXT PE STÂNGA */}
+      
         <div className="text-gray-800 max-w-3xl text-base tablet:text-[1.1rem] lg:text-[1.5rem] leading-relaxed mb-10 lg:mb-[500px]">
           <h1 className="text-4xl tablet:text-5xl lg:text-8xl font-fjalla text-[#b06b4c] leading-tight max-w-3xl">
             Trusted Breastfeeding Help & Support
@@ -39,7 +47,8 @@ function Hero() {
         </div>
 
         {/* IMAGINE DECUPATĂ */}
-        <div className="flex justify-center lg:justify-end relative">
+    <div className="flex justify-center lg:justify-end relative -mt-12 tablet:mt-0">
+
           <img
             src={HeroImg}
             alt="Consultant alăptare și bebeluș"
