@@ -6,10 +6,15 @@ export default {
       fontFamily: {
         fjalla: ['"Fjalla One"', "sans-serif"],
         robotoCondensed: ['"Roboto Condensed"', "sans-serif"],
+        cantata: ['"Cantata One"', "serif"],
+        pinyon: ['"Pinyon Script"', "cursive"],
       },
       screens: {
-        tablet: "1024px",
-        lg: "1280px",
+        phone: "480px",       // Telefoane mici
+        tabletSm: "768px",    // Tablete mici
+        tablet: "1024px",     // Tablete mari
+        laptop: "1280px",     // Laptopuri (standard Tailwind)
+        lg: "1440px",         // Desktop mare
       },
     },
   },
