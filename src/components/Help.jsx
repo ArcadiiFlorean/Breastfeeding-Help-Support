@@ -36,7 +36,7 @@ const helpItems = [
 
 function Help() {
   return (
-    <section className="bg-[#ffffff] py-20">
+    <section id="cumtepotajuta" className="bg-[#ffffff] py-32">
       <div className="max-w-7xl mx-auto px-6">
         <h2 className="text-4xl tablet:text-5xl laptop:text-6xl font-bold text-center text-[#b06b4c] mb-6 leading-tight">
           Moduri în care te pot ajuta
@@ -69,13 +69,13 @@ function Help() {
           ))}
         </div>
 
-        <div className="mt-12 flex justify-center">
-          <Link
-            to="/pricing"
+        <div className="mt-12 flex justify-center py-10">
+          <a
+            href="#preturi"
             className="bg-[#d39473] hover:bg-[#c87f5b] text-white font-semibold text-lg px-8 py-4 rounded-full shadow-md hover:shadow-lg transition duration-300"
           >
             Vezi prețurile și pachetele
-          </Link>
+          </a>
         </div>
       </div>
     </section>

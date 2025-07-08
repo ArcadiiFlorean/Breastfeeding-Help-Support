@@ -43,7 +43,7 @@ function SupportFeatures() {
   ];
 
   return (
-    <section className="bg-[#D39473] py-20">
+    <section id="sprijin" className="bg-[#D39473] py-32">
       <div className="max-w-6xl mx-auto px-6 text-center">
     <p className="text-4xl tablet:text-5xl laptop:text-6xl font-extrabold text-white text-center leading-tight max-w-4xl mx-auto mb-10 px-4 drop-shadow-[2px_4px_6px_rgba(0,0,0,0.5)]">
   De ce să ceri ajutorul unui specialist în alăptare?

@@ -10,11 +10,14 @@ function HeaderNavbar({ menuOpen, setMenuOpen }) {
       <nav className="hidden tablet:flex gap-[30px] items-center text-gray-700 text-xl font-robotoCondensed">
         <a href="#page-0" className={commonClass}>Home</a>
         <a href="#about" className={commonClass}>Despre mine</a>
-        <a href="#blog" className={commonClass}>Articole</a>
-        <a href="#contact" className={commonClass}>Prețuri</a>
-        <a href="#reviews" className={commonClass}>Recenzii</a>
-        <a href="#services" className={commonClass}>Cum te pot ajuta</a>
-        <a href="#faq" className={commonClass}>Contact</a>
+       <a href="#sprijin" className={commonClass}>Sprijin</a>    
+           <a href="#cumtepotajuta" className={commonClass}>Cum te pot ajuta</a>
+        {/* <a href="#articole" className={commonClass}>Articole</a> */}
+        <a href="#preturi" className={commonClass}>Prețuri</a>
+            <a href="#faq" className={commonClass}>Intrebari</a>
+        <a href="#recenzii" className={commonClass}>Recenzii</a>
+
+        <a href="#contact" className={commonClass}>Contact</a>
       </nav>
 
       {/* Meniu mobil/tabletă */}

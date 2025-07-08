@@ -25,7 +25,7 @@ function FAQSection() {
   ];
 
   return (
-    <section className="bg-[#eef5f2] py-20">
+    <section id="faq" className="bg-[#eef5f2] py-32">
       <div className="max-w-5xl mx-auto px-6">
         <p className="text-sm text-gray-500 uppercase tracking-wide mb-2">
           Ghidare blândă pentru mămici

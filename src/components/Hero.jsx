@@ -5,7 +5,7 @@ import HeroIgenerateimg from "/HeroIgenerateimg.png";
 
 function Hero() {
   return (
-    <section className="relative bg-[#fef6f2] bg-contain bg-no-repeat bg-top tablet:bg-none overflow-hidden">
+    <section id="page-0" className="relative bg-[#fef6f2] bg-contain bg-no-repeat bg-top tablet:bg-none overflow-hidden">
       {/* FUNDAL FLORI JOS */}
       <img
         src="/flowers-bg.jpg"

@@ -32,7 +32,7 @@ function ContactOptions() {
   ];
 
   return (
-    <section className="bg-[#fcf7ed] py-20 px-6 text-center">
+    <section id="contact" className="bg-[#fcf7ed] py-20 px-6 text-center">
       <p className="text-sm font-medium text-gray-500 uppercase mb-3 tracking-wide">
         Hai să luăm legătura
       </p>
