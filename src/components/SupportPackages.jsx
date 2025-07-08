@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const packages = [
   {
@@ -40,10 +42,17 @@ const packages = [
 ];
 
 function SupportPackages() {
+  useEffect(() => {
+    AOS.init({ duration: 800, once: true });
+  }, []);
+
   return (
     <section id="SupportPackages" className="bg-[#fbfbfb] py-32">
       <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-4xl tablet:text-5xl laptop:text-6xl font-bold text-center text-[#b06b4c] mb-16 leading-tight font-fjalla">
+        <h2
+          className="text-4xl tablet:text-5xl laptop:text-6xl font-bold text-center text-[#b06b4c] mb-16 leading-tight font-fjalla"
+          data-aos="fade-up"
+        >
           Pachete de Sprijin pentru Alăptare
         </h2>
 
@@ -51,6 +60,8 @@ function SupportPackages() {
           {packages.map((pkg, index) => (
             <div
               key={index}
+              data-aos="zoom-in"
+              data-aos-delay={index * 100}
               className={`rounded-3xl cursor-pointer p-6 flex flex-col items-center text-center transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-2xl ${pkg.bg} ${
                 pkg.bg === "bg-[#fef6f2]" ? "text-gray-800" : "text-white"
               }`}

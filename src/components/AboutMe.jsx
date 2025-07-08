@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import HeaderSocials from "./Header/HeaderSocial";
 
+
 function AboutMe() {
+
+useEffect(() => {
+    AOS.init({ duration: 800, once: true });
+  }, []);
+
   return (
     <section
       id="AboutMe"
@@ -11,8 +19,8 @@ function AboutMe() {
       <div className="max-w-[1440px] mx-auto space-y-12 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-12 items-start p-4">
         
         {/* TITLU – sus pentru toate dimensiunile */}
-        <div className="col-span-full">
-          <h2
+        <div  data-aos="fade-left"  className="col-span-full">
+          <h2 
             className="
               text-center tablet:text-left
               text-4xl phone:text-5xl tabletSm:text-6xl tablet:text-7xl
@@ -25,7 +33,7 @@ function AboutMe() {
         </div>
 
         {/* Imaginea consultantului */}
-        <div className="flex justify-center lg:justify-start relative z-10 -mb-6 tablet:-mb-10">
+        <div  data-aos="fade-left" className="flex justify-center lg:justify-start relative z-10 -mb-6 tablet:-mb-10">
           <img
             src="/Hero_img_2.jpg"
             alt="Consultant în alăptare"
@@ -35,7 +43,7 @@ function AboutMe() {
 
         {/* Textul descriptiv */}
         <div>
-          <div className="shadow-2xl shadow-black/30 p-6 phone:p-8 space-y-6 w-full max-w-[1200px] h-auto tablet:h-auto lg:h-[550px] overflow-y-auto mt-[10px] mx-auto rounded-lg bg-white">
+          <div  data-aos="fade-right" className="shadow-2xl shadow-black/30 p-6 phone:p-8 space-y-6 w-full max-w-[1200px] h-auto tablet:h-auto lg:h-[550px] overflow-y-auto mt-[10px] mx-auto rounded-lg bg-white">
             <div>
               <h3 className="font-bold text-lg mb-1">Drumul meu către consultanța în alăptare</h3>
               <p className="text-gray-700 leading-relaxed">

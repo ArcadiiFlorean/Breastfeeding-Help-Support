@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const testimonials = [
@@ -26,6 +28,10 @@ function Testimonial() {
   const [index, setIndex] = useState(0);
   const [fade, setFade] = useState(true);
   const intervalRef = useRef(null);
+
+  useEffect(() => {
+    AOS.init({ duration: 800, once: true });
+  }, []);
 
   const goNext = () => {
     setFade(false);
@@ -63,7 +69,10 @@ function Testimonial() {
       onMouseEnter={stopSlider}
       onMouseLeave={startSlider}
     >
-      <div className="max-w-5xl mx-auto text-center relative px-6 min-h-[300px] flex flex-col justify-center items-center overflow-hidden transition-all duration-500">
+      <div
+        className="max-w-5xl mx-auto text-center relative px-6 min-h-[300px] flex flex-col justify-center items-center overflow-hidden transition-all duration-500"
+        data-aos="fade-up"
+      >
         {/* Buton stânga */}
         <button
           onClick={goPrev}

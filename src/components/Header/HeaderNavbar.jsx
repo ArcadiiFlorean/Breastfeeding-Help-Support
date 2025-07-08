@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 function HeaderNavbar({ menuOpen, setMenuOpen }) {
+  useEffect(() => {
+    AOS.init({ duration: 800 });
+  }, []);
+
   const commonClass =
     "text-[1em] font-normal font-robotoCondensed text-black hover:text-[#cb8645] no-underline transition-colors duration-200";
 
@@ -20,7 +26,10 @@ function HeaderNavbar({ menuOpen, setMenuOpen }) {
   return (
     <>
       {/* Desktop/Tablet Nav */}
-      <nav className="hidden tablet:flex gap-6 items-center text-gray-700 text-xl font-robotoCondensed">
+      <nav
+        data-aos="fade-down"
+        className="hidden tablet:flex gap-6 items-center text-gray-700 text-xl font-robotoCondensed"
+      >
         {navItems.map((item) => (
           <a key={item.href} href={item.href} className={commonClass}>
             {item.label}
@@ -46,7 +55,10 @@ function HeaderNavbar({ menuOpen, setMenuOpen }) {
 
       {/* Mobile Nav */}
       {menuOpen && (
-        <div className="tablet:hidden absolute top-20 right-4 left-4 bg-white border rounded-xl shadow-lg py-6 px-4 z-50">
+        <div
+          data-aos="fade-down"
+          className="tablet:hidden absolute top-20 right-4 left-4 bg-white border rounded-xl shadow-lg py-6 px-4 z-50"
+        >
           <ul className="space-y-4 text-gray-800 font-robotoCondensed text-base">
             {navItems.map((item) => (
               <li key={item.href}>

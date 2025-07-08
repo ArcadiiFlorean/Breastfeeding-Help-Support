@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 function FAQSection() {
+  useEffect(() => {
+    AOS.init({ duration: 800, once: true });
+  }, []);
+
   const faqs = [
     {
       question: "Cum îmi dau seama dacă bebelușul este sătul?",
@@ -28,7 +34,7 @@ function FAQSection() {
     <section id="FAQSection" className="bg-[#D39473] py-24 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* TEXTUL pe stânga */}
-        <div>
+        <div data-aos="fade-right">
           <p className="text-sm text-white uppercase tracking-wide mb-2">
             Ghidare blândă pentru mămici
           </p>
@@ -41,7 +47,12 @@ function FAQSection() {
 
           <div className="space-y-8">
             {faqs.map((item, index) => (
-              <div key={index} className="border-t border-white/50 pt-5">
+              <div
+                key={index}
+                className="border-t border-white/50 pt-5"
+                data-aos="fade-up"
+                data-aos-delay={index * 150}
+              >
                 <h3 className="text-lg font-semibold text-white mb-2">
                   {item.question}
                 </h3>
@@ -52,11 +63,11 @@ function FAQSection() {
         </div>
 
         {/* IMAGINE pe dreapta */}
-        <div className="flex justify-center lg:justify-end">
+        <div className="flex justify-center lg:justify-end" data-aos="fade-left">
           <img
-            src="/Hero_img-COPY.png" // <- schimbă cu imaginea ta
+            src="/Hero_img-COPY.png"
             alt="Întrebări frecvente"
-            className="w-full max-w-md lg:max-w-lg rounded-xl "
+            className="w-full max-w-md lg:max-w-lg rounded-xl"
           />
         </div>
       </div>

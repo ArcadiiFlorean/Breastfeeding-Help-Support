@@ -38,18 +38,30 @@ function Help() {
   return (
     <section id="Help" className="bg-[#ffffff] py-32">
       <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-4xl tablet:text-5xl laptop:text-6xl font-bold text-center text-[#b06b4c] mb-6 leading-tight">
+        <h2
+          data-aos="fade-up"
+          className="text-4xl tablet:text-5xl laptop:text-6xl font-bold text-center text-[#b06b4c] mb-6 leading-tight"
+        >
           Moduri în care te pot ajuta
         </h2>
-        <p className="text-center text-base tablet:text-lg text-gray-700 max-w-2xl mx-auto mb-12">
+
+        <p
+          data-aos="fade-up"
+          data-aos-delay="100"
+          className="text-center text-base tablet:text-lg text-gray-700 max-w-2xl mx-auto mb-12"
+        >
           Fie că ești la început de drum sau întâmpini dificultăți, sunt aici
           să-ți ofer sprijin, înțelegere și soluții personalizate.
         </p>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 text-left">
+        <div
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 text-left"
+        >
           {helpItems.map((item, index) => (
             <div
               key={index}
+              data-aos="zoom-in-up"
+              data-aos-delay={`${150 + index * 100}`}
               className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col"
             >
               <img
@@ -69,7 +81,11 @@ function Help() {
           ))}
         </div>
 
-        <div className="mt-12 flex justify-center py-10">
+        <div
+          data-aos="fade-up"
+          data-aos-delay="600"
+          className="mt-12 flex justify-center py-10"
+        >
           <a
             href="#preturi"
             className="bg-[#d39473] hover:bg-[#c87f5b] text-white font-semibold text-lg px-8 py-4 rounded-full shadow-md hover:shadow-lg transition duration-300"

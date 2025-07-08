@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import { FaFacebookF, FaInstagram, FaYoutube, FaWhatsapp } from "react-icons/fa";
 
 function HeaderSocial() {
+  useEffect(() => {
+    AOS.init({ duration: 800 });
+  }, []);
+
   return (
-    <div className="hidden tablet:flex items-center gap-4">
+    <div data-aos="fade-left" className="hidden tablet:flex items-center gap-4">
       <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
         <FaFacebookF className="text-gray-600 hover:text-gray-900" />
       </a>
