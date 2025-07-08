@@ -4,9 +4,9 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 const testimonials = [
   {
     text: `„Prezența calmă a Marinei a fost exact ce aveam nevoie. M-a ascultat cu empatie, mi-a oferit ghidare blândă și m-a ajutat să capăt încredere în mine ca mamă la început de drum.”`,
-    name: "Taylor Bennett",
+    name: "Cristina Ionescu",
     role: "Mamă pentru prima dată",
-   image: "/Header_Logo.jpg",
+    image: "/Header_Logo.jpg",
   },
   {
     text: `„Sprijinul oferit de Marina a fost mai mult decât profesionist — a fost uman. Recomand cu tot sufletul.”`,
@@ -44,9 +44,7 @@ function Testimonial() {
   };
 
   const startSlider = () => {
-    intervalRef.current = setInterval(() => {
-      goNext();
-    }, 4000); // schimbă la 4 secunde
+    intervalRef.current = setInterval(goNext, 4000);
   };
 
   const stopSlider = () => clearInterval(intervalRef.current);
@@ -60,8 +58,8 @@ function Testimonial() {
 
   return (
     <section
-      id="recenzii"
-      className="bg-[#f2eefc] py-20 px-6 "
+      id="Testimonials"
+      className="bg-[#fbfbfb] py-20 px-6"
       onMouseEnter={stopSlider}
       onMouseLeave={startSlider}
     >
@@ -75,14 +73,14 @@ function Testimonial() {
           <ChevronLeft className="w-6 h-6 text-gray-600" />
         </button>
 
-        {/* Fade-in content */}
+        {/* Conținut testimonial */}
         <div
-          key={index} // forțăm re-render la schimbare
+          key={index}
           className={`transition-opacity duration-500 ${
             fade ? "opacity-100" : "opacity-0"
           } max-w-4xl`}
         >
-          <p className="text-2xl md:text-3xl font-medium text-gray-800 leading-relaxed mb-12">
+          <p className="text-2xl md:text-3xl font-playwrite text-gray-800 leading-relaxed mb-12">
             {current.text}
           </p>
 
@@ -93,7 +91,7 @@ function Testimonial() {
               className="w-16 h-16 rounded-full object-cover"
             />
             <div className="text-left">
-              <p className="text-lg font-semibold text-gray-800">{current.name}</p>
+              <p className="text-lg font-playwrite text-gray-800">{current.name}</p>
               <p className="text-sm text-gray-600">{current.role}</p>
             </div>
           </div>

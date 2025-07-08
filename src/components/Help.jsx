@@ -36,7 +36,7 @@ const helpItems = [
 
 function Help() {
   return (
-    <section id="cumtepotajuta" className="bg-[#ffffff] py-32">
+    <section id="Help" className="bg-[#ffffff] py-32">
       <div className="max-w-7xl mx-auto px-6">
         <h2 className="text-4xl tablet:text-5xl laptop:text-6xl font-bold text-center text-[#b06b4c] mb-6 leading-tight">
           Moduri în care te pot ajuta

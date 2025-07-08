@@ -1,38 +1,37 @@
 import React from "react";
 
 function HeaderNavbar({ menuOpen, setMenuOpen }) {
-  const commonClass = "text-[1em] font-normal font-robotoCondensed text-black hover:text-[#cb8645] no-underline transition-colors duration-200";
+  const commonClass =
+    "text-[1em] font-normal font-robotoCondensed text-black hover:text-[#cb8645] no-underline transition-colors duration-200";
 
+  // Elementele din navbar (folosite și la desktop și la mobil)
+  const navItems = [
+    { href: "#page-0", label: "Home" },
+    { href: "#AboutMe", label: "Despre mine" },
+    { href: "#SupportFeatures", label: "Sprijin" },
+    { href: "#Help", label: "Cum te pot ajuta" },
+    { href: "#SupportPackages", label: "Prețuri" },
+    { href: "#FAQSection", label: "Întrebări" },
+    { href: "#Testimonials", label: "Recenzii" },
+    { href: "#ContactOptions", label: "Contact" },
+  ];
 
   return (
     <>
-      {/* Linkuri pe desktop/tabletă */}
+      {/* Meniu pe desktop/tabletă */}
       <nav className="hidden tablet:flex gap-[30px] items-center text-gray-700 text-xl font-robotoCondensed">
-        <a href="#page-0" className={commonClass}>Home</a>
-        <a href="#about" className={commonClass}>Despre mine</a>
-       <a href="#sprijin" className={commonClass}>Sprijin</a>    
-           <a href="#cumtepotajuta" className={commonClass}>Cum te pot ajuta</a>
-        {/* <a href="#articole" className={commonClass}>Articole</a> */}
-        <a href="#preturi" className={commonClass}>Prețuri</a>
-            <a href="#faq" className={commonClass}>Intrebari</a>
-        <a href="#recenzii" className={commonClass}>Recenzii</a>
-
-        <a href="#contact" className={commonClass}>Contact</a>
+        {navItems.map((item) => (
+          <a key={item.href} href={item.href} className={commonClass}>
+            {item.label}
+          </a>
+        ))}
       </nav>
 
-      {/* Meniu mobil/tabletă */}
+      {/* Meniu pe mobil */}
       {menuOpen && (
         <div className="tablet:hidden absolute top-20 right-4 left-4 bg-white border rounded-xl shadow-lg py-6 px-4 z-50">
           <ul className="space-y-4 text-gray-800 font-robotoCondensed text-base">
-            {[
-              { href: "#page-0", label: "Home" },
-              { href: "#about", label: "Despre mine" },
-              { href: "#blog", label: "Articole" },
-              { href: "#contact", label: "Prețuri" },
-              { href: "#reviews", label: "Recenzii" },
-              { href: "#services", label: "Cum te pot ajuta" },
-              { href: "#faq", label: "Contact" },
-            ].map((item) => (
+            {navItems.map((item) => (
               <li key={item.href}>
                 <a
                   href={item.href}

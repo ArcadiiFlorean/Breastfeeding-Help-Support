@@ -4,7 +4,7 @@ import HeaderSocials from "./Header/HeaderSocial";
 function AboutMe() {
   return (
     <section
-      id="about"
+      id="AboutMe"
       className="bg-[#fff8f4] px-4 phone:px-6 relative overflow-visible pb-20"
     >
       {/* Container principal */}

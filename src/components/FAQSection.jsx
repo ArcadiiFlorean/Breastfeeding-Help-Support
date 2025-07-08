@@ -25,27 +25,39 @@ function FAQSection() {
   ];
 
   return (
-    <section id="faq" className="bg-[#eef5f2] py-32">
-      <div className="max-w-5xl mx-auto px-6">
-        <p className="text-sm text-gray-500 uppercase tracking-wide mb-2">
-          Ghidare blândă pentru mămici
-        </p>
-        <h2 className="text-3xl md:text-4xl font-semibold text-gray-800 mb-6">
-          Întrebări frecvente despre alăptare
-        </h2>
-        <p className="text-gray-600 text-base mb-12">
-          Descoperă răspunsuri grijulii și profesioniste la cele mai des întâlnite întrebări despre alăptare. Nu ești singură—hai să facem ca această călătorie să fie mai calmă și susținută.
-        </p>
+    <section id="FAQSection" className="bg-[#D39473] py-24 px-6">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        {/* TEXTUL pe stânga */}
+        <div>
+          <p className="text-sm text-white uppercase tracking-wide mb-2">
+            Ghidare blândă pentru mămici
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            Întrebări frecvente despre alăptare
+          </h2>
+          <p className="text-white/90 text-base mb-10">
+            Descoperă răspunsuri grijulii și profesioniste la cele mai des întâlnite întrebări despre alăptare. Nu ești singură—hai să facem ca această călătorie să fie mai calmă și susținută.
+          </p>
 
-        <div className="space-y-8">
-          {faqs.map((item, index) => (
-            <div key={index} className="border-t pt-6">
-              <h3 className="text-lg font-medium text-gray-800 mb-2">
-                {item.question}
-              </h3>
-              <p className="text-gray-700">{item.answer}</p>
-            </div>
-          ))}
+          <div className="space-y-8">
+            {faqs.map((item, index) => (
+              <div key={index} className="border-t border-white/50 pt-5">
+                <h3 className="text-lg font-semibold text-white mb-2">
+                  {item.question}
+                </h3>
+                <p className="text-white/90">{item.answer}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* IMAGINE pe dreapta */}
+        <div className="flex justify-center lg:justify-end">
+          <img
+            src="/Hero_img-COPY.png" // <- schimbă cu imaginea ta
+            alt="Întrebări frecvente"
+            className="w-full max-w-md lg:max-w-lg rounded-xl "
+          />
         </div>
       </div>
     </section>

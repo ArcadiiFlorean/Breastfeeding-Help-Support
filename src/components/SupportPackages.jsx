@@ -41,7 +41,7 @@ const packages = [
 
 function SupportPackages() {
   return (
-<section id="preturi" className="bg-[#fbfbfb] py-32">
+<section id="SupportPackages" className="bg-[#fbfbfb] py-32">
 
 
       <div className="max-w-7xl mx-auto">
