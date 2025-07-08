@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const helpItems = [
   {
@@ -69,12 +70,12 @@ function Help() {
         </div>
 
         <div className="mt-12 flex justify-center">
-          <a
-            href="#pricing"
+          <Link
+            to="/pricing"
             className="bg-[#d39473] hover:bg-[#c87f5b] text-white font-semibold text-lg px-8 py-4 rounded-full shadow-md hover:shadow-lg transition duration-300"
           >
             Vezi prețurile și pachetele
-          </a>
+          </Link>
         </div>
       </div>
     </section>

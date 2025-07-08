@@ -1,84 +1,68 @@
 import React from "react";
-import { FaCheck } from "react-icons/fa";
+
+const packages = [
+  {
+    title: "Newborn Feeding Starter Session",
+    desc: "Perfect for first-time parents or those needing a refresher. This 45-minute virtual session covers latch basics, feeding positions, hunger cues, and what to expect in the early days. Includes a personalized care summary and 2 days of post-session email support.",
+    price: "$75",
+    bg: "bg-[#dc9071]",
+  },
+  {
+    title: "Comprehensive Lactation Consult",
+    desc: "A full 90-minute session for in-depth support. Ideal for latch issues, supply concerns, or persistent feeding pain. Includes feeding assessment, custom care plan, and 5 days of follow-up email support to ensure you feel confident and cared for throughout.",
+    price: "$125",
+    bg: "bg-[#fef6f2]",
+  },
+  {
+    title: "Pumping & Bottle Feeding Support",
+    desc: "Learn how to introduce a bottle, build a freezer stash, and maintain supply while pumping. In this 60-minute session, we'll cover pump fit, settings, and storage tips. Includes a printable pumping guide and 3 days of post-session email support.",
+    price: "$85",
+    bg: "bg-[#dc9071]",
+  },
+  {
+    title: "Prenatal Breastfeeding Prep",
+    desc: "Prepare before baby arrives with this 75-minute educational session. Learn what to expect in the first weeks, how milk supply works, latch techniques, and more. Includes a prenatal checklist, feeding plan template, and 3 days of follow-up support.",
+    price: "$95",
+    bg: "bg-[#dc9071]",
+  },
+  {
+    title: "Weaning Guidance & Transition Plan",
+    desc: "Whether you’re weaning from breast to bottle, solids, or full weaning, this 60-minute session gives you a gentle, step-by-step plan tailored to your goals. Includes tips for emotional transitions, nutrition, and 3 days of follow-up support by email.",
+    price: "$85",
+    bg: "bg-[#fef6f2]",
+  },
+  {
+    title: "Custom Lactation Care Package",
+    desc: "Not sure what you need? I’ll build a care plan just for you. From ongoing support to complex challenges (twins, NICU, re-latching, etc.), pricing and structure depend on your needs. Includes a 15-min intake chat to create your personalized plan.",
+    price: "Starting at $60",
+    bg: "bg-[#dc9071]",
+  },
+];
 
 function SupportPackages() {
-  const packages = [
-    {
-      title: "Start",
-      price: 0,
-      description: "Sprijin blând pentru început.",
-      features: ["Apel video introductiv", "Plan simplu de alăptare"],
-      button: "Începe",
-    },
-    {
-      title: "Bază",
-      price: 9,
-      description: "Ghidare constantă pentru început de drum.",
-      features: ["Două ședințe de verificare", "2 săptămâni suport prin mesaje", "Revizuire jurnal alăptare"],
-      button: "Alege",
-    },
-    {
-      title: "Extins",
-      price: 19,
-      description: "Îngrijire suplimentară pe măsură ce crești.",
-      features: [
-        "4 întâlniri de urmărire",
-        "1 lună suport prin mesaje",
-        "Ajutor cu atașarea corectă",
-        "Sfaturi pentru biberon și pompă",
-        "Recomandări pentru somn și alăptare",
-      ],
-      button: "Selectează",
-    },
-    {
-      title: "Premium",
-      price: 29,
-      description: "Sprijin continuu, empatic și prezent mereu.",
-      features: [
-        "Întâlniri nelimitate",
-        "Asistență prioritară prin mesaje",
-        "Resurse personalizate",
-        "Sfaturi pentru diversificare",
-        "Ședință Q&A cu familia",
-      ],
-      button: "Alătură-te",
-    },
-  ];
-
   return (
-    <section className="bg-[#f0e9fa] py-20">
-      <div className="max-w-7xl mx-auto px-6">
-    <h2 className="text-4xl tablet:text-5xl laptop:text-6xl font-bold text-center text-[#b06b4c] mb-12 leading-tight">
-  Pachete de Sprijin
-</h2>
+    <section className="bg-[#fff8f4] py-20 px-6">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-4xl tablet:text-5xl laptop:text-6xl font-bold text-center text-[#b06b4c] mb-12 leading-tight">
+          Pachete de Sprijin pentru Alăptare
+        </h2>
 
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {packages.map((pkg, index) => (
-            <div key={index} className="bg-white border border-gray-200 p-6 rounded-md shadow-sm flex flex-col justify-between">
-              <div>
-                <h3 className="text-2xl font-semibold text-gray-800">
-                  {pkg.price === 0 ? "Gratuit" : `$${pkg.price}`}
-                </h3>
-                <p className="text-sm text-gray-500 mb-4">
-                  {pkg.price > 0 ? "Pe lună" : "Fără costuri, fără obligații"}
-                </p>
-                <h4 className="text-lg font-medium text-gray-800 mb-1">{pkg.title}</h4>
-                <p className="text-gray-600 text-sm mb-6">{pkg.description}</p>
-                <button className="w-full bg-[#fbcbb2] hover:bg-[#f7b99b] text-gray-800 font-medium py-2 rounded transition">
-                  {pkg.button}
-                </button>
-              </div>
-
-              <ul className="mt-6 space-y-2 text-sm">
-                <li className="text-gray-500 font-semibold">INCLUDE</li>
-                {pkg.features.map((feature, i) => (
-                  <li key={i} className="flex items-start gap-2 text-gray-700">
-                    <FaCheck className="text-orange-500 mt-1" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
+            <div
+              key={index}
+              className={`rounded-xl p-6 flex flex-col items-center text-center shadow-md ${pkg.bg} ${
+                pkg.bg === "bg-[#fef6f2]" ? "text-gray-800" : "text-white"
+              }`}
+            >
+              <img
+                src="/flower.png" // Asigură-te că imaginea e în public/flower.png
+                alt="Decorative flower"
+                className="w-10 h-10 mb-4"
+              />
+              <h3 className="text-lg font-semibold mb-4">{pkg.title}</h3>
+              <p className="text-sm opacity-90 mb-6">{pkg.desc}</p>
+              <p className="text-xl font-bold">{pkg.price}</p>
             </div>
           ))}
         </div>
