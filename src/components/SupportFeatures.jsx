@@ -43,33 +43,42 @@ function SupportFeatures() {
   ];
 
   return (
-    <section className="bg-[#f3e8ff] py-20">
+    <section className="bg-[#D39473] py-20">
       <div className="max-w-6xl mx-auto px-6 text-center">
-        <p className="text-sm text-gray-500 uppercase tracking-widest mb-2">
-          Sprijin care te face să te simți acasă
-        </p>
-        <h2 className="text-3xl md:text-4xl font-semibold text-gray-800 mb-12">
+    <p className="text-4xl tablet:text-5xl laptop:text-6xl font-extrabold text-white text-center leading-tight max-w-4xl mx-auto mb-10 px-4 drop-shadow-[2px_4px_6px_rgba(0,0,0,0.5)]">
+  De ce să ceri ajutorul unui specialist în alăptare?
+</p>
+
+
+        <h2 className="text-3xl md:text-xl font-semibold text-gray-800 mb-12">
           Hrănește. Împuternicește. Începe cu încredere.
         </h2>
+<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 text-left px-4 md:px-0">
+  {features.map((item, index) => (
+    <div
+      key={index}
+      className="flex items-start gap-5 bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition duration-300"
+    >
+      <div className="bg-[#fbcbb2] p-4 rounded-full text-white text-2xl">
+        {item.icon}
+      </div>
+      <div>
+        <h4 className="text-xl font-bold text-[#b06b4c] mb-2">
+          {item.title}
+        </h4>
+        <p className="text-gray-700 text-base leading-relaxed">
+          {item.desc}
+        </p>
+      </div>
+    </div>
+  ))}
+</div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 text-left">
-          {features.map((item, index) => (
-            <div key={index} className="flex items-start gap-4">
-              <div className="bg-[#fbcbb2] p-3 rounded">{item.icon}</div>
-              <div>
-                <h4 className="text-lg font-medium text-gray-800 mb-1">
-                  {item.title}
-                </h4>
-                <p className="text-gray-600 text-sm">{item.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
 
-        <div className="mt-12">
+        <div className="mt-6 flex justify-center">
           <a
             href="#booking"
-            className="bg-[#fbcbb2] hover:bg-[#f7b99b] text-gray-800 font-medium px-6 py-3 rounded transition"
+            className="bg-[#ffdcc9] hover:bg-[#f7b99b] text-gray-800 font-semibold text-lg px-8 py-4 rounded-full shadow-md hover:shadow-lg transition duration-300"
           >
             Programează-te
           </a>

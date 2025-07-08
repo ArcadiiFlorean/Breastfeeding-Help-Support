@@ -48,9 +48,10 @@ function SupportPackages() {
   return (
     <section className="bg-[#f0e9fa] py-20">
       <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-3xl md:text-4xl font-semibold text-center text-gray-800 mb-12">
-          Pachete de Sprijin
-        </h2>
+    <h2 className="text-4xl tablet:text-5xl laptop:text-6xl font-bold text-center text-[#b06b4c] mb-12 leading-tight">
+  Pachete de Sprijin
+</h2>
+
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {packages.map((pkg, index) => (
