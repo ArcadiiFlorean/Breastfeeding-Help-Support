@@ -4,7 +4,6 @@ function HeaderNavbar({ menuOpen, setMenuOpen }) {
   const commonClass =
     "text-[1em] font-normal font-robotoCondensed text-black hover:text-[#cb8645] no-underline transition-colors duration-200";
 
-  // Elementele din navbar (folosite și la desktop și la mobil)
   const navItems = [
     { href: "#page-0", label: "Home" },
     { href: "#AboutMe", label: "Despre mine" },
@@ -13,21 +12,39 @@ function HeaderNavbar({ menuOpen, setMenuOpen }) {
     { href: "#SupportPackages", label: "Prețuri" },
     { href: "#FAQSection", label: "Întrebări" },
     { href: "#Testimonials", label: "Recenzii" },
-    { href: "#ContactOptions", label: "Contact" },
   ];
+
+  const contactItem = { href: "#ContactOptions", label: "Contact" };
+  const bookingItem = { href: "#booking", label: "Programează-te" };
 
   return (
     <>
-      {/* Meniu pe desktop/tabletă */}
-      <nav className="hidden tablet:flex gap-[30px] items-center text-gray-700 text-xl font-robotoCondensed">
+      {/* Desktop/Tablet Nav */}
+      <nav className="hidden tablet:flex gap-6 items-center text-gray-700 text-xl font-robotoCondensed">
         {navItems.map((item) => (
           <a key={item.href} href={item.href} className={commonClass}>
             {item.label}
           </a>
         ))}
+
+        {/* Contact (outline button) */}
+        <a
+          href={contactItem.href}
+          className="px-4 py-2 rounded-lg border border-[#cb8645] text-[#cb8645] font-semibold hover:bg-[#fef6f2] transition-colors duration-200"
+        >
+          {contactItem.label}
+        </a>
+
+        {/* Programează-te (solid button) */}
+        <a
+          href={bookingItem.href}
+          className="px-4 py-2 rounded-lg bg-[#cb8645] text-white font-semibold shadow hover:bg-[#a25f34] transition-colors duration-200"
+        >
+          {bookingItem.label}
+        </a>
       </nav>
 
-      {/* Meniu pe mobil */}
+      {/* Mobile Nav */}
       {menuOpen && (
         <div className="tablet:hidden absolute top-20 right-4 left-4 bg-white border rounded-xl shadow-lg py-6 px-4 z-50">
           <ul className="space-y-4 text-gray-800 font-robotoCondensed text-base">
@@ -42,6 +59,24 @@ function HeaderNavbar({ menuOpen, setMenuOpen }) {
                 </a>
               </li>
             ))}
+            <li>
+              <a
+                href={contactItem.href}
+                onClick={() => setMenuOpen(false)}
+                className="block px-4 py-2 rounded border border-[#cb8645] text-[#cb8645] font-semibold hover:bg-[#fef6f2] transition-all duration-200"
+              >
+                {contactItem.label}
+              </a>
+            </li>
+            <li>
+              <a
+                href={bookingItem.href}
+                onClick={() => setMenuOpen(false)}
+                className="block px-4 py-2 rounded bg-[#cb8645] text-white font-semibold shadow hover:bg-[#a25f34] transition-all duration-200"
+              >
+                {bookingItem.label}
+              </a>
+            </li>
           </ul>
         </div>
       )}

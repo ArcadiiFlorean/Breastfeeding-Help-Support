@@ -34,9 +34,9 @@ function Hero() {
 
           <div className="flex flex-row flex-wrap justify-center gap-4 tabletSm:gap-6 lg:flex-row">
             <PrimaryButton href="#booking">
-              Book a Free Consultation
+            Programează o consultație gratuită
             </PrimaryButton>
-            <OutlineButton href="#services">Explore my Services</OutlineButton>
+            <OutlineButton href="#Help">Explore my Services</OutlineButton>
           </div>
         </div>
 
