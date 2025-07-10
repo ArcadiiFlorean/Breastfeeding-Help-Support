@@ -82,11 +82,11 @@ function Testimonial() {
           <ChevronLeft className="w-6 h-6 text-gray-600" />
         </button>
 
-        {/* Conținut testimonial */}
+        {/* Conținut testimonial cu aria-live */}
         <div
-          key={index}
-          className={`transition-opacity duration-500 ${
-            fade ? "opacity-100" : "opacity-0"
+          aria-live="polite"
+          className={`transition-all duration-500 transform ${
+            fade ? "opacity-100 scale-100" : "opacity-0 scale-95"
           } max-w-4xl`}
         >
           <p className="text-2xl md:text-3xl font-playwrite text-gray-800 leading-relaxed mb-12">
@@ -103,6 +103,18 @@ function Testimonial() {
               <p className="text-lg font-playwrite text-gray-800">{current.name}</p>
               <p className="text-sm text-gray-600">{current.role}</p>
             </div>
+          </div>
+
+          {/* Dots de navigare */}
+          <div className="flex gap-2 justify-center mt-6">
+            {testimonials.map((_, i) => (
+              <span
+                key={i}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  i === index ? "bg-[#cb8645]" : "bg-gray-300"
+                }`}
+              ></span>
+            ))}
           </div>
         </div>
 

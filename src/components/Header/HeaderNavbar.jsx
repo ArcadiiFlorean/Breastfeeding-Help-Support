@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -21,7 +22,6 @@ function HeaderNavbar({ menuOpen, setMenuOpen }) {
   ];
 
   const contactItem = { href: "#ContactOptions", label: "Contact" };
-  const bookingItem = { href: "#booking", label: "Programează-te" };
 
   return (
     <>
@@ -44,13 +44,13 @@ function HeaderNavbar({ menuOpen, setMenuOpen }) {
           {contactItem.label}
         </a>
 
-        {/* Programează-te (solid button) */}
-        <a
-          href={bookingItem.href}
+        {/* ✅ Programează-te (React Router Link) */}
+        <Link
+          to="/booking"
           className="px-4 py-2 rounded-lg bg-[#cb8645] text-white font-semibold shadow hover:bg-[#a25f34] transition-colors duration-200"
         >
-          {bookingItem.label}
-        </a>
+          Programează-te
+        </Link>
       </nav>
 
       {/* Mobile Nav */}
@@ -80,14 +80,15 @@ function HeaderNavbar({ menuOpen, setMenuOpen }) {
                 {contactItem.label}
               </a>
             </li>
+            {/* ✅ Mobile - Programează-te */}
             <li>
-              <a
-                href={bookingItem.href}
+              <Link
+                to="/booking"
                 onClick={() => setMenuOpen(false)}
-                className="block px-4 py-2 rounded bg-[#cb8645] text-white font-semibold shadow hover:bg-[#a25f34] transition-all duration-200"
+                className="block px-4 py-2 rounded bg-[#cb8645] text-white font-semibold hover:bg-[#a25f34] transition-all duration-200"
               >
-                {bookingItem.label}
-              </a>
+                Programează-te
+              </Link>
             </li>
           </ul>
         </div>

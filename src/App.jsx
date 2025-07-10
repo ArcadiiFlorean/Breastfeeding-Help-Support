@@ -1,4 +1,6 @@
 import React from "react";
+import { Routes, Route } from "react-router-dom";
+
 import Header from "./components/Header/Header";
 import Hero from "./components/Hero";
 import AboutMe from "./components/AboutMe";
@@ -10,7 +12,11 @@ import Testimonials from "./components/Testimonials";
 import ContactOptions from "./components/ContactOptions";
 import Footer from "./components/Footer";
 
-function App() {
+import Booking from "./components/Booking";
+import ThankYou from "./components/ThankYou";
+
+// 👇 HomePage construit manual din secțiuni
+function HomePage() {
   return (
     <>
       <Header />
@@ -24,6 +30,16 @@ function App() {
       <ContactOptions />
       <Footer />
     </>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/booking" element={<Booking />} />
+      <Route path="/thankyou" element={<ThankYou />} />
+    </Routes>
   );
 }
 

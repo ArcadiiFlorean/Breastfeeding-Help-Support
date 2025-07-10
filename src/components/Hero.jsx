@@ -13,18 +13,17 @@ function Hero() {
   return (
     <section
       id="page-0"
-      className="relative bg-[#fef6f2] bg-contain bg-no-repeat bg-top tablet:bg-none overflow-hidden"
+      className="relative bg-[#fef6f2] bg-contain bg-no-repeat bg-top tablet:bg-none overflow-hidden "
     >
       {/* FUNDAL FLORI JOS */}
       <img
         src="/flowers-bg.jpg"
         alt="Fundal flori"
-        className=" tablet:block absolute bottom-[80px] tablet:bottom-[100px] laptop:bottom-[100px] lg:bottom-[143px] left-1/2 -translate-x-1/2 w-full max-w-[1500px] h-auto tablet:max-h-[180px] laptop:max-h-[280px] lg:max-h-[350px] object-cover object-bottom z-0 opacity-30"
+        className=" tablet:block absolute tablet:bottom-[150px] laptop:bottom-[150px] lg:bottom-[186px] left-1/2 -translate-x-1/2 w-full max-w-[1500px] h-auto tablet:max-h-[180px] laptop:max-h-[280px] lg:max-h-[350px] object-cover object-bottom z-0 opacity-30"
       />
 
       {/* CONȚINUT */}
       <div className="relative z-10 flex flex-col tablet:grid tablet:grid-cols-2 max-w-[1440px] mx-auto px-4 tablet:px-6 py-16 tablet:py-20 gap-10 tablet:gap-12 laptop:gap-10 items-center">
-
         {/* TEXT */}
         <div
           className="order-1 tablet:order-2 tablet:-mt-12 tabletMd:-mt-12 laptop:mt-6 lg:mt-12 text-gray-800 max-w-3xl text-base tablet:text-[1.1rem] laptop:text-[1rem] lg:text-[1.5rem] leading-relaxed mb-10 laptop:mb-6 lg:mb-[500px]"
@@ -63,9 +62,11 @@ function Hero() {
             data-aos-delay="400"
           >
             <PrimaryButton href="#booking">
-              Programează o consultație gratuită
+              Programează o consultație
             </PrimaryButton>
-            <OutlineButton href="#Help">Explore my Services</OutlineButton>
+            <OutlineButton href="Alăptare primul pas (Ebook)">
+              Alăptare primul pas (Ebook) gratuit
+            </OutlineButton>
           </div>
         </div>
 
@@ -73,7 +74,7 @@ function Hero() {
         <div
           className="order-2 tablet:order-1 flex justify-center lg:justify-end relative -mt-10 tablet:mt-0"
           data-aos="fade-left"
-          data-aos-delay="500"
+          data-aos-delay="200"
         >
           <img
             src={HeroIgenerateimg}

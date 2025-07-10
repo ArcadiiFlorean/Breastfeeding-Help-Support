@@ -24,19 +24,40 @@ function Footer() {
 
         {/* Linkuri Navigație */}
         <nav className="flex flex-wrap justify-center gap-4 text-sm text-gray-200">
-          <a href="#about" className="hover:underline">Despre</a>
-          <a href="#support" className="hover:underline">Sprijin</a>
-          <a href="#packages" className="hover:underline">Pachete</a>
-          <a href="#booking" className="hover:underline">Programare</a>
-          <a href="#faq" className="hover:underline">Întrebări</a>
-          <a href="#contact" className="hover:underline">Contact</a>
-          <a href="#social" className="hover:underline">Rețele</a>
+          <a href="#page-0" className="hover:underline">Home</a>
+          <a href="#AboutMe" className="hover:underline">Despre mine</a>
+          <a href="#SupportFeatures" className="hover:underline">Sprijin</a>
+          <a href="#Help" className="hover:underline">Cum te pot ajuta</a>
+          <a href="#SupportPackages" className="hover:underline">Prețuri</a>
+          <a href="#FAQSection" className="hover:underline">Întrebări</a>
+          <a href="#Testimonials" className="hover:underline">Recenzii</a>
+          <a href="#ContactOptions" className="hover:underline">Contact</a>
+          <a href="#booking" className="hover:underline">Programează-te</a>
         </nav>
 
-        {/* Drepturi de autor */}
-        <p className="text-xs text-center w-full mt-4 lg:mt-0">
-          Toate drepturile rezervate © 2025 Consult.
-        </p>
+        {/* Rețele Social Media */}
+        <div className="flex gap-4">
+          <a href="#" className="hover:text-white">
+            <FaFacebookF />
+          </a>
+          <a href="#" className="hover:text-white">
+            <FaInstagram />
+          </a>
+          <a href="#" className="hover:text-white">
+            <FaTwitter />
+          </a>
+          <a href="#" className="hover:text-white">
+            <FaLinkedinIn />
+          </a>
+          <a href="#" className="hover:text-white">
+            <FaYoutube />
+          </a>
+        </div>
+      </div>
+
+      {/* Drepturi de autor */}
+      <div className="text-center text-xs text-gray-400 mt-6">
+        © 2025 CONSULT — Toate drepturile rezervate.
       </div>
     </footer>
   );
