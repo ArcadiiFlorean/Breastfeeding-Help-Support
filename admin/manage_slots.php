@@ -12,12 +12,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['slots'])) {
 
     foreach ($_POST['slots'] as $slot) {
         list($date, $time) = explode('|', $slot);
-        $stmt = $pdo->prepare("INSERT INTO available_slots (slot_date, slot_time) VALUES (?, ?)");
+        $stmt = $pdo->prepare("INSERT INTO available_slots (slot_date, slot_time, status) VALUES (?, ?, 'available')");
         $stmt->execute([$date, $time]);
     }
 
     $message = "✅ Program actualizat cu succes!";
 }
+
 
 $existingSlots = $pdo->query("SELECT CONCAT(slot_date, '|', slot_time) as slot FROM available_slots")->fetchAll(PDO::FETCH_COLUMN);
 ?>
@@ -63,7 +64,8 @@ $existingSlots = $pdo->query("SELECT CONCAT(slot_date, '|', slot_time) as slot F
         }
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            /* Adjust grid columns if needed for better display with more slots */
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
             gap: 15px;
             margin-top: 20px;
         }
@@ -112,6 +114,15 @@ $existingSlots = $pdo->query("SELECT CONCAT(slot_date, '|', slot_time) as slot F
         .back-link:hover {
             text-decoration: underline;
         }
+
+        /* Stiluri pentru fiecare zi a săptămânii */
+        .day-0 label { background-color: #fbe9e7; } /* Duminică */
+        .day-1 label { background-color: #e3f2fd; } /* Luni */
+        .day-2 label { background-color: #fff3e0; } /* Marți */
+        .day-3 label { background-color: #e8f5e9; } /* Miercuri */
+        .day-4 label { background-color: #fce4ec; } /* Joi */
+        .day-5 label { background-color: #f3e5f5; } /* Vineri */
+        .day-6 label { background-color: #ede7f6; } /* Sâmbătă */
     </style>
 </head>
 <body>
@@ -124,16 +135,30 @@ $existingSlots = $pdo->query("SELECT CONCAT(slot_date, '|', slot_time) as slot F
     <div class="grid">
         <?php
         $startDate = new DateTime();
-        for ($d = 0; $d < 7; $d++) {
+        for ($d = 0; $d < 7; $d++) { // Loop for 7 days
             $date = $startDate->format('Y-m-d');
-            for ($h = 9; $h <= 17; $h++) {
-                $slotKey = $date . '|' . sprintf('%02d:00:00', $h);
-                $checked = in_array($slotKey, $existingSlots) ? 'checked' : '';
-                echo "<div>
-                        <input type='checkbox' name='slots[]' id='$slotKey' value='$slotKey' $checked>
-                        <label for='$slotKey'>" . $date . "<br>" . sprintf('%02d:00', $h) . "</label>
+            $dayIndex = $startDate->format('w'); // 0 (Duminică) până la 6 (Sâmbătă)
+
+            for ($h = 9; $h <= 17; $h++) { // Loop for hours from 9 to 17
+                // Generate 00-minute slot
+                $time00 = sprintf('%02d:00:00', $h);
+                $slotKey00 = $date . '|' . $time00;
+                $checked00 = in_array($slotKey00, $existingSlots) ? 'checked' : '';
+                echo "<div class='day-$dayIndex'>
+                        <input type='checkbox' name='slots[]' id='$slotKey00' value='$slotKey00' $checked00>
+                        <label for='$slotKey00'>" . $date . "<br>" . sprintf('%02d:00', $h) . "</label>
+                      </div>";
+
+                // Generate 30-minute slot
+                $time30 = sprintf('%02d:30:00', $h);
+                $slotKey30 = $date . '|' . $time30;
+                $checked30 = in_array($slotKey30, $existingSlots) ? 'checked' : '';
+                echo "<div class='day-$dayIndex'>
+                        <input type='checkbox' name='slots[]' id='$slotKey30' value='$slotKey30' $checked30>
+                        <label for='$slotKey30'>" . $date . "<br>" . sprintf('%02d:30', $h) . "</label>
                       </div>";
             }
+
             $startDate->modify('+1 day');
         }
         ?>

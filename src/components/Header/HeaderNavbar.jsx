@@ -46,7 +46,7 @@ function HeaderNavbar({ menuOpen, setMenuOpen }) {
 
         {/* ✅ Programează-te (React Router Link) */}
         <Link
-          to="/booking"
+          to="/BookingWizard"
           className="px-4 py-2 rounded-lg bg-[#cb8645] text-white font-semibold shadow hover:bg-[#a25f34] transition-colors duration-200"
         >
           Programează-te

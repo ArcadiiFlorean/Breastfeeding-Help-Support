@@ -11,8 +11,7 @@ import FAQSection from "./components/FAQSection";
 import Testimonials from "./components/Testimonials";
 import ContactOptions from "./components/ContactOptions";
 import Footer from "./components/Footer";
-
-import Booking from "./components/Booking";
+import BookingWizard from './components/BookingWizard/BookingWizard';
 import ThankYou from "./components/ThankYou";
 
 // 👇 HomePage construit manual din secțiuni
@@ -37,7 +36,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/booking" element={<Booking />} />
+         <Route path="/BookingWizard" element={<BookingWizard />} />
       <Route path="/thankyou" element={<ThankYou />} />
     </Routes>
   );
