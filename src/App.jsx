@@ -1,5 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 import Header from "./components/Header/Header";
 import Hero from "./components/Hero";
@@ -13,8 +15,13 @@ import ContactOptions from "./components/ContactOptions";
 import Footer from "./components/Footer";
 import BookingWizard from './components/BookingWizard/BookingWizard';
 import ThankYou from "./components/ThankYou";
+import StepPayment from "./components/BookingWizard/steps/StepPayment";
 
-// 👇 HomePage construit manual din secțiuni
+
+// Stripe public key
+const stripePromise = loadStripe("pk_test_51RX5afGbmcCvmvOdy7YGcVdAVtbtFRb8K44iUc8PfSENZfS4VDgb8oRr1Ev8bL0s761UjSESgbeUErjbAFbf9szi000m7J4TA6");
+
+// HomePage secvențial
 function HomePage() {
   return (
     <>
@@ -34,11 +41,14 @@ function HomePage() {
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-         <Route path="/BookingWizard" element={<BookingWizard />} />
-      <Route path="/thankyou" element={<ThankYou />} />
-    </Routes>
+    <Elements stripe={stripePromise}>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/BookingWizard" element={<BookingWizard />} />
+        <Route path="/thankyou" element={<ThankYou />} />
+        <Route path="/payment" element={<StepPayment />} /> {/* ✅ Nou */}
+      </Routes>
+    </Elements>
   );
 }
 
