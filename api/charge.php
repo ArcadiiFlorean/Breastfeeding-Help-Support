@@ -11,7 +11,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require __DIR__ . '/../vendor/autoload.php';
 
-\Stripe\Stripe::setApiKey('sk_test_51RX5afGbmcCvmvOdmz75waNsDG0WScLmy8Z3VWHPGlh6FMkmyCiOgUTX7KCkoonjm2niR6gJTg78PFx67YBxnT5100TCBHpTrA');
+// Load configuration
+$config = require __DIR__ . '/../config.php';
+
+\Stripe\Stripe::setApiKey($config['stripe_secret_key']);
 
 $input = json_decode(file_get_contents('php://input'), true);
 
@@ -24,15 +27,13 @@ if (!$input || !isset($input['amount']) || !isset($input['paymentMethodId'])) {
 }
 
 try {
-    // SOLUTION 2: Add return_url for redirect-based payment methods
     $intent = \Stripe\PaymentIntent::create([
         'amount' => $input['amount'],
-        'currency' => 'ron',
+        'currency' => 'gbp',
         'payment_method' => $input['paymentMethodId'],
         'confirmation_method' => 'manual',
         'confirm' => true,
-        // ✅ Provide return URL for redirect-based payments
-        'return_url' => 'http://localhost/Consultant-Land-Page/payment-success.html' // Replace with your actual success page
+        'return_url' => $config['return_url']
     ]);
 
     echo json_encode([
