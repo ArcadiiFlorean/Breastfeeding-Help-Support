@@ -11,8 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require __DIR__ . '/../vendor/autoload.php';
 
-\Stripe\Stripe::setApiKey(getenv('STRIPE_SECRET_KEY'));
-
+\Stripe\Stripe::setApiKey('sk_test_51RX5afGbmcCvmvOdmz75waNsDG0WScLmy8Z3VWHPGlh6FMkmyCiOgUTX7KCkoonjm2niR6gJTg78PFx67YBxnT5100TCBHpTrA');
 
 $input = json_decode(file_get_contents('php://input'), true);
 
@@ -33,7 +32,7 @@ try {
         'confirmation_method' => 'manual',
         'confirm' => true,
         // ✅ Provide return URL for redirect-based payments
-        'return_url' => 'http://127.0.0.1/Consultant-Land-Page/payment-success.html' // Replace with your actual success page
+        'return_url' => 'http://localhost/Consultant-Land-Page/payment-success.html' // Replace with your actual success page
     ]);
 
     echo json_encode([

@@ -16,8 +16,8 @@ function StepServiceSelection({ services, formData, updateSelectedService, nextS
     nextStep();
   };
 
-  const formatPrice = (price, currency = "RON") => {
-    return new Intl.NumberFormat('ro-RO', {
+  const formatPrice = (price, currency = "GBP") => {
+    return new Intl.NumberFormat('en-GB', {
       style: 'currency',
       currency: currency
     }).format(price);
@@ -93,7 +93,7 @@ function StepServiceSelection({ services, formData, updateSelectedService, nextS
                 
                 <div className="text-right ml-6">
                   <div className="text-2xl font-bold text-green-600">
-                    {formatPrice(service.price, service.currency)}
+                    {formatPrice(service.price, service.currency || "GBP")}
                   </div>
                   {selectedServiceId === service.id.toString() && (
                     <div className="mt-2">
@@ -120,7 +120,7 @@ function StepServiceSelection({ services, formData, updateSelectedService, nextS
           </div>
         )}
 
-        <div className="flex justify-between items-center mt-8 pt-6 border-t border-gray-200">
+        <div className="flex justify-between items-center mt-8 pt-6 border-gray-200">
           <div className="text-sm text-gray-500">
             Pasul 1 din 4
           </div>

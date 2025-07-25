@@ -16,6 +16,7 @@ import Footer from "./components/Footer";
 import BookingWizard from './components/BookingWizard/BookingWizard';
 import ThankYou from "./components/ThankYou";
 import StepPayment from "./components/BookingWizard/steps/StepPayment";
+import BookingSuccess from './components/BookingSuccess';
 
 
 // Stripe public key
@@ -47,6 +48,7 @@ function App() {
         <Route path="/BookingWizard" element={<BookingWizard />} />
         <Route path="/thankyou" element={<ThankYou />} />
         <Route path="/payment" element={<StepPayment />} /> {/* ✅ Nou */}
+        <Route path="/booking-success" element={<BookingSuccess />} />
       </Routes>
     </Elements>
   );

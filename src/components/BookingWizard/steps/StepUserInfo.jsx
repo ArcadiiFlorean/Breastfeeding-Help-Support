@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { User, Mail, Phone, AlertCircle, CheckCircle } from "lucide-react";
+import { User, Mail, Phone, AlertCircle, CheckCircle, Shield, ArrowLeft, ArrowRight } from "lucide-react";
 
 function StepUserInfo({ formData, setFormData, nextStep, prevStep }) {
   const [errors, setErrors] = useState({});
@@ -158,214 +158,279 @@ function StepUserInfo({ formData, setFormData, nextStep, prevStep }) {
     );
   };
 
+  const getFieldBorderClass = (fieldName) => {
+    if (errors[fieldName]) {
+      return "border-red-300 bg-red-50/30 focus:ring-red-100 focus:border-red-400";
+    }
+    if (isFieldValid(fieldName)) {
+      return "border-emerald-300 bg-emerald-50/30 focus:ring-emerald-100 focus:border-emerald-400";
+    }
+    return "border-gray-200 bg-white/70 focus:ring-emerald-100 focus:border-emerald-400 hover:border-gray-300";
+  };
+
   return (
-    <div className="bg-white p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
-      <div className="text-center mb-6">
-        <div className="inline-flex items-center justify-center w-12 h-12 bg-blue-100 rounded-full mb-4">
-          <User className="w-6 h-6 text-blue-600" />
-        </div>
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">
-          Informațiile tale
-        </h2>
-        <p className="text-gray-600">
-          Completează datele pentru a finaliza rezervarea
-        </p>
-      </div>
-
-      <div className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Prenume */}
-          <div className="relative">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Prenume *
-            </label>
-            <div className="relative">
-              <input
-                name="firstName"
-                type="text"
-                placeholder="Prenumele tău"
-                value={formData.firstName || ""}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                className={`w-full pl-4 pr-10 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition ${
-                  errors.firstName
-                    ? "border-red-300 bg-red-50"
-                    : isFieldValid("firstName")
-                    ? "border-green-300 bg-green-50"
-                    : "border-gray-300"
-                }`}
-              />
-              {isFieldValid("firstName") && (
-                <CheckCircle className="absolute right-3 top-3 w-5 h-5 text-green-500" />
-              )}
-              {errors.firstName && (
-                <AlertCircle className="absolute right-3 top-3 w-5 h-5 text-red-500" />
-              )}
-            </div>
-            {errors.firstName && (
-              <p className="mt-1 text-sm text-red-600 flex items-center">
-                <AlertCircle className="w-4 h-4 mr-1" />
-                {errors.firstName}
-              </p>
-            )}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6 flex items-center justify-center">
+      <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-2xl max-w-3xl w-full border border-white/20">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full mb-6 shadow-lg">
+            <User className="w-8 h-8 text-white" />
           </div>
-
-          {/* Nume */}
-          <div className="relative">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Nume *
-            </label>
-            <div className="relative">
-              <input
-                name="lastName"
-                type="text"
-                placeholder="Numele tău de familie"
-                value={formData.lastName || ""}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                className={`w-full pl-4 pr-10 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition ${
-                  errors.lastName
-                    ? "border-red-300 bg-red-50"
-                    : isFieldValid("lastName")
-                    ? "border-green-300 bg-green-50"
-                    : "border-gray-300"
-                }`}
-              />
-              {isFieldValid("lastName") && (
-                <CheckCircle className="absolute right-3 top-3 w-5 h-5 text-green-500" />
-              )}
-              {errors.lastName && (
-                <AlertCircle className="absolute right-3 top-3 w-5 h-5 text-red-500" />
-              )}
-            </div>
-            {errors.lastName && (
-              <p className="mt-1 text-sm text-red-600 flex items-center">
-                <AlertCircle className="w-4 h-4 mr-1" />
-                {errors.lastName}
-              </p>
-            )}
-          </div>
-        </div>
-
-        {/* Email */}
-        <div className="relative">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Adresa de email *
-          </label>
-          <div className="relative">
-            <Mail className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
-            <input
-              name="email"
-              type="email"
-              placeholder="exemplu@email.com"
-              value={formData.email || ""}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              className={`w-full pl-10 pr-10 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition ${
-                errors.email
-                  ? "border-red-300 bg-red-50"
-                  : isFieldValid("email")
-                  ? "border-green-300 bg-green-50"
-                  : "border-gray-300"
-              }`}
-            />
-            {isFieldValid("email") && (
-              <CheckCircle className="absolute right-3 top-3 w-5 h-5 text-green-500" />
-            )}
-            {errors.email && (
-              <AlertCircle className="absolute right-3 top-3 w-5 h-5 text-red-500" />
-            )}
-          </div>
-          {errors.email && (
-            <p className="mt-1 text-sm text-red-600 flex items-center">
-              <AlertCircle className="w-4 h-4 mr-1" />
-              {errors.email}
-            </p>
-          )}
-        </div>
-
-        {/* Telefon */}
-        <div className="relative">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Număr de telefon *
-          </label>
-          <div className="relative">
-            <Phone className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
-            <input
-              name="phone"
-              type="tel"
-              placeholder="0712 345 678"
-              value={formData.phone || ""}
-              onChange={handlePhoneChange}
-              onBlur={handleBlur}
-              className={`w-full pl-10 pr-10 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition ${
-                errors.phone
-                  ? "border-red-300 bg-red-50"
-                  : isFieldValid("phone")
-                  ? "border-green-300 bg-green-50"
-                  : "border-gray-300"
-              }`}
-            />
-            {isFieldValid("phone") && (
-              <CheckCircle className="absolute right-3 top-3 w-5 h-5 text-green-500" />
-            )}
-            {errors.phone && (
-              <AlertCircle className="absolute right-3 top-3 w-5 h-5 text-red-500" />
-            )}
-          </div>
-          {errors.phone && (
-            <p className="mt-1 text-sm text-red-600 flex items-center">
-              <AlertCircle className="w-4 h-4 mr-1" />
-              {errors.phone}
-            </p>
-          )}
-          <p className="mt-1 text-xs text-gray-500">
-            Formatul acceptat: 0712345678, +40712345678
+          <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent mb-2">
+            Informațiile tale
+          </h2>
+          <p className="text-gray-600 text-lg">
+            Completează datele pentru a finaliza rezervarea
           </p>
         </div>
-      </div>
 
-      {/* Privacy notice */}
-      <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-        <p className="text-sm text-gray-600">
-          <span className="font-medium">Confidențialitate:</span> Informațiile
-          tale vor fi folosite doar pentru procesarea rezervării și nu vor fi
-          partajate cu terți.
-        </p>
-      </div>
+        <div className="space-y-8">
+          {/* Name Fields */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Prenume */}
+            <div className="space-y-3">
+              <label className="block text-sm font-semibold text-gray-700 flex items-center">
+                <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
+                Prenume *
+              </label>
+              <div className="relative group">
+                <input
+                  name="firstName"
+                  type="text"
+                  placeholder="Prenumele tău"
+                  value={formData.firstName || ""}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className={`w-full pl-4 pr-12 py-4 border-2 rounded-xl text-lg transition-all duration-200 shadow-sm focus:shadow-md ${getFieldBorderClass("firstName")}`}
+                />
+                <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                  {isFieldValid("firstName") && (
+                    <div className="w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center animate-pulse">
+                      <CheckCircle className="w-4 h-4 text-white" />
+                    </div>
+                  )}
+                  {errors.firstName && (
+                    <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center animate-pulse">
+                      <AlertCircle className="w-4 h-4 text-white" />
+                    </div>
+                  )}
+                </div>
+              </div>
+              {errors.firstName && (
+                <div className="bg-red-50 border-l-4 border-red-400 p-3 rounded-r-lg">
+                  <p className="text-sm text-red-700 flex items-center">
+                    <AlertCircle className="w-4 h-4 mr-2" />
+                    {errors.firstName}
+                  </p>
+                </div>
+              )}
+            </div>
 
-      {/* Buttons */}
-      <div className="mt-8 flex flex-col sm:flex-row justify-between gap-4">
-        <button
-          onClick={prevStep}
-          className="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition font-medium"
-        >
-          ← Înapoi la dată
-        </button>
+            {/* Nume */}
+            <div className="space-y-3">
+              <label className="block text-sm font-semibold text-gray-700 flex items-center">
+                <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
+                Nume *
+              </label>
+              <div className="relative group">
+                <input
+                  name="lastName"
+                  type="text"
+                  placeholder="Numele tău de familie"
+                  value={formData.lastName || ""}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className={`w-full pl-4 pr-12 py-4 border-2 rounded-xl text-lg transition-all duration-200 shadow-sm focus:shadow-md ${getFieldBorderClass("lastName")}`}
+                />
+                <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                  {isFieldValid("lastName") && (
+                    <div className="w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center animate-pulse">
+                      <CheckCircle className="w-4 h-4 text-white" />
+                    </div>
+                  )}
+                  {errors.lastName && (
+                    <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center animate-pulse">
+                      <AlertCircle className="w-4 h-4 text-white" />
+                    </div>
+                  )}
+                </div>
+              </div>
+              {errors.lastName && (
+                <div className="bg-red-50 border-l-4 border-red-400 p-3 rounded-r-lg">
+                  <p className="text-sm text-red-700 flex items-center">
+                    <AlertCircle className="w-4 h-4 mr-2" />
+                    {errors.lastName}
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
 
-        <button
-          onClick={handleNext}
-          disabled={!isFormValid()}
-          className={`px-8 py-3 rounded-lg font-medium transition ${
-            isFormValid()
-              ? "bg-blue-600 text-white hover:bg-blue-700 shadow-lg hover:shadow-xl"
-              : "bg-gray-300 text-gray-500 cursor-not-allowed"
-          }`}
-        >
-          {isFormValid()
-            ? "Continuă la plată →"
-            : "Completează toate câmpurile"}
-        </button>
-      </div>
+          {/* Email */}
+          <div className="space-y-3">
+            <label className="block text-sm font-semibold text-gray-700 flex items-center">
+              <Mail className="w-4 h-4 mr-2 text-blue-500" />
+              Adresa de email *
+            </label>
+            <div className="relative group">
+              <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
+                <Mail className={`w-5 h-5 transition-colors duration-200 ${
+                  isFieldValid("email") ? "text-emerald-500" : 
+                  errors.email ? "text-red-500" : "text-gray-400"
+                }`} />
+              </div>
+              <input
+                name="email"
+                type="email"
+                placeholder="exemplu@email.com"
+                value={formData.email || ""}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={`w-full pl-12 pr-12 py-4 border-2 rounded-xl text-lg transition-all duration-200 shadow-sm focus:shadow-md ${getFieldBorderClass("email")}`}
+              />
+              <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                {isFieldValid("email") && (
+                  <div className="w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center animate-pulse">
+                    <CheckCircle className="w-4 h-4 text-white" />
+                  </div>
+                )}
+                {errors.email && (
+                  <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center animate-pulse">
+                    <AlertCircle className="w-4 h-4 text-white" />
+                  </div>
+                )}
+              </div>
+            </div>
+            {errors.email && (
+              <div className="bg-red-50 border-l-4 border-red-400 p-3 rounded-r-lg">
+                <p className="text-sm text-red-700 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-2" />
+                  {errors.email}
+                </p>
+              </div>
+            )}
+          </div>
 
-      {/* Form progress indicator */}
-      <div className="mt-6 text-center">
-        <div className="flex justify-center space-x-2">
-          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-          <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
+          {/* Telefon */}
+          <div className="space-y-3">
+            <label className="block text-sm font-semibold text-gray-700 flex items-center">
+              <Phone className="w-4 h-4 mr-2 text-blue-500" />
+              Număr de telefon *
+            </label>
+            <div className="relative group">
+              <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
+                <Phone className={`w-5 h-5 transition-colors duration-200 ${
+                  isFieldValid("phone") ? "text-emerald-500" : 
+                  errors.phone ? "text-red-500" : "text-gray-400"
+                }`} />
+              </div>
+              <input
+                name="phone"
+                type="tel"
+                placeholder="0712 345 678"
+                value={formData.phone || ""}
+                onChange={handlePhoneChange}
+                onBlur={handleBlur}
+                className={`w-full pl-12 pr-12 py-4 border-2 rounded-xl text-lg transition-all duration-200 shadow-sm focus:shadow-md ${getFieldBorderClass("phone")}`}
+              />
+              <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                {isFieldValid("phone") && (
+                  <div className="w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center animate-pulse">
+                    <CheckCircle className="w-4 h-4 text-white" />
+                  </div>
+                )}
+                {errors.phone && (
+                  <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center animate-pulse">
+                    <AlertCircle className="w-4 h-4 text-white" />
+                  </div>
+                )}
+              </div>
+            </div>
+            {errors.phone && (
+              <div className="bg-red-50 border-l-4 border-red-400 p-3 rounded-r-lg">
+                <p className="text-sm text-red-700 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-2" />
+                  {errors.phone}
+                </p>
+              </div>
+            )}
+            <p className="text-xs text-gray-500 bg-gray-50 px-3 py-2 rounded-lg">
+              💡 Formatul acceptat: 0712345678, +40712345678
+            </p>
+          </div>
         </div>
-        <p className="text-xs text-gray-500 mt-2">Pasul 2 din 3</p>
+
+        {/* Privacy Notice */}
+        <div className="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl">
+          <div className="flex items-start">
+            <div className="flex-shrink-0">
+              <Shield className="w-6 h-6 text-blue-600 mt-0.5" />
+            </div>
+            <div className="ml-3">
+              <h3 className="text-sm font-semibold text-blue-800 mb-1">
+                Protecția datelor personale
+              </h3>
+              <p className="text-sm text-blue-700">
+                Informațiile tale vor fi folosite doar pentru procesarea rezervării 
+                și nu vor fi partajate cu terți. Respectăm pe deplin GDPR.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Navigation Buttons */}
+        <div className="mt-8 flex flex-col sm:flex-row justify-between gap-4">
+          <button
+            onClick={prevStep}
+            className="group px-6 py-4 bg-white border-2 border-gray-200 text-gray-700 rounded-xl hover:border-gray-300 hover:bg-gray-50 transition-all duration-200 font-semibold shadow-sm hover:shadow-md flex items-center justify-center"
+          >
+            <ArrowLeft className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform duration-200" />
+            Înapoi la dată
+          </button>
+
+          <button
+            onClick={handleNext}
+            disabled={!isFormValid()}
+            className={`group px-8 py-4 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center shadow-lg ${
+              isFormValid()
+                ? "bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white hover:shadow-xl transform hover:-translate-y-0.5"
+                : "bg-gray-300 text-gray-500 cursor-not-allowed"
+            }`}
+          >
+            {isFormValid() ? (
+              <>
+                Continuă la plată
+                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
+              </>
+            ) : (
+              "Completează toate câmpurile"
+            )}
+          </button>
+        </div>
+
+        {/* Progress Indicator */}
+        <div className="mt-8 text-center">
+          <div className="flex justify-center items-center space-x-3 mb-3">
+            <div className="flex items-center">
+              <div className="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center shadow-md">
+                <CheckCircle className="w-5 h-5 text-white" />
+              </div>
+              <div className="w-12 h-1 bg-emerald-500 mx-1"></div>
+            </div>
+            <div className="flex items-center">
+              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-md animate-pulse">
+                <span className="text-white font-bold text-sm">2</span>
+              </div>
+              <div className="w-12 h-1 bg-gray-300 mx-1"></div>
+            </div>
+            <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
+              <span className="text-gray-500 font-bold text-sm">3</span>
+            </div>
+          </div>
+          <p className="text-sm text-gray-600 font-medium">
+            Pasul 2 din 3 - Informații personale
+          </p>
+        </div>
       </div>
     </div>
   );

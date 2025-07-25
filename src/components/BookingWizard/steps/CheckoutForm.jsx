@@ -4,9 +4,10 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 /**
  * Renders a Stripe checkout form for processing payments.
  * @param {object} props - The component props.
- * @param {number} [props.amount=2000] - The amount to charge in cents (e.g., 2000 for $20.00).
+ * @param {number} [props.amount=2000] - The amount to charge in pence (e.g., 5000 for £50.00).
+ * @param {object} props.formData - The complete booking data from the wizard.
  */
-function CheckoutForm({ amount = 2000 }) {
+function CheckoutForm({ amount = 2000, formData }) {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -16,6 +17,49 @@ function CheckoutForm({ amount = 2000 }) {
   // State for loading and error messages
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
+
+  /**
+   * Saves the booking to the database before processing payment
+   */
+  const saveBookingToDatabase = async () => {
+    try {
+      const bookingData = {
+        ...formData,
+        paymentMethod: "card" // Since we're using card payment
+      };
+
+      console.log("💾 Saving booking to database:", bookingData);
+
+      const response = await fetch(
+        "http://localhost/Consultant-Land-Page/api/bookings.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(bookingData),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      
+      if (!data.success) {
+        throw new Error(data.message || "Eroare la salvarea rezervării");
+      }
+
+      console.log("✅ Booking saved successfully:", data);
+      return data.data;
+      
+    } catch (error) {
+      console.error("❌ Error saving booking:", error);
+      throw error;
+    }
+  };
 
   /**
    * Handles the form submission for payment processing.
@@ -30,36 +74,39 @@ function CheckoutForm({ amount = 2000 }) {
 
     // Ensure Stripe and Elements are loaded
     if (!stripe || !elements) {
+      setMessage("❌ Stripe nu este încărcat încă. Te rugăm să aștepți...");
       setIsLoading(false);
       return;
     }
-
-    const cardElement = elements.getElement(CardElement);
-
-    // Create a PaymentMethod with Stripe
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card: cardElement,
-      billing_details: {
-        name: cardName,
-        address: zip ? { postal_code: zip } : {}, // Only include postal_code if zip is provided
-      },
-    });
-
-    if (error) {
-      setMessage("❌ " + error.message);
-      setIsLoading(false);
-      return;
-    }
-
-    // Replace the fetch block in your handleSubmit function with this:
 
     try {
-      console.log("🚀 Sending request to server...");
+      // First, save the booking to the database
+      console.log("💾 Saving booking to database...");
+      const bookingResult = await saveBookingToDatabase();
+      
+      const cardElement = elements.getElement(CardElement);
+
+      // Create a PaymentMethod with Stripe
+      const { error, paymentMethod } = await stripe.createPaymentMethod({
+        type: "card",
+        card: cardElement,
+        billing_details: {
+          name: cardName,
+          address: zip ? { postal_code: zip } : {}, // Only include postal_code if zip is provided
+        },
+      });
+
+      if (error) {
+        setMessage("❌ " + error.message);
+        setIsLoading(false);
+        return;
+      }
+
+      console.log("🚀 Processing payment...");
 
       // Send the paymentMethodId to your backend
       const res = await fetch(
-        "http://127.0.0.1/Consultant-Land-Page/api/charge.php",
+        "http://localhost/Consultant-Land-Page/api/charge.php",
         {
           method: "POST",
           headers: {
@@ -69,72 +116,82 @@ function CheckoutForm({ amount = 2000 }) {
           body: JSON.stringify({
             paymentMethodId: paymentMethod.id,
             amount,
+            currency: "gbp", // ✅ Set currency to GBP for pounds
+            bookingId: bookingResult.bookingId, // Include booking ID
           }),
         }
       );
 
-      console.log("📡 Response status:", res.status);
-      console.log("📡 Response headers:", res.headers);
+      console.log("📡 Payment response status:", res.status);
 
       // Check if the response is OK before parsing JSON
       if (!res.ok) {
-        console.error("❌ HTTP Error:", res.status, res.statusText);
-
-        // Try to get error text from response
+        console.error("❌ Payment HTTP Error:", res.status, res.statusText);
         const errorText = await res.text();
-        console.error("❌ Error response body:", errorText);
-
-        throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        console.error("❌ Payment error response body:", errorText);
+        throw new Error(`Payment failed: HTTP ${res.status}`);
       }
 
-      const data = await res.json();
-      console.log("✅ Server response:", data);
+      const paymentData = await res.json();
+      console.log("✅ Payment response:", paymentData);
 
-      if (data.success) {
-        setMessage("✅ Plata a fost procesată!");
-        // Optionally, clear form fields or redirect
+      if (paymentData.success) {
+        setMessage("✅ Rezervarea și plata au fost procesate cu succes!");
+        
+        // Clear form fields
         setCardName("");
         setZip("");
-        cardElement.clear(); // Clear the card input field
+        cardElement.clear();
+        
+        // Optionally redirect to a success page after a delay
+        setTimeout(() => {
+          window.location.href = "/booking-success";
+        }, 2000);
+        
       } else {
         setMessage(
           "❌ Eroare la plată: " +
-            (data.message || "A apărut o eroare necunoscută.")
+            (paymentData.message || "A apărut o eroare necunoscută.")
         );
       }
-    } catch (fetchError) {
-      // Catch network errors or errors thrown from the res.ok check
-      console.error("🚨 Fetch error details:", fetchError);
-
-      if (
-        fetchError.name === "TypeError" &&
-        fetchError.message.includes("fetch")
-      ) {
+      
+    } catch (error) {
+      console.error("🚨 Error during booking/payment process:", error);
+      
+      if (error.message.includes("fetch")) {
         setMessage(
           "❌ Eroare de conectare: Nu se poate conecta la server. Verifică dacă serverul rulează."
         );
       } else {
-        setMessage("❌ Eroare la plată: " + fetchError.message);
+        setMessage("❌ Eroare: " + error.message);
       }
     } finally {
-      setIsLoading(false); // Always stop loading, regardless of success or failure
+      setIsLoading(false);
     }
   };
+
+  // Show loading message if Stripe is not ready
+  if (!stripe || !elements) {
+    return (
+      <div className="space-y-4 p-4 bg-white shadow-md rounded-lg">
+        <div className="flex items-center justify-center py-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
+          <span className="ml-3 text-gray-600">Se încarcă sistemul de plată...</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-4 p-4 bg-white shadow-md rounded-lg"
+      className="space-y-6"
     >
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">
-        Completează Detaliile de Plată
-      </h2>
-
       {/* Cardholder Name Input */}
       <div>
         <label
           htmlFor="card-name"
-          className="block text-sm font-medium text-gray-700 mb-1"
+          className="block text-sm font-semibold text-gray-700 mb-2"
         >
           Nume de pe card
         </label>
@@ -145,7 +202,7 @@ function CheckoutForm({ amount = 2000 }) {
           onChange={(e) => setCardName(e.target.value)}
           placeholder="ex: Maria Popescu"
           required
-          className="border border-gray-300 p-2 rounded-md w-full focus:ring-indigo-500 focus:border-indigo-500"
+          className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-lg focus:ring-4 focus:ring-purple-100 focus:border-purple-500 transition-all duration-200 shadow-sm"
         />
       </div>
 
@@ -153,7 +210,7 @@ function CheckoutForm({ amount = 2000 }) {
       <div>
         <label
           htmlFor="zip-code"
-          className="block text-sm font-medium text-gray-700 mb-1"
+          className="block text-sm font-semibold text-gray-700 mb-2"
         >
           Cod poștal (opțional)
         </label>
@@ -162,54 +219,68 @@ function CheckoutForm({ amount = 2000 }) {
           type="text"
           value={zip}
           onChange={(e) => setZip(e.target.value)}
-          placeholder="ex: 123456"
-          className="border border-gray-300 p-2 rounded-md w-full focus:ring-indigo-500 focus:border-indigo-500"
+          placeholder="ex: SW1A 1AA"
+          className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-lg focus:ring-4 focus:ring-purple-100 focus:border-purple-500 transition-all duration-200 shadow-sm"
         />
       </div>
 
       {/* Stripe CardElement */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label className="block text-sm font-semibold text-gray-700 mb-2">
           Detalii card
         </label>
-        <CardElement
-          options={{
-            hidePostalCode: true, // You explicitly set this, so I kept it.
-            style: {
-              base: {
-                fontSize: "16px",
-                color: "#32325d",
-                "::placeholder": { color: "#a0aec0" },
+        <div className="border-2 border-gray-200 rounded-xl p-4 bg-white focus-within:ring-4 focus-within:ring-purple-100 focus-within:border-purple-500 transition-all duration-200 shadow-sm">
+          <CardElement
+            options={{
+              hidePostalCode: true,
+              style: {
+                base: {
+                  fontSize: "18px",
+                  color: "#374151",
+                  fontFamily: "'Inter', 'Segoe UI', sans-serif",
+                  "::placeholder": { 
+                    color: "#9CA3AF" 
+                  },
+                },
+                invalid: { 
+                  color: "#EF4444" 
+                },
+                complete: {
+                  color: "#059669"
+                }
               },
-              invalid: { color: "#e53e3e" },
-            },
-          }}
-          className="border border-gray-300 p-3 rounded-md bg-white focus:ring-indigo-500 focus:border-indigo-500"
-        />
+            }}
+          />
+        </div>
       </div>
 
       {/* Submission Button */}
       <button
         type="submit"
-        disabled={!stripe || isLoading} // Disable button if Stripe not loaded or submission in progress
-        className={`w-full px-6 py-2 rounded-md text-white font-semibold transition duration-200 ease-in-out
-          ${
-            !stripe || isLoading
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-[#4a584b] hover:bg-[#3a4739]"
-          }
-        `}
+        disabled={!stripe || isLoading}
+        className={`w-full px-8 py-4 rounded-xl text-lg font-bold transition-all duration-200 transform ${
+          !stripe || isLoading
+            ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+            : "bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+        }`}
       >
-        {isLoading ? "Se procesează..." : "Plătește"}
+        {isLoading ? (
+          <span className="flex items-center justify-center">
+            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
+            Se procesează plata...
+          </span>
+        ) : (
+          `Plătește £${(amount/100).toFixed(2)}`
+        )}
       </button>
 
       {/* Display Messages (Success/Error) */}
       {message && (
         <div
-          className={`mt-4 p-3 rounded-md text-sm font-medium ${
+          className={`p-4 rounded-xl text-sm font-medium border-2 ${
             message.startsWith("✅")
-              ? "bg-green-100 text-green-800"
-              : "bg-red-100 text-red-800"
+              ? "bg-green-50 text-green-800 border-green-200"
+              : "bg-red-50 text-red-800 border-red-200"
           }`}
         >
           {message}
