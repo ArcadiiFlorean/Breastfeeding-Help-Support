@@ -2,98 +2,221 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { 
+  FaHome, 
+  FaUser, 
+  FaHeart, 
+  FaHandsHelping, 
+  FaTags, 
+  FaQuestionCircle, 
+  FaStar,
+  FaPhone,
+  FaCalendarAlt
+} from "react-icons/fa";
 
 function HeaderNavbar({ menuOpen, setMenuOpen }) {
   useEffect(() => {
     AOS.init({ duration: 800 });
   }, []);
 
-  const commonClass =
-    "text-[1em] font-normal font-robotoCondensed text-black hover:text-[#cb8645] no-underline transition-colors duration-200";
-
   const navItems = [
-    { href: "#page-0", label: "Home" },
-    { href: "#AboutMe", label: "Despre mine" },
-    { href: "#SupportFeatures", label: "Sprijin" },
-    { href: "#Help", label: "Cum te pot ajuta" },
-    { href: "#SupportPackages", label: "Prețuri" },
-    { href: "#FAQSection", label: "Întrebări" },
-    { href: "#Testimonials", label: "Recenzii" },
+    { href: "#page-0", label: "Acasă", icon: FaHome },
+    { href: "#AboutMe", label: "Despre mine", icon: FaUser },
+    { href: "#SupportFeatures", label: "De ce eu?", icon: FaHeart },
+    { href: "#Help", label: "Cum ajut", icon: FaHandsHelping },
+    { href: "#SupportPackages", label: "Servicii", icon: FaTags },
+    { href: "#FAQSection", label: "Întrebări", icon: FaQuestionCircle },
+    { href: "#Testimonials", label: "Recenzii", icon: FaStar },
   ];
 
-  const contactItem = { href: "#ContactOptions", label: "Contact" };
+  const contactItem = { href: "#ContactOptions", label: "Contact", icon: FaPhone };
 
-  return (
-    <>
-      {/* Desktop/Tablet Nav */}
-      <nav
-        data-aos="fade-down"
-        className="hidden tablet:flex gap-6 items-center text-gray-700 text-xl font-robotoCondensed"
-      >
-        {navItems.map((item) => (
-          <a key={item.href} href={item.href} className={commonClass}>
-            {item.label}
-          </a>
-        ))}
+  // Smooth scroll function
+  const handleSmoothScroll = (href) => {
+    if (href.startsWith('#')) {
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    }
+    if (setMenuOpen) {
+      setMenuOpen(false);
+    }
+  };
 
-        {/* Contact (outline button) */}
+  // Dacă suntem în mobile menu, renderizăm doar itemii pentru mobile
+  if (menuOpen) {
+    return (
+      <div className="space-y-1">
+        {navItems.map((item, index) => {
+          const IconComponent = item.icon;
+          return (
+            <a
+              key={item.href}
+              href={item.href}
+              onClick={(e) => {
+                e.preventDefault();
+                handleSmoothScroll(item.href);
+              }}
+              className="
+                flex items-center gap-3 
+                px-4 py-3 rounded-lg
+                text-gray-700 hover:text-[#cb8645]
+                hover:bg-gradient-to-r hover:from-orange-50 hover:to-pink-50
+                transition-all duration-300
+                group
+              "
+            >
+              <div className="
+                w-8 h-8 rounded-lg
+                bg-gradient-to-br from-orange-100 to-pink-100
+                flex items-center justify-center
+                group-hover:from-orange-200 group-hover:to-pink-200
+                transition-all duration-300
+                group-hover:scale-110
+              ">
+                <IconComponent className="text-sm text-[#cb8645]" />
+              </div>
+              <span className="font-medium text-base">{item.label}</span>
+              <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
+                <svg className="w-4 h-4 text-[#cb8645]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </a>
+          );
+        })}
+
+        {/* Contact item */}
         <a
           href={contactItem.href}
-          className="px-4 py-2 rounded-lg border border-[#cb8645] text-[#cb8645] font-semibold hover:bg-[#fef6f2] transition-colors duration-200"
+          onClick={(e) => {
+            e.preventDefault();
+            handleSmoothScroll(contactItem.href);
+          }}
+          className="
+            flex items-center gap-3 
+            px-4 py-3 rounded-lg
+            border-2 border-[#cb8645] 
+            text-[#cb8645] font-semibold
+            hover:bg-[#cb8645] hover:text-white
+            transition-all duration-300
+            group mt-2
+          "
         >
-          {contactItem.label}
+          <div className="
+            w-8 h-8 rounded-lg
+            bg-[#cb8645] bg-opacity-10
+            flex items-center justify-center
+            group-hover:bg-white group-hover:bg-opacity-20
+            transition-all duration-300
+          ">
+            <FaPhone className="text-sm" />
+          </div>
+          <span className="font-semibold text-base">{contactItem.label}</span>
+          <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
         </a>
 
-        {/* ✅ Programează-te (React Router Link) */}
+        {/* CTA Button pentru mobile */}
         <Link
           to="/BookingWizard"
-          className="px-4 py-2 rounded-lg bg-[#cb8645] text-white font-semibold shadow hover:bg-[#a25f34] transition-colors duration-200"
+          onClick={() => setMenuOpen && setMenuOpen(false)}
+          className="
+            flex items-center gap-3 
+            px-4 py-4 rounded-lg
+            bg-gradient-to-r from-orange-400 to-pink-400
+            hover:from-orange-500 hover:to-pink-500
+            text-white font-bold
+            shadow-md hover:shadow-lg
+            transition-all duration-300
+            transform hover:scale-[1.02]
+            mt-3 mb-2
+            group
+          "
         >
-          Programează-te
+          <div className="
+            w-8 h-8 rounded-lg
+            bg-white bg-opacity-20
+            flex items-center justify-center
+            group-hover:bg-opacity-30
+            transition-all duration-300
+            group-hover:scale-110
+          ">
+            <FaCalendarAlt className="text-sm" />
+          </div>
+          <div className="flex-1">
+            <span className="font-bold text-base block">Programează consultația</span>
+            <span className="text-xs opacity-90">Disponibil online & offline</span>
+          </div>
+          <div className="opacity-80 group-hover:opacity-100 transition-opacity">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </div>
         </Link>
-      </nav>
+      </div>
+    );
+  }
 
-      {/* Mobile Nav */}
-      {menuOpen && (
-        <div
-          data-aos="fade-down"
-          className="tablet:hidden absolute top-20 right-4 left-4 bg-white border rounded-xl shadow-lg py-6 px-4 z-50"
+  // Desktop/Tablet Navigation
+  return (
+    <nav className="flex gap-4 lg:gap-6 items-center justify-center">
+      {navItems.slice(0, 5).map((item, index) => (
+        <a 
+          key={item.href} 
+          href={item.href}
+          onClick={(e) => {
+            e.preventDefault();
+            handleSmoothScroll(item.href);
+          }}
+          className="
+            text-sm lg:text-base font-medium 
+            text-gray-700 hover:text-[#cb8645] 
+            transition-all duration-300
+            relative group
+            px-2 py-1 rounded-md
+            hover:bg-orange-50
+            whitespace-nowrap
+          "
         >
-          <ul className="space-y-4 text-gray-800 font-robotoCondensed text-base">
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <a
-                  href={item.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="block px-4 py-2 rounded hover:bg-[#fef6f2] hover:text-[#cb8645] transition-all duration-200"
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-            <li>
-              <a
-                href={contactItem.href}
-                onClick={() => setMenuOpen(false)}
-                className="block px-4 py-2 rounded border border-[#cb8645] text-[#cb8645] font-semibold hover:bg-[#fef6f2] transition-all duration-200"
-              >
-                {contactItem.label}
-              </a>
-            </li>
-            {/* ✅ Mobile - Programează-te */}
-            <li>
-              <Link
-                to="/booking"
-                onClick={() => setMenuOpen(false)}
-                className="block px-4 py-2 rounded bg-[#cb8645] text-white font-semibold hover:bg-[#a25f34] transition-all duration-200"
-              >
-                Programează-te
-              </Link>
-            </li>
-          </ul>
-        </div>
-      )}
-    </>
+          {item.label}
+          {/* Underline effect */}
+          <span className="
+            absolute bottom-0 left-0 w-0 h-0.5 
+            bg-gradient-to-r from-orange-400 to-pink-400
+            transition-all duration-300 
+            group-hover:w-full
+          "></span>
+        </a>
+      ))}
+
+      {/* Contact button */}
+      <a
+        href={contactItem.href}
+        onClick={(e) => {
+          e.preventDefault();
+          handleSmoothScroll(contactItem.href);
+        }}
+        className="
+          px-3 lg:px-4 py-2 rounded-lg 
+          border-2 border-[#cb8645] text-[#cb8645] 
+          font-semibold text-sm lg:text-base
+          hover:bg-[#cb8645] hover:text-white
+          transition-all duration-300
+          transform hover:scale-105
+          whitespace-nowrap
+        "
+      >
+        {contactItem.label}
+      </a>
+    </nav>
   );
 }
 

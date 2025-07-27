@@ -348,8 +348,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="admin-icon">
                     <i class="fas fa-user-shield"></i>
                 </div>
-                <h1 class="login-title">Admin Portal</h1>
-                <p class="login-subtitle">Acces securizat pentru administratori</p>
+                <h1 class="login-title">Salut Pufet</h1>
+                <p class="login-subtitle">Acces securizat pentru pufica</p>
             </div>
 
             <?php if (isset($error)): ?>

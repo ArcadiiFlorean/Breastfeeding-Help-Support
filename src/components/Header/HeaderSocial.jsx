@@ -14,39 +14,82 @@ function HeaderSocial() {
     AOS.init({ duration: 800 });
   }, []);
 
+  const socialLinks = [
+    {
+      href: "https://facebook.com",
+      icon: FaFacebookF,
+      color: "#1877F2",
+      name: "Facebook"
+    },
+    {
+      href: "https://www.instagram.com/marina.cociug/",
+      icon: FaInstagram,
+      color: "#E1306C",
+      name: "Instagram"
+    },
+    {
+      href: "https://youtube.com",
+      icon: FaYoutube,
+      color: "#FF0000",
+      name: "YouTube"
+    },
+    {
+      href: "https://wa.me/37368179176",
+      icon: FaWhatsapp,
+      color: "#25D366",
+      name: "WhatsApp"
+    },
+    {
+      href: "https://t.me/+MqS0PFqPb8UyZjcy",
+      icon: FaTelegramPlane,
+      color: "#0088cc",
+      name: "Telegram"
+    }
+  ];
+
   return (
-    <div data-aos="fade-left" className="hidden tablet:flex items-center gap-5">
-      <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-        <FaFacebookF className="text-gray-600 hover:text-[#1877F2] text-2xl transition-transform transform hover:scale-125 duration-200" />
-      </a>
-      <a
-        href="https://www.instagram.com/marina.cociug/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <FaInstagram className="text-gray-600 hover:text-[#E1306C] text-2xl transition-transform transform hover:scale-125 duration-200" />
-      </a>
-      <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
-        <FaYoutube className="text-gray-600 hover:text-[#FF0000] text-2xl transition-transform transform hover:scale-125 duration-200" />
-      </a>
-      <a
-        href="https://wa.me/+447510627788"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <FaWhatsapp className="text-gray-600 hover:text-[#25D366] text-2xl transition-transform transform hover:scale-125 duration-200" />
-      </a>
-      <a
-        href="https://t.me/+MqS0PFqPb8UyZjcy"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <FaTelegramPlane className="text-gray-600 hover:text-[#0088cc] text-2xl transition-transform transform hover:scale-125 duration-200" />
-      </a>
+    <div className="flex items-center gap-2">
+      {socialLinks.map((social, index) => {
+        const IconComponent = social.icon;
+        return (
+          <a
+            key={index}
+            href={social.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="
+              group
+              w-8 h-8 rounded-full
+              flex items-center justify-center
+              text-gray-500 hover:text-white
+              transition-all duration-300
+              transform hover:scale-110
+            "
+            style={{
+              '--hover-bg': social.color
+            }}
+            aria-label={`Urmărește pe ${social.name}`}
+          >
+            <div 
+              className="
+                absolute inset-0 rounded-full 
+                opacity-0 group-hover:opacity-100
+                transition-all duration-300
+              "
+              style={{ backgroundColor: social.color }}
+            ></div>
+            
+            <IconComponent 
+              className="
+                relative z-10 text-base
+                transition-all duration-300
+              " 
+            />
+          </a>
+        );
+      })}
     </div>
   );
 }
 
 export default HeaderSocial;
-
-
