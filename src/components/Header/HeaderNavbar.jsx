@@ -2,16 +2,16 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { 
-  FaHome, 
-  FaUser, 
-  FaHeart, 
-  FaHandsHelping, 
-  FaTags, 
-  FaQuestionCircle, 
+import {
+  FaHome,
+  FaUser,
+  FaHeart,
+  FaHandsHelping,
+  FaTags,
+  FaQuestionCircle,
   FaStar,
   FaPhone,
-  FaCalendarAlt
+  FaCalendarAlt,
 } from "react-icons/fa";
 
 function HeaderNavbar({ menuOpen, setMenuOpen }) {
@@ -29,16 +29,20 @@ function HeaderNavbar({ menuOpen, setMenuOpen }) {
     { href: "#Testimonials", label: "Recenzii", icon: FaStar },
   ];
 
-  const contactItem = { href: "#ContactOptions", label: "Contact", icon: FaPhone };
+  const contactItem = {
+    href: "#ContactOptions",
+    label: "Contact",
+    icon: FaPhone,
+  };
 
   // Smooth scroll function
   const handleSmoothScroll = (href) => {
-    if (href.startsWith('#')) {
+    if (href.startsWith("#")) {
       const element = document.querySelector(href);
       if (element) {
-        element.scrollIntoView({ 
-          behavior: 'smooth',
-          block: 'start'
+        element.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
         });
       }
     }
@@ -51,7 +55,7 @@ function HeaderNavbar({ menuOpen, setMenuOpen }) {
   if (menuOpen) {
     return (
       <div className="space-y-1">
-        {navItems.map((item, index) => {
+        {navItems.map((item) => {
           const IconComponent = item.icon;
           return (
             <a
@@ -70,20 +74,32 @@ function HeaderNavbar({ menuOpen, setMenuOpen }) {
                 group
               "
             >
-              <div className="
+              <div
+                className="
                 w-8 h-8 rounded-lg
                 bg-gradient-to-br from-orange-100 to-pink-100
                 flex items-center justify-center
                 group-hover:from-orange-200 group-hover:to-pink-200
                 transition-all duration-300
                 group-hover:scale-110
-              ">
+              "
+              >
                 <IconComponent className="text-sm text-[#cb8645]" />
               </div>
               <span className="font-medium text-base">{item.label}</span>
               <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
-                <svg className="w-4 h-4 text-[#cb8645]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                <svg
+                  className="w-4 h-4 text-[#cb8645]"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
                 </svg>
               </div>
             </a>
@@ -107,19 +123,31 @@ function HeaderNavbar({ menuOpen, setMenuOpen }) {
             group mt-2
           "
         >
-          <div className="
+          <div
+            className="
             w-8 h-8 rounded-lg
             bg-[#cb8645] bg-opacity-10
             flex items-center justify-center
             group-hover:bg-white group-hover:bg-opacity-20
             transition-all duration-300
-          ">
+          "
+          >
             <FaPhone className="text-sm" />
           </div>
           <span className="font-semibold text-base">{contactItem.label}</span>
           <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
             </svg>
           </div>
         </a>
@@ -141,23 +169,39 @@ function HeaderNavbar({ menuOpen, setMenuOpen }) {
             group
           "
         >
-          <div className="
+          <div
+            className="
             w-8 h-8 rounded-lg
             bg-white bg-opacity-20
             flex items-center justify-center
             group-hover:bg-opacity-30
             transition-all duration-300
             group-hover:scale-110
-          ">
+          "
+          >
             <FaCalendarAlt className="text-sm" />
           </div>
           <div className="flex-1">
-            <span className="font-bold text-base block">Programează consultația</span>
-            <span className="text-xs opacity-90">Disponibil online & offline</span>
+            <span className="font-bold text-base block">
+              Programează consultația
+            </span>
+            <span className="text-xs opacity-90">
+              Disponibil online & offline
+            </span>
           </div>
           <div className="opacity-80 group-hover:opacity-100 transition-opacity">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M13 7l5 5m0 0l-5 5m5-5H6"
+              />
             </svg>
           </div>
         </Link>
@@ -168,9 +212,9 @@ function HeaderNavbar({ menuOpen, setMenuOpen }) {
   // Desktop/Tablet Navigation
   return (
     <nav className="flex gap-4 lg:gap-6 items-center justify-center">
-      {navItems.slice(0, 5).map((item, index) => (
-        <a 
-          key={item.href} 
+      {navItems.slice(0, 5).map((item) => (
+        <a
+          key={item.href}
           href={item.href}
           onClick={(e) => {
             e.preventDefault();
@@ -188,12 +232,14 @@ function HeaderNavbar({ menuOpen, setMenuOpen }) {
         >
           {item.label}
           {/* Underline effect */}
-          <span className="
+          <span
+            className="
             absolute bottom-0 left-0 w-0 h-0.5 
             bg-gradient-to-r from-orange-400 to-pink-400
             transition-all duration-300 
             group-hover:w-full
-          "></span>
+          "
+          ></span>
         </a>
       ))}
 

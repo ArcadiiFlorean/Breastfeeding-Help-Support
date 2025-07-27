@@ -667,10 +667,11 @@ try {
 <body>
 
     <div class="dashboard-container">
-        <div class="header">
-            <h1>🌸 Admin Dashboard</h1>
-            <p>Panoul de administrare pentru consultanța în alăptare</p>
-        </div>
+    <div class="header">
+    <h1>🌸 Pufet</h1>
+    <p>Cu drag, pentru Pufica – sprijinul mamelor, inspirația mea</p>
+</div>
+
 
         <div class="stats-bar">
             <div class="stat-item">

@@ -9,13 +9,34 @@ include 'db.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {     
     if (isset($_POST['action']) && $_POST['action'] === 'update') {
         // Actualizare serviciu existent
-        $stmt = $pdo->prepare("UPDATE services SET name=?, price=?, description=? WHERE id=?");     
-        $stmt->execute([$_POST['name'], $_POST['price'], $_POST['description'], $_POST['id']]);
+        $stmt = $pdo->prepare("UPDATE services SET name=?, price=?, currency=?, description=?, popular=?, icon=?, features=? WHERE id=?");     
+        $features = isset($_POST['features']) ? implode('|', array_filter($_POST['features'])) : '';
+        $popular = isset($_POST['popular']) ? 1 : 0;
+        $stmt->execute([
+            $_POST['name'], 
+            $_POST['price'], 
+            $_POST['currency'], 
+            $_POST['description'], 
+            $popular,
+            $_POST['icon'],
+            $features,
+            $_POST['id']
+        ]);
         $message = "Serviciul a fost actualizat cu succes!";
     } elseif (isset($_POST['action']) && $_POST['action'] === 'add') {
         // Adăugare serviciu nou
-        $stmt = $pdo->prepare("INSERT INTO services (name, price, description) VALUES (?, ?, ?)");
-        $stmt->execute([$_POST['name'], $_POST['price'], $_POST['description']]);
+        $stmt = $pdo->prepare("INSERT INTO services (name, price, currency, description, popular, icon, features) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $features = isset($_POST['features']) ? implode('|', array_filter($_POST['features'])) : '';
+        $popular = isset($_POST['popular']) ? 1 : 0;
+        $stmt->execute([
+            $_POST['name'], 
+            $_POST['price'], 
+            $_POST['currency'], 
+            $_POST['description'], 
+            $popular,
+            $_POST['icon'],
+            $features
+        ]);
         $message = "Serviciul a fost adăugat cu succes!";
     } elseif (isset($_POST['action']) && $_POST['action'] === 'delete') {
         // Ștergere serviciu
@@ -25,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }  
 
-$services = $pdo->query("SELECT * FROM services ORDER BY id ASC")->fetchAll(); 
+$services = $pdo->query("SELECT * FROM services ORDER BY popular DESC, id ASC")->fetchAll(); 
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +59,7 @@ $services = $pdo->query("SELECT * FROM services ORDER BY id ASC")->fetchAll();
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #dc9071 0%, #b06b4c 100%);
             min-height: 100vh;
             padding: 20px 0;
         }
@@ -70,7 +91,7 @@ $services = $pdo->query("SELECT * FROM services ORDER BY id ASC")->fetchAll();
         }
         
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #dc9071 0%, #b06b4c 100%);
             color: white;
             padding: 40px;
             text-align: center;
@@ -147,13 +168,13 @@ $services = $pdo->query("SELECT * FROM services ORDER BY id ASC")->fetchAll();
             content: '';
             flex: 1;
             height: 3px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #dc9071, #b06b4c);
             border-radius: 2px;
             margin-left: 20px;
         }
         
         .service-form {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            background: linear-gradient(135deg, #fef6f2 0%, #f5f5f5 100%);
             border: none;
             border-radius: 20px;
             padding: 30px;
@@ -171,7 +192,7 @@ $services = $pdo->query("SELECT * FROM services ORDER BY id ASC")->fetchAll();
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(45deg, rgba(102, 126, 234, 0.05) 0%, transparent 100%);
+            background: linear-gradient(45deg, rgba(220, 144, 113, 0.05) 0%, transparent 100%);
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -190,12 +211,23 @@ $services = $pdo->query("SELECT * FROM services ORDER BY id ASC")->fetchAll();
         }
         
         .edit-form {
+            border-left: 5px solid #dc9071;
+        }
+        
+        .popular-form {
             border-left: 5px solid #f39c12;
+            background: linear-gradient(135deg, #fff8e1 0%, #fff3c4 100%);
         }
         
         .form-group {
             margin-bottom: 25px;
             position: relative;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
         
         .form-label {
@@ -210,7 +242,7 @@ $services = $pdo->query("SELECT * FROM services ORDER BY id ASC")->fetchAll();
             gap: 8px;
         }
         
-        .form-control {
+        .form-control, .form-select {
             border: 2px solid #e1e8ed;
             border-radius: 12px;
             padding: 15px 20px;
@@ -220,20 +252,90 @@ $services = $pdo->query("SELECT * FROM services ORDER BY id ASC")->fetchAll();
             font-weight: 500;
         }
         
-        .form-control:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        .form-control:focus, .form-select:focus {
+            border-color: #dc9071;
+            box-shadow: 0 0 0 0.2rem rgba(220, 144, 113, 0.25);
             background: white;
             outline: none;
         }
         
-        .form-control:hover {
-            border-color: #764ba2;
+        .form-control:hover, .form-select:hover {
+            border-color: #b06b4c;
         }
         
         textarea.form-control {
             resize: vertical;
             min-height: 100px;
+        }
+        
+        .features-container {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            border: 2px solid #e1e8ed;
+        }
+        
+        .feature-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .feature-input input {
+            flex: 1;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+        }
+        
+        .add-feature-btn {
+            background: #dc9071;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 15px;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .add-feature-btn:hover {
+            background: #b06b4c;
+        }
+        
+        .remove-feature-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 0.8em;
+        }
+        
+        .popular-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #fff8e1, #ffecb3);
+            padding: 15px 20px;
+            border-radius: 12px;
+            border: 2px solid #f39c12;
+        }
+        
+        .popular-checkbox input {
+            width: 20px;
+            height: 20px;
+            accent-color: #f39c12;
+        }
+        
+        .popular-checkbox label {
+            margin: 0;
+            font-weight: 600;
+            color: #e67e22;
+            cursor: pointer;
         }
         
         .btn-group {
@@ -274,12 +376,12 @@ $services = $pdo->query("SELECT * FROM services ORDER BY id ASC")->fetchAll();
         }
         
         .btn-save {
-            background: linear-gradient(135deg, #f39c12, #e67e22);
+            background: linear-gradient(135deg, #dc9071, #b06b4c);
             color: white;
         }
         
         .btn-save:hover {
-            background: linear-gradient(135deg, #e67e22, #d35400);
+            background: linear-gradient(135deg, #b06b4c, #8b5a3c);
             color: white;
         }
         
@@ -297,38 +399,26 @@ $services = $pdo->query("SELECT * FROM services ORDER BY id ASC")->fetchAll();
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            color: #667eea;
+            color: #dc9071;
             text-decoration: none;
             font-weight: 600;
             margin-top: 30px;
             padding: 15px 25px;
             border-radius: 25px;
-            background: rgba(102, 126, 234, 0.1);
+            background: rgba(220, 144, 113, 0.1);
             transition: all 0.3s ease;
         }
         
         .back-link:hover {
-            background: rgba(102, 126, 234, 0.2);
+            background: rgba(220, 144, 113, 0.2);
             transform: translateX(-5px);
-            color: #764ba2;
+            color: #b06b4c;
             text-decoration: none;
         }
         
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #7f8c8d;
-        }
-        
-        .empty-state h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: #34495e;
-        }
-        
         .service-counter {
-            background: rgba(102, 126, 234, 0.1);
-            color: #667eea;
+            background: rgba(220, 144, 113, 0.1);
+            color: #dc9071;
             padding: 8px 15px;
             border-radius: 20px;
             font-size: 0.9rem;
@@ -337,8 +427,52 @@ $services = $pdo->query("SELECT * FROM services ORDER BY id ASC")->fetchAll();
             margin-bottom: 20px;
         }
         
+        .service-preview {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 4px solid #dc9071;
+        }
+        
+        .preview-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .preview-price {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #dc9071;
+            margin-bottom: 5px;
+        }
+        
+        .preview-features {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        
+        .preview-features li {
+            padding: 5px 0;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .preview-features li:before {
+            content: "✓ ";
+            color: #dc9071;
+            font-weight: bold;
+        }
+        
         /* Responsive Design */
         @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
             .header {
                 padding: 30px 20px;
             }
@@ -365,10 +499,6 @@ $services = $pdo->query("SELECT * FROM services ORDER BY id ASC")->fetchAll();
                 width: 100%;
                 justify-content: center;
             }
-            
-            .form-control {
-                padding: 12px 15px;
-            }
         }
         
         /* Animații pentru formulare */
@@ -391,17 +521,6 @@ $services = $pdo->query("SELECT * FROM services ORDER BY id ASC")->fetchAll();
                 opacity: 1;
                 transform: translateX(0);
             }
-        }
-        
-        /* Loading states */
-        .btn.loading {
-            opacity: 0.7;
-            pointer-events: none;
-        }
-        
-        .btn.loading::after {
-            content: '⏳';
-            margin-left: 5px;
         }
     </style>
 </head>
@@ -429,23 +548,51 @@ $services = $pdo->query("SELECT * FROM services ORDER BY id ASC")->fetchAll();
                 <h2 class="section-title">
                     ➕ Adaugă Serviciu Nou
                 </h2>
-                <form method="POST" class="service-form add-form">
+                <form method="POST" class="service-form add-form" id="addForm">
                     <input type="hidden" name="action" value="add">
                     
-                    <div class="form-group">
-                        <label class="form-label" for="new_name">
-                            🏷️ Nume serviciu
-                        </label>
-                        <input type="text" id="new_name" name="name" class="form-control" 
-                               placeholder="ex: Consultație inițială alăptare" required>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="new_name">
+                                🏷️ Nume serviciu
+                            </label>
+                            <input type="text" id="new_name" name="name" class="form-control" 
+                                   placeholder="ex: Consultație inițială alăptare" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="new_icon">
+                                🎨 Tip icon
+                            </label>
+                            <select id="new_icon" name="icon" class="form-select" required>
+                                <option value="">Selectează iconul</option>
+                                <option value="consultation">💬 Consultație</option>
+                                <option value="premium">⭐ Premium</option>
+                                <option value="emergency">🚨 Urgență</option>
+                            </select>
+                        </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label class="form-label" for="new_price">
-                            💰 Preț
-                        </label>
-                        <input type="text" id="new_price" name="price" class="form-control" 
-                               placeholder="ex: 150 RON sau De la 120 RON" required>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="new_price">
+                                💰 Preț (numai cifre)
+                            </label>
+                            <input type="number" id="new_price" name="price" class="form-control" 
+                                   placeholder="ex: 150" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="new_currency">
+                                💱 Monedă
+                            </label>
+                            <select id="new_currency" name="currency" class="form-select" required>
+                                <option value="GBP">£ GBP (Pounds)</option>
+                                <option value="EUR">€ EUR</option>
+                                <option value="USD">$ USD</option>
+                                <option value="RON">RON</option>
+                            </select>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -453,7 +600,31 @@ $services = $pdo->query("SELECT * FROM services ORDER BY id ASC")->fetchAll();
                             📝 Descriere
                         </label>
                         <textarea id="new_description" name="description" class="form-control" 
-                                  placeholder="Descrierea detaliată a serviciului oferit..."></textarea>
+                                  placeholder="Descrierea detaliată a serviciului oferit..." required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">
+                            ⭐ Caracteristici incluse
+                        </label>
+                        <div class="features-container">
+                            <div id="features-list">
+                                <div class="feature-input">
+                                    <input type="text" name="features[]" placeholder="ex: Evaluare completă" class="form-control">
+                                    <button type="button" class="remove-feature-btn" onclick="removeFeature(this)">×</button>
+                                </div>
+                            </div>
+                            <button type="button" class="add-feature-btn" onclick="addFeature()">
+                                + Adaugă caracteristică
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="popular-checkbox">
+                            <input type="checkbox" id="new_popular" name="popular" value="1">
+                            <label for="new_popular">⭐ Marchează ca "Cel mai popular"</label>
+                        </div>
                     </div>
                     
                     <div class="btn-group">
@@ -468,32 +639,120 @@ $services = $pdo->query("SELECT * FROM services ORDER BY id ASC")->fetchAll();
                         ✏️ Servicii Existente
                     </h2>
                     
-                    <?php foreach ($services as $index => $s): ?> 
-                    <form method="POST" class="service-form edit-form">
+                    <?php foreach ($services as $index => $s): 
+                        $features = $s['features'] ? explode('|', $s['features']) : [];
+                        $formClass = $s['popular'] ? 'service-form edit-form popular-form' : 'service-form edit-form';
+                    ?> 
+                    <form method="POST" class="<?= $formClass ?>">
                         <input type="hidden" name="action" value="update">
                         <input type="hidden" name="id" value="<?= $s['id'] ?>">
                         
-                        <div class="form-group">
-                            <label class="form-label" for="name_<?= $s['id'] ?>">
-                                🏷️ Nume serviciu
-                            </label>
-                            <input type="text" id="name_<?= $s['id'] ?>" name="name" class="form-control" 
-                                   value="<?= htmlspecialchars($s['name']) ?>" required>
+                        <?php if ($s['popular']): ?>
+                            <div style="text-align: center; margin-bottom: 20px;">
+                                <span style="background: #f39c12; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.9em; font-weight: 600;">
+                                    ⭐ SERVICIU POPULAR ⭐
+                                </span>
+                            </div>
+                        <?php endif; ?>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="name_<?= $s['id'] ?>">
+                                    🏷️ Nume serviciu
+                                </label>
+                                <input type="text" id="name_<?= $s['id'] ?>" name="name" class="form-control" 
+                                       value="<?= htmlspecialchars($s['name']) ?>" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="icon_<?= $s['id'] ?>">
+                                    🎨 Tip icon
+                                </label>
+                                <select id="icon_<?= $s['id'] ?>" name="icon" class="form-select" required>
+                                    <option value="consultation" <?= $s['icon'] === 'consultation' ? 'selected' : '' ?>>💬 Consultație</option>
+                                    <option value="premium" <?= $s['icon'] === 'premium' ? 'selected' : '' ?>>⭐ Premium</option>
+                                    <option value="emergency" <?= $s['icon'] === 'emergency' ? 'selected' : '' ?>>🚨 Urgență</option>
+                                </select>
+                            </div>
                         </div>
                         
-                        <div class="form-group">
-                            <label class="form-label" for="price_<?= $s['id'] ?>">
-                                💰 Preț
-                            </label>
-                            <input type="text" id="price_<?= $s['id'] ?>" name="price" class="form-control" 
-                                   value="<?= htmlspecialchars($s['price']) ?>" required>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="price_<?= $s['id'] ?>">
+                                    💰 Preț
+                                </label>
+                                <input type="number" id="price_<?= $s['id'] ?>" name="price" class="form-control" 
+                                       value="<?= htmlspecialchars($s['price']) ?>" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="currency_<?= $s['id'] ?>">
+                                    💱 Monedă
+                                </label>
+                                <select id="currency_<?= $s['id'] ?>" name="currency" class="form-select" required>
+                                    <option value="GBP" <?= ($s['currency'] ?? 'GBP') === 'GBP' ? 'selected' : '' ?>>£ GBP (Pounds)</option>
+                                    <option value="EUR" <?= ($s['currency'] ?? 'GBP') === 'EUR' ? 'selected' : '' ?>>€ EUR</option>
+                                    <option value="USD" <?= ($s['currency'] ?? 'GBP') === 'USD' ? 'selected' : '' ?>>$ USD</option>
+                                    <option value="RON" <?= ($s['currency'] ?? 'GBP') === 'RON' ? 'selected' : '' ?>>RON</option>
+                                </select>
+                            </div>
                         </div>
                         
                         <div class="form-group">
                             <label class="form-label" for="desc_<?= $s['id'] ?>">
                                 📝 Descriere
                             </label>
-                            <textarea id="desc_<?= $s['id'] ?>" name="description" class="form-control"><?= htmlspecialchars($s['description'] ?? '') ?></textarea>
+                            <textarea id="desc_<?= $s['id'] ?>" name="description" class="form-control" required><?= htmlspecialchars($s['description'] ?? '') ?></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">
+                                ⭐ Caracteristici incluse
+                            </label>
+                            <div class="features-container">
+                                <div class="features-list-<?= $s['id'] ?>">
+                                    <?php foreach ($features as $feature): ?>
+                                        <?php if (trim($feature)): ?>
+                                            <div class="feature-input">
+                                                <input type="text" name="features[]" value="<?= htmlspecialchars(trim($feature)) ?>" class="form-control">
+                                                <button type="button" class="remove-feature-btn" onclick="removeFeature(this)">×</button>
+                                            </div>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                    <?php if (empty($features) || count(array_filter($features)) === 0): ?>
+                                        <div class="feature-input">
+                                            <input type="text" name="features[]" placeholder="ex: Evaluare completă" class="form-control">
+                                            <button type="button" class="remove-feature-btn" onclick="removeFeature(this)">×</button>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                                <button type="button" class="add-feature-btn" onclick="addFeatureToService(<?= $s['id'] ?>)">
+                                    + Adaugă caracteristică
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="popular-checkbox">
+                                <input type="checkbox" id="popular_<?= $s['id'] ?>" name="popular" value="1" <?= $s['popular'] ? 'checked' : '' ?>>
+                                <label for="popular_<?= $s['id'] ?>">⭐ Marchează ca "Cel mai popular"</label>
+                            </div>
+                        </div>
+                        
+                        <!-- Preview -->
+                        <div class="service-preview">
+                            <div class="preview-title"><?= htmlspecialchars($s['name']) ?></div>
+                            <div class="preview-price"><?= htmlspecialchars($s['price']) ?> <?= htmlspecialchars($s['currency'] ?? 'GBP') ?></div>
+                            <p style="color: #666; margin: 10px 0;"><?= htmlspecialchars($s['description']) ?></p>
+                            <?php if (!empty($features) && count(array_filter($features)) > 0): ?>
+                                <ul class="preview-features">
+                                    <?php foreach ($features as $feature): ?>
+                                        <?php if (trim($feature)): ?>
+                                            <li><?= htmlspecialchars(trim($feature)) ?></li>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php endif; ?>
                         </div>
                         
                         <div class="btn-group">
@@ -510,8 +769,8 @@ $services = $pdo->query("SELECT * FROM services ORDER BY id ASC")->fetchAll();
                     <?php endforeach; ?>
                     
                 <?php else: ?>
-                    <div class="empty-state">
-                        <h3>📋 Nu există servicii</h3>
+                    <div class="empty-state" style="text-align: center; padding: 60px 20px; color: #7f8c8d;">
+                        <h3 style="font-size: 1.5rem; margin-bottom: 15px; color: #34495e;">📋 Nu există servicii</h3>
                         <p>Începe prin a adăuga primul serviciu folosind formularul de mai sus.</p>
                     </div>
                 <?php endif; ?>
@@ -524,6 +783,43 @@ $services = $pdo->query("SELECT * FROM services ORDER BY id ASC")->fetchAll();
     </div>
 
     <script>
+        // Adaugă caracteristică nouă pentru formularul de adăugare
+        function addFeature() {
+            const featuresList = document.getElementById('features-list');
+            const newFeature = document.createElement('div');
+            newFeature.className = 'feature-input';
+            newFeature.innerHTML = `
+                <input type="text" name="features[]" placeholder="ex: Suport 24/7" class="form-control">
+                <button type="button" class="remove-feature-btn" onclick="removeFeature(this)">×</button>
+            `;
+            featuresList.appendChild(newFeature);
+        }
+        
+        // Adaugă caracteristică pentru un serviciu specific
+        function addFeatureToService(serviceId) {
+            const featuresList = document.querySelector('.features-list-' + serviceId);
+            const newFeature = document.createElement('div');
+            newFeature.className = 'feature-input';
+            newFeature.innerHTML = `
+                <input type="text" name="features[]" placeholder="ex: Suport 24/7" class="form-control">
+                <button type="button" class="remove-feature-btn" onclick="removeFeature(this)">×</button>
+            `;
+            featuresList.appendChild(newFeature);
+        }
+        
+        // Elimină caracteristică
+        function removeFeature(button) {
+            const featureInput = button.parentElement;
+            const container = featureInput.parentElement;
+            
+            // Nu permite ștergerea dacă e singura caracteristică
+            if (container.children.length > 1) {
+                featureInput.remove();
+            } else {
+                alert('Trebuie să existe cel puțin o caracteristică!');
+            }
+        }
+
         // Efecte interactive
         document.addEventListener('DOMContentLoaded', function() {
             const forms = document.querySelectorAll('form');
@@ -541,7 +837,7 @@ $services = $pdo->query("SELECT * FROM services ORDER BY id ASC")->fetchAll();
             });
             
             // Animație pentru input focus
-            const inputs = document.querySelectorAll('.form-control');
+            const inputs = document.querySelectorAll('.form-control, .form-select');
             inputs.forEach(input => {
                 input.addEventListener('focus', function() {
                     this.parentElement.style.transform = 'scale(1.02)';
@@ -555,7 +851,7 @@ $services = $pdo->query("SELECT * FROM services ORDER BY id ASC")->fetchAll();
             // Auto-save draft pentru formular nou
             const newForm = document.querySelector('.add-form');
             if (newForm) {
-                const inputs = newForm.querySelectorAll('.form-control');
+                const inputs = newForm.querySelectorAll('.form-control, .form-select');
                 inputs.forEach(input => {
                     input.addEventListener('input', function() {
                         localStorage.setItem('draft_' + this.name, this.value);
@@ -563,7 +859,7 @@ $services = $pdo->query("SELECT * FROM services ORDER BY id ASC")->fetchAll();
                     
                     // Restore draft
                     const draft = localStorage.getItem('draft_' + input.name);
-                    if (draft) {
+                    if (draft && !input.value) {
                         input.value = draft;
                     }
                 });
@@ -575,7 +871,88 @@ $services = $pdo->query("SELECT * FROM services ORDER BY id ASC")->fetchAll();
                     });
                 });
             }
+            
+            // Preview în timp real pentru formularul de adăugare
+            const previewElements = {
+                name: document.getElementById('new_name'),
+                price: document.getElementById('new_price'),
+                currency: document.getElementById('new_currency'),
+                description: document.getElementById('new_description')
+            };
+            
+            // Validare formulare
+            document.querySelectorAll('form').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    const requiredFields = form.querySelectorAll('[required]');
+                    let isValid = true;
+                    
+                    requiredFields.forEach(field => {
+                        if (!field.value.trim()) {
+                            field.style.borderColor = '#e74c3c';
+                            isValid = false;
+                        } else {
+                            field.style.borderColor = '#e1e8ed';
+                        }
+                    });
+                    
+                    if (!isValid) {
+                        e.preventDefault();
+                        alert('⚠️ Te rugăm să completezi toate câmpurile obligatorii!');
+                    }
+                });
+            });
+            
+            // Smooth scroll pentru secțiuni
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Toast notifications pentru mesaje de succes
+            const message = document.querySelector('.message');
+            if (message) {
+                setTimeout(() => {
+                    message.style.animation = 'slideOutUp 0.5s ease-out forwards';
+                    setTimeout(() => {
+                        message.style.display = 'none';
+                    }, 500);
+                }, 3000);
+            }
         });
+        
+        // Animația pentru slideOutUp
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideOutUp {
+                from {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateY(-20px);
+                }
+            }
+            
+            .loading {
+                opacity: 0.7;
+                pointer-events: none;
+            }
+            
+            .loading::after {
+                content: '⏳';
+                margin-left: 5px;
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
