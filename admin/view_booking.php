@@ -323,48 +323,154 @@ try {
             font-style: italic;
         }
         
-        /* Responsive Design */
+        /* Responsive Design - IMPROVED */
         @media (max-width: 768px) {
+            body {
+                padding: 10px 0;
+            }
+            
+            .container {
+                padding: 0 10px;
+            }
+            
+            /* Header responsive */
             .card-header {
-                padding: 20px;
+                padding: 15px;
+                text-align: center;
+            }
+            
+            .card-header h4 {
+                font-size: 1.1em;
+                margin-bottom: 15px;
+                line-height: 1.3;
+            }
+            
+            .status-badge {
+                font-size: 0.7em;
+                padding: 4px 8px;
+                display: block;
+                margin: 10px auto;
+                width: fit-content;
+            }
+            
+            /* Header buttons - stacked vertically */
+            .header-buttons {
+                display: flex;
                 flex-direction: column;
-                gap: 15px;
+                gap: 8px;
+                width: 100%;
+                margin-top: 15px;
             }
             
             .card-header .btn {
                 width: 100%;
-                margin: 2px 0;
+                font-size: 0.75em;
+                padding: 10px 15px;
+                margin: 0;
+                text-align: center;
             }
             
             .card-body {
-                padding: 20px;
+                padding: 15px;
             }
             
             .info-section {
-                padding: 20px;
-                margin-bottom: 20px;
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+            
+            .info-section h5 {
+                font-size: 1.1em;
+                margin-bottom: 15px;
+            }
+            
+            /* Data tables responsive */
+            .data-table {
+                font-size: 0.85em;
             }
             
             .data-table th,
             .data-table td {
-                padding: 12px 15px;
-                font-size: 0.9em;
+                padding: 10px 12px;
+                font-size: 0.8em;
+                word-break: break-word;
             }
             
-            .btn {
-                width: 100%;
-                margin: 5px 0;
+            .data-table th {
+                width: 40%;
+                font-size: 0.75em;
             }
             
-            .mt-4.d-flex {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .mt-4.d-flex > div {
+            /* Action buttons - better mobile layout */
+            .action-buttons {
                 display: flex;
                 flex-direction: column;
                 gap: 10px;
+                margin-top: 20px;
+            }
+            
+            .action-buttons .btn {
+                width: 100%;
+                font-size: 0.8em;
+                padding: 12px 20px;
+                margin: 0;
+                text-align: center;
+                white-space: nowrap;
+            }
+            
+            /* Specific button groups */
+            .btn-group-mobile {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                margin-bottom: 15px;
+            }
+            
+            .btn-group-mobile .btn {
+                width: 100%;
+                margin: 0;
+            }
+            
+            /* Typography adjustments */
+            .timestamp {
+                font-size: 0.75em;
+            }
+            
+            code {
+                font-size: 0.75em;
+                padding: 2px 6px;
+            }
+        }
+        
+        /* Extra small screens */
+        @media (max-width: 480px) {
+            .card-header h4 {
+                font-size: 1em;
+            }
+            
+            .status-badge {
+                font-size: 0.65em;
+                padding: 3px 6px;
+            }
+            
+            .card-header .btn {
+                font-size: 0.7em;
+                padding: 8px 12px;
+            }
+            
+            .data-table th,
+            .data-table td {
+                padding: 8px 10px;
+                font-size: 0.75em;
+            }
+            
+            .info-section h5 {
+                font-size: 1em;
+            }
+            
+            .action-buttons .btn {
+                font-size: 0.75em;
+                padding: 10px 15px;
             }
         }
         
@@ -418,12 +524,12 @@ try {
         <div class="row">
             <div class="col-md-8 mx-auto">
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="card-header">
                         <h4 class="mb-0">
                             🗓️ Rezervare #<?php echo $booking_id; ?>
-                            <span class="status-badge status-confirmed ms-2">Confirmată</span>
+                            <span class="status-badge status-confirmed">Confirmată</span>
                         </h4>
-                        <div>
+                        <div class="header-buttons">
                             <a href="view_bookings.php" class="btn btn-secondary btn-sm">← Lista rezervări</a>
                             <a href="edit_booking.php?id=<?php echo $booking_id; ?>" class="btn btn-warning btn-sm">✏️ Editează</a>
                             <button onclick="window.print()" class="btn btn-primary btn-sm">🖨️ Printează</button>
@@ -435,7 +541,7 @@ try {
                         <div class="info-section">
                             <h5>👤 Informații Client</h5>
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col-12">
                                     <table class="table table-sm data-table">
                                         <tr>
                                             <th>Nume complet:</th>
@@ -549,7 +655,7 @@ try {
                         <div class="info-section">
                             <h5>⚙️ Informații Sistem</h5>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-12">
                                     <table class="table table-sm data-table">
                                         <tr>
                                             <th>ID Rezervare:</th>
@@ -563,10 +669,6 @@ try {
                                             <th>ID Slot:</th>
                                             <td><code>#<?php echo $booking['slot_id']; ?></code></td>
                                         </tr>
-                                    </table>
-                                </div>
-                                <div class="col-md-6">
-                                    <table class="table table-sm data-table">
                                         <tr>
                                             <th>Creat la:</th>
                                             <td><?php echo date('d.m.Y H:i:s', strtotime($booking['booked_at'])); ?></td>
@@ -587,9 +689,9 @@ try {
                             </div>
                         </div>
 
-                        <!-- Acțiuni -->
-                        <div class="mt-4 d-flex gap-2 justify-content-between">
-                            <div>
+                        <!-- Acțiuni - IMPROVED MOBILE LAYOUT -->
+                        <div class="action-buttons">
+                            <div class="btn-group-mobile">
                                 <a href="edit_booking.php?id=<?php echo $booking_id; ?>" class="btn btn-warning">
                                     ✏️ Editează rezervarea
                                 </a>
@@ -597,7 +699,7 @@ try {
                                     📧 Trimite confirmare email
                                 </button>
                             </div>
-                            <div>
+                            <div class="btn-group-mobile">
                                 <button 
                                     onclick="confirmDelete(<?php echo $booking_id; ?>)" 
                                     class="btn btn-danger"

@@ -280,40 +280,226 @@ try {
             font-size: 1.2em;
         }
         
-        /* Responsive Design */
-        @media (max-width: 768px) {
+        /* Mobile Cards - pentru ecrane mici */
+        .mobile-cards {
+            display: none;
+        }
+        
+        .booking-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+        
+        .booking-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .booking-card h3 {
+            margin: 0 0 15px 0;
+            color: #2c3e50;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .booking-id {
+            font-size: 0.8em;
+            background: #667eea;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        
+        .booking-info {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f3f4;
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #7f8c8d;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .info-value {
+            color: #2c3e50;
+            font-weight: 500;
+            text-align: right;
+            max-width: 60%;
+            word-break: break-word;
+        }
+        
+        .mobile-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .mobile-actions .btn {
+            flex: 1;
+            min-width: 70px;
+            text-align: center;
+            font-size: 0.75em;
+            padding: 10px 12px;
+        }
+        
+        /* Responsive Design - IMPROVED */
+        @media (max-width: 1024px) {
             .container {
                 padding: 20px;
                 margin: 10px;
-                border-radius: 12px;
             }
             
             .stats {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
                 gap: 15px;
+            }
+            
+            .stat-card {
+                padding: 20px;
+            }
+            
+            .stat-card h3 {
+                font-size: 2.2em;
             }
             
             .search-box input {
                 width: 100%;
                 max-width: 400px;
             }
-            
-            table {
-                font-size: 0.85em;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
             }
             
-            th, td {
-                padding: 12px 8px;
+            .container {
+                padding: 15px;
+                margin: 5px;
+                border-radius: 12px;
             }
             
-            .actions {
+            h1 {
+                font-size: 1.8em;
+                margin-bottom: 20px;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                margin-bottom: 20px;
+            }
+            
+            .stat-card {
+                padding: 15px;
+            }
+            
+            .stat-card h3 {
+                font-size: 1.8em;
+            }
+            
+            .stat-card p {
+                font-size: 0.9em;
+            }
+            
+            .search-box {
+                margin-bottom: 20px;
+            }
+            
+            .search-box input {
+                width: 100%;
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+            
+            .back-link {
+                margin-bottom: 20px;
+                font-size: 0.9em;
+                padding: 8px 12px;
+            }
+            
+            /* Hide table, show cards on mobile */
+            .table-container {
+                display: none;
+            }
+            
+            .mobile-cards {
+                display: block;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+                margin: 2px;
+            }
+            
+            h1 {
+                font-size: 1.5em;
+            }
+            
+            .booking-card {
+                padding: 15px;
+                margin-bottom: 10px;
+            }
+            
+            .booking-card h3 {
+                font-size: 1.1em;
                 flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .booking-id {
+                font-size: 0.75em;
+            }
+            
+            .info-row {
+                flex-direction: column;
+                align-items: flex-start;
                 gap: 5px;
             }
             
-            .btn {
-                font-size: 11px;
-                padding: 6px 12px;
+            .info-value {
+                max-width: 100%;
+                text-align: left;
+                font-size: 0.9em;
+            }
+            
+            .mobile-actions {
+                flex-direction: column;
+                gap: 6px;
+            }
+            
+            .mobile-actions .btn {
+                width: 100%;
+                padding: 12px;
+                font-size: 0.8em;
             }
         }
         
@@ -352,6 +538,22 @@ try {
                 transform: translateX(0);
             }
         }
+        
+        .booking-card {
+            animation: slideInUp 0.4s ease-out;
+            animation-fill-mode: both;
+        }
+        
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 <body>
@@ -385,6 +587,7 @@ try {
                 <p>Când clienții vor face rezervări, acestea vor apărea aici.</p>
             </div>
         <?php else: ?>
+            <!-- Desktop Table -->
             <div class="table-container">
                 <table id="bookingsTable">
                     <thead>
@@ -434,38 +637,376 @@ try {
                             <td class="actions">
                                 <a href="view_booking.php?id=<?php echo $booking['id']; ?>" class="btn btn-view">Vezi</a>
                                 <a href="edit_booking.php?id=<?php echo $booking['id']; ?>" class="btn btn-edit">Editează</a>
-                                <a href="delete_booking.php?id=<?php echo $booking['id']; ?>" class="btn btn-delete" onclick="return confirm('Ești sigur că vrei să ștergi această rezervare?')">Șterge</a>
+                                <button onclick="showDeleteModal(<?php echo $booking['id']; ?>, '<?php echo addslashes($client_name ?: 'Client Necunoscut'); ?>')" class="btn btn-delete">Șterge</button>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
+            
+            <!-- Mobile Cards -->
+            <div class="mobile-cards" id="mobileCards">
+                <?php foreach ($bookings as $booking): ?>
+                    <?php
+                    $client_name = !empty($booking['name']) ? $booking['name'] : $booking['client_name'];
+                    $email = !empty($booking['email']) ? $booking['email'] : $booking['client_email'];
+                    $phone = !empty($booking['phone']) ? $booking['phone'] : $booking['client_phone'];
+                    ?>
+                    <div class="booking-card" data-search="<?php echo strtolower($client_name . ' ' . $email . ' ' . $phone); ?>">
+                        <h3>
+                            <?php echo htmlspecialchars($client_name ?: 'Client Necunoscut'); ?>
+                            <span class="booking-id">#<?php echo $booking['id']; ?></span>
+                        </h3>
+                        
+                        <div class="booking-info">
+                            <div class="info-row">
+                                <span class="info-label">Email:</span>
+                                <span class="info-value"><?php echo htmlspecialchars($email ?: 'N/A'); ?></span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Telefon:</span>
+                                <span class="info-value"><?php echo htmlspecialchars($phone ?: 'N/A'); ?></span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Data:</span>
+                                <span class="info-value"><?php echo htmlspecialchars($booking['date'] ?: 'N/A'); ?></span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Ora:</span>
+                                <span class="info-value"><?php echo htmlspecialchars($booking['hour'] ?: 'N/A'); ?></span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Consultație:</span>
+                                <span class="info-value"><?php echo htmlspecialchars($booking['consult_type'] ?: 'N/A'); ?></span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Plată:</span>
+                                <span class="info-value"><?php echo htmlspecialchars($booking['payment_method'] ?: 'N/A'); ?></span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Rezervat:</span>
+                                <span class="info-value"><?php echo date('d.m.Y H:i', strtotime($booking['booked_at'])); ?></span>
+                            </div>
+                        </div>
+                        
+                        <div class="mobile-actions">
+                            <a href="view_booking.php?id=<?php echo $booking['id']; ?>" class="btn btn-view">👁️ Vezi</a>
+                            <a href="edit_booking.php?id=<?php echo $booking['id']; ?>" class="btn btn-edit">✏️ Editează</a>
+                            <button onclick="showDeleteModal(<?php echo $booking['id']; ?>, '<?php echo addslashes($client_name ?: 'Client Necunoscut'); ?>')" class="btn btn-delete">🗑️ Șterge</button>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
         <?php endif; ?>
     </div>
 
+    <!-- Custom Delete Confirmation Modal -->
+    <div id="deleteModal" class="delete-modal">
+        <div class="delete-modal-content">
+            <div class="delete-modal-header">
+                <span class="delete-icon">⚠️</span>
+                <h3>Confirmare Ștergere</h3>
+            </div>
+            <div class="delete-modal-body">
+                <p>Ești sigur că vrei să ștergi această rezervare?</p>
+                <div class="delete-warning">
+                    <p><strong>Această acțiune va:</strong></p>
+                    <ul>
+                        <li>Șterge definitiv rezervarea</li>
+                        <li>Elibera slotul pentru alte rezervări</li>
+                        <li>Nu poate fi anulată</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="delete-modal-actions">
+                <button onclick="cancelDelete()" class="btn-modal btn-cancel">
+                    ❌ Anulează
+                </button>
+                <button onclick="confirmDelete()" class="btn-modal btn-confirm">
+                    🗑️ Șterge
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Delete Modal Styles */
+        .delete-modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .delete-modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .delete-modal-content {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 450px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideInUp 0.4s ease-out;
+            position: relative;
+        }
+
+        .delete-modal-header {
+            padding: 25px 25px 15px 25px;
+            text-align: center;
+            border-bottom: 1px solid #f1f3f4;
+        }
+
+        .delete-icon {
+            font-size: 3em;
+            display: block;
+            margin-bottom: 10px;
+            animation: shake 0.6s ease-in-out;
+        }
+
+        .delete-modal-header h3 {
+            margin: 0;
+            color: #e74c3c;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .delete-modal-body {
+            padding: 20px 25px;
+        }
+
+        .delete-modal-body p {
+            margin: 0 0 15px 0;
+            font-size: 1.1em;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .delete-warning {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border: 1px solid #f39c12;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .delete-warning p {
+            margin: 0 0 10px 0;
+            font-weight: 600;
+            color: #856404;
+            text-align: left;
+        }
+
+        .delete-warning ul {
+            margin: 0;
+            padding-left: 20px;
+            color: #856404;
+        }
+
+        .delete-warning li {
+            margin-bottom: 5px;
+            font-size: 0.95em;
+        }
+
+        .delete-modal-actions {
+            display: flex;
+            gap: 10px;
+            padding: 20px 25px 25px 25px;
+            justify-content: center;
+        }
+
+        .btn-modal {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-cancel {
+            background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+            color: white;
+        }
+
+        .btn-cancel:hover {
+            background: linear-gradient(135deg, #7f8c8d, #6c7b7d);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(149, 165, 166, 0.4);
+        }
+
+        .btn-confirm {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+        }
+
+        .btn-confirm:hover {
+            background: linear-gradient(135deg, #c0392b, #a93226);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
+            20%, 40%, 60%, 80% { transform: translateX(3px); }
+        }
+
+        /* Mobile responsive pentru modal */
+        @media (max-width: 480px) {
+            .delete-modal-content {
+                margin: 10px;
+                max-width: calc(100% - 20px);
+            }
+
+            .delete-modal-header {
+                padding: 20px 20px 15px 20px;
+            }
+
+            .delete-icon {
+                font-size: 2.5em;
+            }
+
+            .delete-modal-header h3 {
+                font-size: 1.2em;
+            }
+
+            .delete-modal-body {
+                padding: 15px 20px;
+            }
+
+            .delete-modal-actions {
+                flex-direction: column;
+                padding: 15px 20px 20px 20px;
+            }
+
+            .btn-modal {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+    </style>
+
     <script>
+        let deleteUrl = '';
+
+        function showDeleteModal(bookingId, bookingName) {
+            deleteUrl = `delete_booking.php?id=${bookingId}`;
+            document.getElementById('deleteModal').classList.add('show');
+            
+            // Add booking name to modal if provided
+            if (bookingName) {
+                const modalBody = document.querySelector('.delete-modal-body p');
+                modalBody.innerHTML = `Ești sigur că vrei să ștergi rezervarea pentru <strong>${bookingName}</strong>?`;
+            }
+            
+            // Prevent body scrolling
+            document.body.style.overflow = 'hidden';
+        }
+
+        function cancelDelete() {
+            document.getElementById('deleteModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+            deleteUrl = '';
+        }
+
+        function confirmDelete() {
+            if (deleteUrl) {
+                window.location.href = deleteUrl;
+            }
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('deleteModal');
+            if (event.target === modal) {
+                cancelDelete();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                cancelDelete();
+            }
+        });
+
         function searchBookings() {
             const input = document.getElementById('searchInput');
             const filter = input.value.toLowerCase();
+            
+            // Search in desktop table
             const table = document.getElementById('bookingsTable');
-            const rows = table.getElementsByTagName('tr');
-
-            for (let i = 1; i < rows.length; i++) {
-                const cells = rows[i].getElementsByTagName('td');
-                let found = false;
-                
-                // Căutăm în coloanele: nume (1), email (2), telefon (3)
-                for (let j = 1; j <= 3; j++) {
-                    if (cells[j] && cells[j].textContent.toLowerCase().indexOf(filter) > -1) {
-                        found = true;
-                        break;
+            if (table) {
+                const rows = table.getElementsByTagName('tr');
+                for (let i = 1; i < rows.length; i++) {
+                    const cells = rows[i].getElementsByTagName('td');
+                    let found = false;
+                    
+                    // Căutăm în coloanele: nume (1), email (2), telefon (3)
+                    for (let j = 1; j <= 3; j++) {
+                        if (cells[j] && cells[j].textContent.toLowerCase().indexOf(filter) > -1) {
+                            found = true;
+                            break;
+                        }
                     }
+                    
+                    rows[i].style.display = found ? '' : 'none';
                 }
-                
-                rows[i].style.display = found ? '' : 'none';
             }
+            
+            // Search in mobile cards
+            const cards = document.querySelectorAll('.booking-card');
+            cards.forEach(card => {
+                const searchData = card.getAttribute('data-search');
+                if (searchData && searchData.indexOf(filter) > -1) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
         }
+        
+        // Add staggered animation to mobile cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.booking-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
     </script>
 </body>
 </html>

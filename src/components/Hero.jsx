@@ -13,48 +13,58 @@ function Hero() {
   return (
     <section
       id="page-0"
-      className="relative bg-[#fef6f2] bg-contain bg-no-repeat bg-top tablet:bg-none overflow-hidden min-h-screen flex items-center"
+      className="relative bg-gradient-to-br from-[#fef6f2] via-[#fdf4ef] to-[#fcf1eb] overflow-hidden min-h-screen flex items-center"
     >
-      {/* FUNDAL FLORI JOS */}
-      <img
-        src="/flowers-bg.jpg"
-        alt="Fundal flori"
-        className="tablet:block absolute tablet:bottom-[150px] laptop:bottom-[150px] lg:bottom-[186px] left-1/2 -translate-x-1/2 w-full max-w-[1500px] h-auto tablet:max-h-[180px] laptop:max-h-[280px] lg:max-h-[350px] object-cover object-bottom z-0 opacity-30"
-      />
+      {/* ANIMATED BACKGROUND ELEMENTS - În loc de imagine statică */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Cercuri animate decorative */}
+        <div className="absolute top-20 left-10 w-32 h-32 bg-[#b06b4c]/10 rounded-full animate-pulse"></div>
+        <div className="absolute top-40 right-20 w-24 h-24 bg-amber-200/20 rounded-full animate-bounce slow"></div>
+        <div className="absolute bottom-32 left-1/4 w-16 h-16 bg-rose-200/30 rounded-full animate-pulse delay-300"></div>
+        <div className="absolute bottom-20 right-1/3 w-20 h-20 bg-orange-200/20 rounded-full animate-bounce delay-500"></div>
+        
+        {/* Forme geometrice subtile */}
+        <div className="absolute top-1/3 left-5 w-8 h-8 bg-amber-300/20 rotate-45 animate-spin-slow"></div>
+        <div className="absolute bottom-1/3 right-10 w-6 h-6 bg-rose-300/20 rotate-12 animate-pulse"></div>
+        
+        {/* Gradient overlay pentru depth */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-amber-50/20"></div>
+      </div>
 
       {/* CONȚINUT */}
-      <div className="relative z-10 flex flex-col tablet:grid tablet:grid-cols-2 max-w-[1440px] mx-auto px-4 tablet:px-6 py-8 tablet:py-20 gap-6 tablet:gap-12 laptop:gap-10 items-center w-full">
+      <div className="relative z-10 flex flex-col lg:grid lg:grid-cols-2 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-16 gap-8 lg:gap-16 items-center w-full">
         
-        {/* IMAGINE - Prima pe mobile */}
+        {/* TEXT SECTION - Prima pe mobile pentru SEO */}
         <div
-          className="order-1 tablet:order-1 flex justify-center lg:justify-end relative w-full"
-          data-aos="fade-down"
-          data-aos-delay="100"
-        >
-          <img
-            src={HeroIgenerateimg}
-            alt="Consultant alăptare și bebeluș"
-            className="w-full max-w-[280px] sm:max-w-[350px] tablet:max-w-[1000px] laptop:max-w-[1200px] lg:max-w-[1400px] h-auto object-contain z-10"
-          />
-        </div>
-
-        {/* TEXT - Al doilea pe mobile */}
-        <div
-          className="order-2 tablet:order-2 tablet:-mt-12 tabletMd:-mt-12 laptop:mt-6 lg:mt-12 text-gray-800 w-full text-center tablet:text-left"
+          className="order-2 lg:order-1 text-gray-800 w-full text-center lg:text-left"
           data-aos="fade-up"
           data-aos-delay="200"
         >
+          {/* Badge pentru credibilitate */}
+          <div 
+            className="inline-flex items-center px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full text-sm text-[#b06b4c] font-medium mb-6 shadow-lg"
+            data-aos="fade-down"
+            data-aos-delay="100"
+          >
+            <span className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
+            Consultant certificat în alăptare
+          </div>
+
           <h1
-            className="text-2xl sm:text-3xl tabletSm:text-7xl tablet:text-5xl laptop:text-7xl lg:text-8xl font-fjalla text-[#b06b4c] leading-tight pb-3 sm:pb-4"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-[#b06b4c] leading-tight mb-4 sm:mb-6"
             data-aos="fade-up"
             data-aos-delay="300"
           >
             Sprijin profesionist pentru{" "}
-            <span className="text-amber-900">mame</span> dedicate
+            <span className="relative inline-block">
+              <span className="text-amber-900">mame</span>
+              <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 to-orange-400 rounded-full transform scale-x-0 animate-scale-x"></div>
+            </span>{" "}
+            dedicate
           </h1>
 
           <p
-            className="text-base sm:text-lg tabletSm:text-4xl tablet:text-2xl laptop:text-xl lg:text-3xl font-semibold text-gray-900 mb-4 sm:mb-6"
+            className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900 mb-4 sm:mb-6"
             data-aos="fade-up"
             data-aos-delay="400"
           >
@@ -62,7 +72,7 @@ function Hero() {
           </p>
 
           <p
-            className="text-sm sm:text-base tabletSm:text-2xl tablet:text-base laptop:text-sm lg:text-lg text-gray-700 mb-6 sm:mb-8 laptop:mb-6 leading-relaxed px-2 tablet:px-0"
+            className="text-base sm:text-lg text-gray-700 mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0"
             data-aos="fade-up"
             data-aos-delay="500"
           >
@@ -71,44 +81,111 @@ function Hero() {
             încredere prin fiecare etapă a alăptării.
           </p>
 
-          {/* BUTOANE OPTIMIZATE PENTRU MOBILE */}
+          {/* BUTOANE CU HOVER EFFECTS */}
           <div
-            className="flex flex-col sm:flex-row justify-center tablet:justify-start gap-3 sm:gap-4 tabletSm:gap-6 px-2 tablet:px-0"
+            className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 mb-8"
             data-aos="zoom-in-up"
             data-aos-delay="600"
           >
             <PrimaryButton 
               href="#booking"
-              className="w-full sm:w-auto text-sm sm:text-base px-4 py-3 sm:px-6 sm:py-3"
+              className="group w-full sm:w-auto text-base px-8 py-4 bg-gradient-to-r from-[#b06b4c] to-[#965a42] hover:from-[#965a42] hover:to-[#7d4a37] transform hover:-translate-y-1 transition-all duration-300 shadow-lg hover:shadow-2xl"
             >
-              Programează consultația
+              <span className="flex items-center justify-center">
+                Programează consultația
+                <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </span>
             </PrimaryButton>
+            
             <OutlineButton 
               href="Alăptare primul pas (Ebook)"
-              className="w-full sm:w-auto text-xs sm:text-sm px-3 py-2 sm:px-4 sm:py-3 whitespace-nowrap"
+              className="group w-full sm:w-auto text-base px-8 py-4 border-2 border-[#b06b4c] text-[#b06b4c] hover:bg-[#b06b4c] hover:text-white transform hover:-translate-y-1 transition-all duration-300 shadow-lg hover:shadow-2xl"
             >
-              Ebook gratuit
+              <span className="flex items-center justify-center">
+                <svg className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Ebook gratuit
+              </span>
             </OutlineButton>
           </div>
 
-          {/* INDICATOR SCROLL PENTRU MOBILE */}
+          {/* SOCIAL PROOF / TRUST INDICATORS */}
           <div 
-            className="flex justify-center mt-8 tablet:hidden"
+            className="flex flex-wrap justify-center lg:justify-start items-center gap-6 text-sm text-gray-600"
             data-aos="fade-up"
-            data-aos-delay="800"
+            data-aos-delay="700"
           >
-            <div className="flex flex-col items-center text-gray-500 animate-bounce">
-              <span className="text-xs mb-1">Scroll jos</span>
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            <div className="flex items-center">
+              <div className="flex -space-x-2 mr-3">
+                <div className="w-8 h-8 bg-gradient-to-r from-pink-400 to-rose-400 rounded-full border-2 border-white"></div>
+                <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-full border-2 border-white"></div>
+                <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full border-2 border-white"></div>
+              </div>
+              <span>500+ mame ajutate</span>
+            </div>
+            <div className="flex items-center">
+              <svg className="w-5 h-5 text-yellow-400 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
               </svg>
+              <span>Rating 4.9/5</span>
+            </div>
+          </div>
+        </div>
+
+        {/* IMAGINE - A doua pe mobile */}
+        <div
+          className="order-1 lg:order-2 flex justify-center lg:justify-end relative w-full"
+          data-aos="fade-down"
+          data-aos-delay="100"
+        >
+          {/* Decorative elements around image */}
+          <div className="relative">
+            <div className="absolute -top-4 -left-4 w-24 h-24 bg-gradient-to-br from-amber-200 to-orange-200 rounded-full opacity-60 animate-pulse"></div>
+            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-gradient-to-br from-rose-200 to-pink-200 rounded-full opacity-40 animate-bounce slow"></div>
+            
+            <img
+              src={HeroIgenerateimg}
+              alt="Consultant alăptare și bebeluș"
+              className="relative z-10 w-full max-w-sm sm:max-w-md lg:max-w-lg xl:max-w-xl h-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-700"
+            />
+            
+            {/* Floating elements */}
+            <div className="absolute top-1/4 -left-8 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-lg animate-float">
+              <div className="flex items-center text-sm text-gray-700">
+                <span className="text-green-500 mr-2">✓</span>
+                Experiență 5+ ani
+              </div>
+            </div>
+            
+            <div className="absolute bottom-1/4 -right-8 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-lg animate-float-delay">
+              <div className="flex items-center text-sm text-gray-700">
+                <span className="text-blue-500 mr-2">📞</span>
+                24/7 support
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* GRADIENT OVERLAY PENTRU TRANZIȚIE FRUMOASĂ */}
-      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent z-20 tablet:hidden"></div>
+      {/* SCROLL INDICATOR PENTRU MOBILE */}
+      <div 
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 lg:hidden"
+        data-aos="fade-up"
+        data-aos-delay="800"
+      >
+        <div className="flex flex-col items-center text-gray-500 animate-bounce">
+          <span className="text-xs mb-2 opacity-70">Explorează mai mult</span>
+          <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-gray-400 rounded-full mt-2 animate-pulse"></div>
+          </div>
+        </div>
+      </div>
+
+      {/* GRADIENT OVERLAY PENTRU TRANZIȚIE */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white via-white/50 to-transparent z-5"></div>
     </section>
   );
 }

@@ -173,120 +173,122 @@ function CheckoutForm({ amount = 2000, formData }) {
   // Show loading message if Stripe is not ready
   if (!stripe || !elements) {
     return (
-      <div className="space-y-4 p-4 bg-white shadow-md rounded-lg">
-        <div className="flex items-center justify-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
-          <span className="ml-3 text-gray-600">Se încarcă sistemul de plată...</span>
+      <div className="w-full max-w-md mx-auto space-y-4 p-4 sm:p-6 bg-white shadow-md rounded-lg">
+        <div className="flex items-center justify-center py-6 sm:py-8">
+          <div className="animate-spin rounded-full h-6 w-6 sm:h-8 sm:w-8 border-b-2 border-purple-600"></div>
+          <span className="ml-3 text-sm sm:text-base text-gray-600">Se încarcă sistemul de plată...</span>
         </div>
       </div>
     );
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="space-y-6"
-    >
-      {/* Cardholder Name Input */}
-      <div>
-        <label
-          htmlFor="card-name"
-          className="block text-sm font-semibold text-gray-700 mb-2"
-        >
-          Nume de pe card
-        </label>
-        <input
-          id="card-name"
-          type="text"
-          value={cardName}
-          onChange={(e) => setCardName(e.target.value)}
-          placeholder="ex: Maria Popescu"
-          required
-          className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-lg focus:ring-4 focus:ring-purple-100 focus:border-purple-500 transition-all duration-200 shadow-sm"
-        />
-      </div>
-
-      {/* Postal Code Input (Optional) */}
-      <div>
-        <label
-          htmlFor="zip-code"
-          className="block text-sm font-semibold text-gray-700 mb-2"
-        >
-          Cod poștal (opțional)
-        </label>
-        <input
-          id="zip-code"
-          type="text"
-          value={zip}
-          onChange={(e) => setZip(e.target.value)}
-          placeholder="ex: SW1A 1AA"
-          className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-lg focus:ring-4 focus:ring-purple-100 focus:border-purple-500 transition-all duration-200 shadow-sm"
-        />
-      </div>
-
-      {/* Stripe CardElement */}
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
-          Detalii card
-        </label>
-        <div className="border-2 border-gray-200 rounded-xl p-4 bg-white focus-within:ring-4 focus-within:ring-purple-100 focus-within:border-purple-500 transition-all duration-200 shadow-sm">
-          <CardElement
-            options={{
-              hidePostalCode: true,
-              style: {
-                base: {
-                  fontSize: "18px",
-                  color: "#374151",
-                  fontFamily: "'Inter', 'Segoe UI', sans-serif",
-                  "::placeholder": { 
-                    color: "#9CA3AF" 
-                  },
-                },
-                invalid: { 
-                  color: "#EF4444" 
-                },
-                complete: {
-                  color: "#059669"
-                }
-              },
-            }}
+    <div className="w-full max-w-md mx-auto">
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-4 sm:space-y-6 p-4 sm:p-0"
+      >
+        {/* Cardholder Name Input */}
+        <div>
+          <label
+            htmlFor="card-name"
+            className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2"
+          >
+            Nume de pe card
+          </label>
+          <input
+            id="card-name"
+            type="text"
+            value={cardName}
+            onChange={(e) => setCardName(e.target.value)}
+            placeholder="ex: Maria Popescu"
+            required
+            className="w-full px-3 sm:px-4 py-2 sm:py-3 border-2 border-gray-200 rounded-lg sm:rounded-xl text-base sm:text-lg focus:ring-2 sm:focus:ring-4 focus:ring-purple-100 focus:border-purple-500 transition-all duration-200 shadow-sm"
           />
         </div>
-      </div>
 
-      {/* Submission Button */}
-      <button
-        type="submit"
-        disabled={!stripe || isLoading}
-        className={`w-full px-8 py-4 rounded-xl text-lg font-bold transition-all duration-200 transform ${
-          !stripe || isLoading
-            ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-            : "bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5"
-        }`}
-      >
-        {isLoading ? (
-          <span className="flex items-center justify-center">
-            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
-            Se procesează plata...
-          </span>
-        ) : (
-          `Plătește £${(amount/100).toFixed(2)}`
-        )}
-      </button>
+        {/* Postal Code Input (Optional) */}
+        <div>
+          <label
+            htmlFor="zip-code"
+            className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2"
+          >
+            Cod poștal (opțional)
+          </label>
+          <input
+            id="zip-code"
+            type="text"
+            value={zip}
+            onChange={(e) => setZip(e.target.value)}
+            placeholder="ex: SW1A 1AA"
+            className="w-full px-3 sm:px-4 py-2 sm:py-3 border-2 border-gray-200 rounded-lg sm:rounded-xl text-base sm:text-lg focus:ring-2 sm:focus:ring-4 focus:ring-purple-100 focus:border-purple-500 transition-all duration-200 shadow-sm"
+          />
+        </div>
 
-      {/* Display Messages (Success/Error) */}
-      {message && (
-        <div
-          className={`p-4 rounded-xl text-sm font-medium border-2 ${
-            message.startsWith("✅")
-              ? "bg-green-50 text-green-800 border-green-200"
-              : "bg-red-50 text-red-800 border-red-200"
+        {/* Stripe CardElement */}
+        <div>
+          <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
+            Detalii card
+          </label>
+          <div className="border-2 border-gray-200 rounded-lg sm:rounded-xl p-3 sm:p-4 bg-white focus-within:ring-2 sm:focus-within:ring-4 focus-within:ring-purple-100 focus-within:border-purple-500 transition-all duration-200 shadow-sm">
+            <CardElement
+              options={{
+                hidePostalCode: true,
+                style: {
+                  base: {
+                    fontSize: window.innerWidth < 640 ? "16px" : "18px",
+                    color: "#374151",
+                    fontFamily: "'Inter', 'Segoe UI', sans-serif",
+                    "::placeholder": { 
+                      color: "#9CA3AF" 
+                    },
+                  },
+                  invalid: { 
+                    color: "#EF4444" 
+                  },
+                  complete: {
+                    color: "#059669"
+                  }
+                },
+              }}
+            />
+          </div>
+        </div>
+
+        {/* Submission Button */}
+        <button
+          type="submit"
+          disabled={!stripe || isLoading}
+          className={`w-full px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl text-base sm:text-lg font-bold transition-all duration-200 transform ${
+            !stripe || isLoading
+              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+              : "bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0"
           }`}
         >
-          {message}
-        </div>
-      )}
-    </form>
+          {isLoading ? (
+            <span className="flex items-center justify-center">
+              <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:w-5 border-b-2 border-white mr-2 sm:mr-3"></div>
+              <span className="text-sm sm:text-base">Se procesează plata...</span>
+            </span>
+          ) : (
+            `Plătește £${(amount/100).toFixed(2)}`
+          )}
+        </button>
+
+        {/* Display Messages (Success/Error) */}
+        {message && (
+          <div
+            className={`p-3 sm:p-4 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium border-2 ${
+              message.startsWith("✅")
+                ? "bg-green-50 text-green-800 border-green-200"
+                : "bg-red-50 text-red-800 border-red-200"
+            }`}
+          >
+            <div className="break-words">{message}</div>
+          </div>
+        )}
+      </form>
+    </div>
   );
 }
 

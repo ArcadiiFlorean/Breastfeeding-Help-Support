@@ -17,164 +17,195 @@ function SupportFeatures() {
 
   const features = [
     {
-      icon: <FaQuoteRight size={20} className="text-orange-500" />,
+      icon: <FaQuoteRight size={24} className="text-white" />,
       title: "Ghidare blândă și profesionistă",
       desc: "Primești sprijin personalizat, oferit cu grijă și înțelegere, pentru fiecare etapă a alăptării.",
+      gradient: "from-orange-400 to-red-400",
     },
     {
-      icon: <FaComments size={20} className="text-orange-500" />,
+      icon: <FaComments size={24} className="text-white" />,
       title: "Sfaturi actualizate și de încredere",
       desc: "Te simți în siguranță cu recomandări bazate pe cele mai noi cercetări, explicate clar și accesibil.",
+      gradient: "from-blue-400 to-indigo-400",
     },
     {
-      icon: <FaEnvelope size={20} className="text-orange-500" />,
+      icon: <FaEnvelope size={24} className="text-white" />,
       title: "Sprijin adaptat stilului tău",
       desc: "Alege ședințe față în față sau online—flexibilitate în funcție de viața și confortul tău.",
+      gradient: "from-green-400 to-emerald-400",
     },
     {
-      icon: <FaCheckCircle size={20} className="text-orange-500" />,
+      icon: <FaCheckCircle size={24} className="text-white" />,
       title: "Sprijin constant, pe termen lung",
       desc: "Rămânem în legătură prin monitorizări regulate și încurajare—ca să știi că ești ascultată.",
+      gradient: "from-purple-400 to-pink-400",
     },
     {
-      icon: <FaHeart size={20} className="text-orange-500" />,
+      icon: <FaHeart size={24} className="text-white" />,
       title: "Primim fiecare familie cu căldură",
       desc: "Indiferent de stilul de parenting sau obiectivele tale, călătoria ta este respectată aici.",
+      gradient: "from-rose-400 to-pink-400",
     },
     {
-      icon: <FaStar size={20} className="text-orange-500" />,
+      icon: <FaStar size={24} className="text-white" />,
       title: "Spațiu calm și reconfortant",
       desc: "Relaxează-te într-un mediu liniștit, fără judecată, creat pentru a-ți oferi siguranță și confort.",
+      gradient: "from-amber-400 to-orange-400",
     },
   ];
 
   return (
-    <section id="SupportFeatures" className="bg-[#D39473] py-12 sm:py-16 tablet:py-24 lg:py-32">
-      <div className="max-w-6xl mx-auto px-3 sm:px-4 tablet:px-6 text-center">
+    <section 
+      id="SupportFeatures" 
+      className="relative bg-gradient-to-br from-[#D39473] via-[#C8845E] to-[#B67449] py-16 sm:py-20 lg:py-24 overflow-hidden"
+    >
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-10 w-32 h-32 bg-white/5 rounded-full animate-float"></div>
+        <div className="absolute top-40 right-20 w-24 h-24 bg-white/10 rounded-full animate-float-delay"></div>
+        <div className="absolute bottom-32 left-1/4 w-16 h-16 bg-orange-300/20 rounded-full animate-pulse"></div>
+        <div className="absolute bottom-20 right-1/3 w-28 h-28 bg-white/5 rounded-full animate-float-slow"></div>
         
-        {/* Titlu principal - optimizat pentru mobile */}
-        <h1
-          data-aos="fade-down"
-          className="
-            text-2xl sm:text-3xl tablet:text-4xl laptop:text-5xl lg:text-6xl 
-            font-extrabold text-white text-center leading-tight 
-            max-w-4xl mx-auto mb-6 sm:mb-8 tablet:mb-10 
-            px-2 sm:px-4 
-            drop-shadow-[1px_2px_4px_rgba(0,0,0,0.5)] sm:drop-shadow-[2px_4px_6px_rgba(0,0,0,0.5)]
-          "
-        >
-          De ce să ceri ajutorul unui specialist în alăptare?
-        </h1>
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent"></div>
+      </div>
 
-        {/* Subtitlu */}
-        <h2
-          data-aos="fade-up"
-          data-aos-delay="100"
-          className="
-            text-base sm:text-lg tablet:text-xl lg:text-2xl 
-            font-semibold text-gray-800 
-            mb-8 sm:mb-10 tablet:mb-12
-            px-2 sm:px-0
-          "
-        >
-          Hrănește. Împuternicește. Începe cu încredere.
-        </h2>
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        
+        {/* Header Section */}
+        <div className="mb-16" data-aos="fade-down">
+          {/* Badge */}
+          <div className="inline-flex items-center px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm text-white font-medium mb-6 shadow-lg">
+            <FaHeart className="w-4 h-4 mr-2 text-pink-200 animate-pulse" />
+            Suport specializat pentru mame
+          </div>
+          
+          {/* Main Title */}
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight max-w-4xl mx-auto mb-6 drop-shadow-2xl">
+            De ce să ceri ajutorul unui 
+            <span className="relative inline-block mx-2">
+              <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
+                specialist
+              </span>
+              <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-yellow-300 to-orange-300 rounded-full animate-pulse"></div>
+            </span>
+            în alăptare?
+          </h1>
 
-        {/* Grid cu features - responsive optimizat */}
-        <div className="
-          grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 
-          gap-4 sm:gap-6 tablet:gap-8 lg:gap-10 
-          text-left 
-          px-2 sm:px-4 tablet:px-0
-        ">
+          {/* Subtitle */}
+          <p className="text-lg sm:text-xl lg:text-2xl font-semibold text-white/90 mb-4">
+            Hrănește. Împuternicește. Începe cu încredere.
+          </p>
+          
+          {/* Trust indicators */}
+          <div className="flex flex-wrap justify-center items-center gap-6 text-white/80 text-sm">
+            <div className="flex items-center">
+              <div className="flex -space-x-1 mr-2">
+                {[1,2,3,4,5].map((star) => (
+                  <FaStar key={star} className="w-4 h-4 text-yellow-300" />
+                ))}
+              </div>
+              <span>500+ mame ajutate</span>
+            </div>
+            <div className="flex items-center">
+              <FaCheckCircle className="w-4 h-4 mr-2 text-green-300" />
+              <span>Consultant certificat IBCLC</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Features Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-16">
           {features.map((item, index) => (
             <div
               key={index}
               data-aos="zoom-in"
               data-aos-delay={`${150 + index * 100}`}
-              className="
-                flex items-start gap-3 sm:gap-4 tablet:gap-5 
-                bg-white rounded-lg sm:rounded-xl 
-                p-4 sm:p-5 tablet:p-6 
-                shadow-md hover:shadow-lg sm:shadow-lg sm:hover:shadow-xl 
-                transition duration-300
-                border border-orange-100 sm:border-none
-              "
+              className="group relative bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 border border-white/20 hover:border-white/40 transform hover:-translate-y-2"
             >
-              {/* Icon container - responsive */}
-              <div className="
-                bg-[#fbcbb2] 
-                p-2 sm:p-3 tablet:p-4 
-                rounded-lg sm:rounded-full 
-                text-white 
-                flex-shrink-0
-                min-w-[40px] sm:min-w-[48px] tablet:min-w-[56px]
-              ">
-                <div className="flex items-center justify-center">
-                  {React.cloneElement(item.icon, {
-                    size: window.innerWidth < 640 ? 16 : window.innerWidth < 768 ? 18 : 20
-                  })}
-                </div>
-              </div>
+              {/* Gradient overlay on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-orange-50/50 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
-              {/* Content */}
-              <div className="flex-1 min-w-0">
-                <h4 className="
-                  text-base sm:text-lg tablet:text-xl 
-                  font-bold text-[#b06b4c] 
-                  mb-1 sm:mb-2 
-                  leading-tight
-                ">
+              <div className="relative z-10">
+                {/* Icon */}
+                <div className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br ${item.gradient} rounded-2xl shadow-lg mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                  {item.icon}
+                </div>
+                
+                {/* Title */}
+                <h3 className="text-xl font-bold text-[#b06b4c] mb-3 group-hover:text-[#965a42] transition-colors duration-300">
                   {item.title}
-                </h4>
-                <p className="
-                  text-gray-700 
-                  text-sm sm:text-base 
-                  leading-relaxed
-                ">
+                </h3>
+                
+                {/* Description */}
+                <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
                   {item.desc}
                 </p>
+                
+                {/* Hover indicator */}
+                <div className="absolute bottom-4 right-4 w-2 h-2 bg-gradient-to-r from-orange-400 to-pink-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* CTA Button - optimizat pentru mobile */}
-        <div
-          className="mt-8 sm:mt-10 tablet:mt-12 flex justify-center px-2 sm:px-0"
-          data-aos="fade-up"
-          data-aos-delay="600"
-        >
-          <a
-            href="#booking"
-            className="
-              bg-[#ffdcc9] hover:bg-[#f7b99b] 
-              text-gray-800 font-semibold 
-              text-base sm:text-lg 
-              px-6 sm:px-8 
-              py-3 sm:py-4 
-              rounded-full 
-              shadow-md hover:shadow-lg 
-              transition duration-300
-              w-full sm:w-auto
-              max-w-xs sm:max-w-none
-              text-center
-              transform hover:scale-105
-            "
-          >
-            Programează-te acum
-          </a>
-        </div>
-
-        {/* Trust indicator pentru mobile */}
-        <div 
-          className="mt-6 sm:hidden flex items-center justify-center gap-2 text-white/80"
-          data-aos="fade-up"
-          data-aos-delay="700"
-        >
-          <FaStar size={12} className="text-yellow-300" />
-          <span className="text-xs">Peste 100 de mame mulțumite</span>
-          <FaStar size={12} className="text-yellow-300" />
+        {/* Call to Action Section */}
+        <div className="relative" data-aos="fade-up" data-aos-delay="600">
+          {/* Background decoration */}
+          <div className="absolute inset-0 bg-white/10 backdrop-blur-sm rounded-3xl -m-8"></div>
+          
+          <div className="relative z-10 py-8">
+            <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+              Ești gata să începi călătoria?
+            </h3>
+            
+            <p className="text-white/90 mb-8 max-w-2xl mx-auto text-lg">
+              Programează o consultație gratuită și să discutăm despre cum te pot ajuta să-ți trăiești experiența de alăptare cu încredere.
+            </p>
+            
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <a
+                href="#booking"
+                className="group inline-flex items-center justify-center bg-white text-[#D39473] font-bold text-lg px-8 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105"
+              >
+                <span>Programează consultația gratuită</span>
+                <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </a>
+              
+              <a
+                href="#contact"
+                className="group inline-flex items-center justify-center border-2 border-white text-white font-semibold text-lg px-8 py-4 rounded-full hover:bg-white hover:text-[#D39473] transition-all duration-300 transform hover:-translate-y-1"
+              >
+                <FaEnvelope className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-300" />
+                <span>Contactează-mă</span>
+              </a>
+            </div>
+            
+            {/* Additional trust elements */}
+            <div className="mt-8 flex flex-wrap justify-center items-center gap-8 text-white/70 text-sm">
+              <div className="flex items-center">
+                <svg className="w-5 h-5 mr-2 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Consultație gratuită de 15 min
+              </div>
+              <div className="flex items-center">
+                <svg className="w-5 h-5 mr-2 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                100% confidențial
+              </div>
+              <div className="flex items-center">
+                <svg className="w-5 h-5 mr-2 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+                Suport cu empatie
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
