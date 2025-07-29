@@ -87,7 +87,7 @@ function Hero() {
             data-aos-delay="600"
           >
             <PrimaryButton
-              href="#booking"
+              href="BookingWizard"
               className="group w-full sm:w-auto text-base px-8 py-4 bg-gradient-to-r from-[#b06b4c] to-[#965a42] hover:from-[#965a42] hover:to-[#7d4a37] transform hover:-translate-y-1 transition-all duration-300 shadow-lg hover:shadow-2xl"
             >
               <span className="flex items-center justify-center">

@@ -31,7 +31,7 @@ const helpItems = [
   {
     title: "Educație prenatală pentru alăptare",
     desc: "Pregătește-te din timp! Sesiuni personalizate te ajută să știi la ce să te aștepți și cum să începi alăptarea cu încredere, chiar din primele zile.",
-    image: "/help_img_04.jpg",
+    image: "/help_img_05.webp",
     icon: "📚",
     color: "from-purple-400 to-pink-400",
     stats: "Pregătire completă"

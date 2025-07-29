@@ -6,7 +6,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import Header from "./components/Header/Header";
 import Hero from "./components/Hero";
 import AboutMe from "./components/AboutMe";
-import SupportFeatures from "./components/SupportFeatures";
+// import SupportFeatures from "./components/SupportFeatures";
 import Help from "./components/Help";
 import SupportPackages from "./components/SupportPackages";
 import FAQSection from "./components/FAQSection";
@@ -29,7 +29,7 @@ function HomePage() {
       <Header />
       <Hero />
       <AboutMe />
-      <SupportFeatures />
+   {/* <SupportFeatures /> */}
       <Help />
       <SupportPackages />
       <FAQSection />
