@@ -164,10 +164,10 @@ function StepServiceSelection({ services, formData, updateSelectedService, nextS
                       </div>
                     </div>
                     
-                    <p className="text-gray-600 leading-relaxed mb-4 group-hover:text-gray-700 transition-colors duration-300">
-                      {service.description}
-                    </p>
-                    
+                   <p className="text-gray-600 leading-relaxed mb-4 group-hover:text-gray-700 transition-colors duration-300 line-clamp-3 max-w-full">
+  {service.description}
+</p>
+
                     {/* Service Features */}
                     <div className="grid grid-cols-2 gap-3 text-sm text-gray-500">
                       <div className="flex items-center">

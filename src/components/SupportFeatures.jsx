@@ -48,8 +48,8 @@ function SupportFeatures() {
     },
     {
       icon: <FaStar size={24} className="text-white" />,
-      title: "Spațiu calm și reconfortant",
-      desc: "Relaxează-te într-un mediu liniștit, fără judecată, creat pentru a-ți oferi siguranță și confort.",
+      title: "Consultanță online, oriunde te afli",
+      desc: "Primești sprijinul de care ai nevoie direct din confortul casei tale, fără deplasări sau stres.",
       gradient: "from-amber-400 to-orange-400",
     },
   ];

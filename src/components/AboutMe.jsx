@@ -164,24 +164,8 @@ function AboutMe() {
         </div>
 
         {/* Call to Action Section */}
-        <div className="mt-16 text-center" data-aos="fade-up">
-          <div className="bg-gradient-to-r from-[#9f6032] to-amber-600 rounded-2xl p-8 shadow-2xl">
-            <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4">
-              Ești gata să începi?
-            </h3>
-            <p className="text-orange-100 mb-6 max-w-2xl mx-auto">
-              Programează o consultație gratuită și să discutăm despre cum te pot ajuta în călătoria ta de alăptare.
-            </p>
-            <button className="group bg-white text-[#9f6032] px-8 py-4 rounded-full font-semibold hover:bg-orange-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-              <span className="flex items-center">
-                Programează consultația gratuită
-                <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </span>
-            </button>
-          </div>
-        </div>
+    
+       
       </div>
     </section>
   );
