@@ -25,21 +25,30 @@ function ContactOptions() {
     e.preventDefault();
     const email = "macociug@gmail.com";
     const subject = encodeURIComponent("Consultație alăptare");
-    const body = encodeURIComponent("Bună ziua, aș dori să programez o consultație...");
-    
+    const body = encodeURIComponent(
+      "Bună ziua, aș dori să programez o consultație..."
+    );
+
     const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
-    
+
     // Încearcă să deschidă link-ul
     window.location.href = mailtoLink;
-    
+
     // Fallback pentru mobile sau dacă nu funcționează
     setTimeout(() => {
-      if (confirm("Nu s-a deschis aplicația de email? Copiezi adresa în clipboard?")) {
-        navigator.clipboard.writeText(email).then(() => {
-          alert("Adresa de email a fost copiată în clipboard!");
-        }).catch(() => {
-          prompt("Copiază această adresă de email:", email);
-        });
+      if (
+        confirm(
+          "Nu s-a deschis aplicația de email? Copiezi adresa în clipboard?"
+        )
+      ) {
+        navigator.clipboard
+          .writeText(email)
+          .then(() => {
+            alert("Adresa de email a fost copiată în clipboard!");
+          })
+          .catch(() => {
+            prompt("Copiază această adresă de email:", email);
+          });
       }
     }, 1000);
   };
@@ -194,9 +203,17 @@ function ContactOptions() {
                 {/* Contact Button */}
                 <a
                   href={item.link}
-                  onClick={item.title === "Email Personal" ? handleEmailClick : undefined}
+                  onClick={
+                    item.title === "Email Personal"
+                      ? handleEmailClick
+                      : undefined
+                  }
                   target={item.title === "Email Personal" ? "_self" : "_blank"}
-                  rel={item.title === "Email Personal" ? undefined : "noopener noreferrer"}
+                  rel={
+                    item.title === "Email Personal"
+                      ? undefined
+                      : "noopener noreferrer"
+                  }
                   className={`group/btn block w-full text-center bg-gradient-to-r ${item.bgGradient} hover:${item.hoverGradient} text-white font-bold text-lg py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1`}
                 >
                   <span className="flex items-center justify-center">
