@@ -108,8 +108,8 @@ function Hero() {
               </span>
             </PrimaryButton>
 
-            <OutlineButton
-              href="Alăptare primul pas (Ebook)"
+    <OutlineButton
+              href="/ebook"  // ← Schimbat din "Alăptare primul pas (Ebook)" în "/ebook"
               className="group w-full sm:w-auto text-base px-8 py-4 border-2 border-[#b06b4c] text-[#b06b4c] hover:bg-[#b06b4c] hover:text-white transform hover:-translate-y-1 transition-all duration-300 shadow-lg hover:shadow-2xl"
             >
               <span className="flex items-center justify-center">

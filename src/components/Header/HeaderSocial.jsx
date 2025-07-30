@@ -16,7 +16,7 @@ function HeaderSocial() {
 
   const socialLinks = [
     {
-      href: "https://facebook.com",
+      href: "https://www.facebook.com/cociug.marina",
       icon: FaFacebookF,
       color: "#1877F2",
       name: "Facebook"

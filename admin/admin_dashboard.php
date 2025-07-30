@@ -31,6 +31,12 @@ try {
     $stmt = $pdo->prepare("SELECT COUNT(*) as total FROM testimonials_simple WHERE status = 'active'");
     $stmt->execute();
     $recenzii_active = $stmt->fetch()['total'] ?? 0;
+   
+// STATISTICĂ PENTRU DOCUMENTE - NOUĂ ///////////////////////////////////////////////////////////////////////////////
+$stmt = $pdo->prepare("SELECT COUNT(*) as total FROM documents WHERE status = 'active'");
+$stmt->execute();
+$documente_active = $stmt->fetch()['total'] ?? 0;
+
     
 } catch (PDOException $e) {
     // Valori default în caz de eroare
@@ -662,6 +668,240 @@ try {
         .text-primary {
             color: #fd79a8 !important;
         }
+        .card-documents .card-icon {
+    background: linear-gradient(135deg, #a8e6cf, #7fcdcd);
+    color: white;
+}
+
+.card-documents .card-action {
+    background: linear-gradient(135deg, #a8e6cf, #7fcdcd);
+    color: white;
+}
+
+/* STILURI PENTRU MODAL DOCUMENTE */
+.modal-header.documents-header {
+    background: linear-gradient(135deg, #a8e6cf, #7fcdcd);
+}
+
+.nav-tabs .nav-link.active.documents-tab {
+    background: linear-gradient(135deg, #a8e6cf, #7fcdcd);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(168, 230, 207, 0.3);
+}
+
+.text-documents {
+    color: #a8e6cf !important;
+}
+
+/* STILURI PENTRU FORMULARUL DE DOCUMENTE */
+.documents-upload-area {
+    border: 3px dashed #a8e6cf;
+    border-radius: 20px;
+    padding: 40px 20px;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(168, 230, 207, 0.1), rgba(127, 205, 205, 0.1));
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.documents-upload-area:hover {
+    border-color: #7fcdcd;
+    background: linear-gradient(135deg, rgba(168, 230, 207, 0.2), rgba(127, 205, 205, 0.2));
+    transform: translateY(-5px);
+}
+
+.documents-upload-area.dragover {
+    border-color: #5fa8a8;
+    background: linear-gradient(135deg, rgba(168, 230, 207, 0.3), rgba(127, 205, 205, 0.3));
+    transform: scale(1.02);
+}
+
+.upload-icon {
+    font-size: 4rem;
+    color: #7fcdcd;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.documents-upload-area:hover .upload-icon {
+    transform: scale(1.1) rotate(5deg);
+    color: #5fa8a8;
+}
+
+.form-floating.documents > .form-control:focus {
+    border-color: #a8e6cf;
+    box-shadow: 0 0 0 0.2rem rgba(168, 230, 207, 0.25);
+}
+
+.form-floating.documents > .form-control:focus ~ label,
+.form-floating.documents > .form-control:not(:placeholder-shown) ~ label {
+    color: #a8e6cf;
+    font-weight: 600;
+}
+
+/* BUTON PENTRU DOCUMENTE */
+.btn-save-document {
+    background: linear-gradient(135deg, #a8e6cf, #7fcdcd);
+    border: none;
+    border-radius: 20px;
+    padding: 15px 40px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: white;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-save-document::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
+}
+
+.btn-save-document:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(168, 230, 207, 0.4);
+    background: linear-gradient(135deg, #7fcdcd, #5fa8a8);
+}
+
+.btn-save-document:hover::before {
+    left: 100%;
+}
+
+/* STILURI PENTRU LISTA DE DOCUMENTE */
+.document-item {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 20px;
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.document-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(135deg, #a8e6cf, #7fcdcd);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+.document-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    border-color: #a8e6cf;
+}
+
+.document-item:hover::before {
+    transform: scaleY(1);
+}
+
+.document-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.document-badge {
+    background: linear-gradient(135deg, #a8e6cf, #7fcdcd);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.document-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #a8e6cf, #7fcdcd);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.btn-delete-document {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+    border: none;
+    border-radius: 10px;
+    padding: 8px 15px;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-delete-document:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+    background: linear-gradient(135deg, #ee5a52, #dc3545);
+}
+
+/* Empty state design pentru documente */
+.documents-empty {
+    text-align: center;
+    padding: 50px 20px;
+    color: #6c757d;
+}
+
+.documents-empty i {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    color: #a8e6cf;
+    opacity: 0.7;
+}
+
+/* Loading animation pentru documente */
+.documents-loading {
+    text-align: center;
+    padding: 50px;
+}
+
+/* Progress bar pentru upload */
+.upload-progress {
+    width: 100%;
+    height: 8px;
+    background: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 15px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.upload-progress.show {
+    opacity: 1;
+}
+
+.progress-bar-documents {
+    height: 100%;
+    background: linear-gradient(135deg, #a8e6cf, #7fcdcd);
+    width: 0%;
+    transition: width 0.3s ease;
+    border-radius: 4px;
+}
     </style>
 </head>
 <body>
@@ -690,6 +930,10 @@ try {
                 <h3 id="testimonials-count"><?php echo $recenzii_active; ?></h3>
                 <p>Recenzii</p>
             </div>
+            <div class="stat-item">
+    <h3 id="documents-count"><?php echo $documente_active; ?></h3>
+    <p>Documente</p>
+</div>
         </div>
 
         <div class="dashboard-grid">
@@ -729,7 +973,14 @@ try {
                     ⭐ Gestionează recenzii
                 </div>
             </button>
-
+<button type="button" class="dashboard-card card-documents" onclick="openDocumentsModal()">
+    <div class="card-icon">📁</div>
+    <h3 class="card-title">Documente pentru Clienți</h3>
+    <p class="card-description">Încarcă ghiduri, formulare și resurse pentru mamele care te urmăresc</p>
+    <div class="card-action">
+        📤 Gestionează documente
+    </div>
+</button>
             <a href="logout.php" class="dashboard-card card-logout">
                 <div class="card-icon">🚪</div>
                 <h3 class="card-title">Deconectare</h3>
@@ -849,7 +1100,9 @@ try {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
+        
         // Variabile globale pentru testimonials
         let testimonialsData = [];
         let selectedRating = 5;
@@ -1188,6 +1441,7 @@ try {
         // Încarcă datele la pornirea paginii
         document.addEventListener('DOMContentLoaded', function() {
             loadTestimonialsCount();
+               updateDocumentsCount();
             
             // Efecte interactive pentru dashboard
             const cards = document.querySelectorAll('.dashboard-card');
@@ -1246,6 +1500,573 @@ try {
             }
         `;
         document.head.appendChild(style);
+        let documentsData = [];
+const DOCUMENTS_API = 'documents_admin_api.php';
+
+// Deschide modal-ul pentru documente
+function openDocumentsModal() {
+    const modal = new bootstrap.Modal(document.getElementById('documentsModal'));
+    modal.show();
+    loadDocuments();
+    initDocumentUpload();
+}
+
+// Inițializează upload-ul de documente
+function initDocumentUpload() {
+    const uploadArea = document.getElementById('upload-area');
+    const fileInput = document.getElementById('document-file');
+    const uploadForm = document.getElementById('document-upload-form');
+    
+    // Click pentru a selecta fișier
+    uploadArea.addEventListener('click', () => fileInput.click());
+    
+    // Drag & Drop
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+    });
+    
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('dragover');
+    });
+    
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+        
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            fileInput.files = files;
+            handleFileSelect(files[0]);
+        }
+    });
+    
+    // Când se selectează un fișier
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+            handleFileSelect(e.target.files[0]);
+        }
+    });
+    
+    // Submit form
+    uploadForm.addEventListener('submit', uploadDocument);
+}
+
+// Gestionează selecția fișierului
+function handleFileSelect(file) {
+    const fileName = document.getElementById('selected-file-name');
+    const fileSize = document.getElementById('selected-file-size');
+    const fileInfo = document.getElementById('file-info');
+    
+    fileName.textContent = file.name;
+    fileSize.textContent = formatFileSize(file.size);
+    fileInfo.style.display = 'block';
+    
+    // Auto-completează titlul dacă este gol
+    const titleInput = document.getElementById('document-title');
+    if (!titleInput.value) {
+        const nameWithoutExt = file.name.replace(/\.[^/.]+$/, "");
+        titleInput.value = nameWithoutExt;
+    }
+}
+
+// Upload document
+// Upload document
+async function uploadDocument(e) {
+    e.preventDefault();
+    
+    const formData = new FormData();
+    const fileInput = document.getElementById('document-file');
+    const title = document.getElementById('document-title').value.trim();
+    const description = document.getElementById('document-description').value.trim();
+    const category = document.getElementById('document-category').value;
+    const isFeatured = document.getElementById('document-featured').checked;
+    const documentType = document.getElementById('document-type').value;
+    const price = documentType === 'paid' ? parseFloat(document.getElementById('document-price').value) || 0 : 0;
+    const isFree = documentType === 'free';
+    
+    if (!fileInput.files[0]) {
+        showAlert('❌ Selectează un fișier pentru încărcare!', 'danger');
+        return;
+    }
+    
+    if (!title) {
+        showAlert('❌ Titlul documentului este obligatoriu!', 'danger');
+        return;
+    }
+    
+    if (documentType === 'paid' && price <= 0) {
+        showAlert('❌ Prețul trebuie să fie mai mare decât 0 pentru documentele cu plată!', 'danger');
+        return;
+    }
+    
+    formData.append('document', fileInput.files[0]);
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('category', category);
+    formData.append('price', price);
+    formData.append('is_free', isFree ? '1' : '0');
+    if (isFeatured) formData.append('is_featured', '1');
+    
+    const submitBtn = document.querySelector('.btn-save-document');
+    const originalText = submitBtn.innerHTML;
+    const progressBar = document.querySelector('.upload-progress');
+    const progressFill = document.querySelector('.progress-bar-documents');
+    
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Se încarcă...';
+    submitBtn.disabled = true;
+    progressBar.classList.add('show');
+    
+    try {
+        const response = await fetch(DOCUMENTS_API, {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            showAlert('✅ Document încărcat cu succes! Este disponibil pentru clienți.', 'success');
+            
+            // Reset form
+            document.getElementById('document-upload-form').reset();
+            document.getElementById('selected-file-name').textContent = '';
+            document.getElementById('selected-file-size').textContent = '';
+            document.getElementById('file-info').style.display = 'none';
+            document.getElementById('price-container').style.display = 'none';
+            
+            // Reload documents
+            setTimeout(() => {
+                loadDocuments();
+                updateDocumentsCount(); 
+                 
+                // Switch to list tab
+                const listTab = new bootstrap.Tab(document.getElementById('documents-list-tab'));
+                listTab.show();
+            }, 1500);
+        } else {
+            showAlert('❌ Eroare la încărcarea documentului: ' + data.error, 'danger');
+        }
+    } catch (error) {
+        showAlert('❌ Eroare de conexiune: ' + error.message, 'danger');
+    } finally {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+        progressBar.classList.remove('show');
+        progressFill.style.width = '0%';
+    }
+}
+
+// Event listener pentru tipul de document
+document.getElementById('document-type').addEventListener('change', function() {
+    const priceContainer = document.getElementById('price-container');
+    if (this.value === 'paid') {
+        priceContainer.style.display = 'block';
+        document.getElementById('document-price').required = true;
+    } else {
+        priceContainer.style.display = 'none';
+        document.getElementById('document-price').required = false;
+        document.getElementById('document-price').value = '';
+    }
+});
+// Încarcă lista de documente
+// Afișează lista de documente
+// Încarcă lista de documente
+async function loadDocuments() {
+    const loadingEl = document.getElementById('documents-loading');
+    const listEl = document.getElementById('documents-list');
+    const emptyEl = document.getElementById('documents-empty');
+
+    listEl.style.display = 'none';
+    emptyEl.style.display = 'none';
+    loadingEl.style.display = 'block';
+
+    try {
+        const response = await fetch(DOCUMENTS_API);
+        const data = await response.json();
+
+        if (data.success) {
+            documentsData = data.data;
+
+            setTimeout(() => {
+                loadingEl.style.display = 'none';
+
+                if (documentsData.length === 0) {
+                    emptyEl.style.display = 'block';
+                } else {
+                    displayDocumentsList(); // ✅ logic corect aici
+                    listEl.style.display = 'block';
+                }
+            }, 1000);
+        } else {
+            loadingEl.style.display = 'none';
+            showAlert('❌ Eroare la încărcarea documentelor: ' + data.error, 'danger');
+        }
+    } catch (error) {
+        loadingEl.style.display = 'none';
+        showAlert('❌ Eroare de conexiune: ' + error.message, 'danger');
+    }
+}
+
+// Afișează lista de documente
+function displayDocumentsList() {
+    const listEl = document.getElementById('documents-list');
+
+    let html = '';
+    documentsData.forEach((doc, index) => {
+        const iconClass = getDocumentIcon(doc.file_type);
+        const shortDescription = doc.description && doc.description.length > 100 ?
+            doc.description.substring(0, 100) + '...' :
+            doc.description || 'Fără descriere';
+
+        const priceInfo = doc.is_free === 1 || doc.is_free === true ?
+            '<span class="badge bg-success"><i class="fas fa-gift me-1"></i>GRATUIT</span>' :
+            `<span class="badge bg-warning text-dark"><i class="fas fa-euro-sign me-1"></i>${doc.price || 0} RON</span>`;
+
+        html += `
+            <div class="document-item" style="animation: fadeInUp 0.5s ease-out ${index * 0.1}s both;">
+                <div class="document-header">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="document-badge">Document #${index + 1}</span>
+                        ${priceInfo}
+                    </div>
+                    <div>
+                        ${doc.is_featured ? '<span class="badge bg-warning text-dark me-2">⭐ Recomandat</span>' : ''}
+                        <span class="badge bg-secondary">${doc.category}</span>
+                        <button class="btn-delete-document ms-2" onclick="deleteDocument(${doc.id})" title="Șterge documentul">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-start gap-3">
+                    <div class="document-icon">
+                        ${iconClass}
+                    </div>
+
+                    <div class="flex-grow-1">
+                        <h6 class="fw-bold mb-2">${doc.title}</h6>
+                        <p class="text-muted small mb-2">${shortDescription}</p>
+                        <div class="d-flex align-items-center gap-3 text-muted small">
+                            <span><i class="fas fa-file me-1"></i>${doc.original_filename}</span>
+                            <span><i class="fas fa-weight me-1"></i>${doc.formatted_size}</span>
+                            <span><i class="fas fa-calendar me-1"></i>${doc.created_at_formatted}</span>
+                            ${doc.downloads_count > 0 ? `<span class="badge bg-info">${doc.downloads_count} descărcări</span>` : ''}
+                        </div>
+                        ${!(doc.is_free === 1 || doc.is_free === true) ? '<div class="mt-2"><small class="text-warning"><i class="fas fa-crown me-1"></i>Document Premium</small></div>' : ''}
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-sm btn-outline-primary" onclick="testDownload(${doc.id})" title="Test descărcare">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+
+    listEl.innerHTML = html;
+}
+
+// Șterge document
+async function deleteDocument(id) {
+    const result = await showConfirmDialog(
+        'Șterge Document',
+        'Ești sigură că vrei să ștergi acest document? Nu va mai fi disponibil pentru clienți!',
+        'danger'
+    );
+    
+    if (!result) return;
+    
+    try {
+        const response = await fetch(`${DOCUMENTS_API}?id=${id}`, {
+            method: 'DELETE'
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            showAlert('🗑️ Document șters cu succes!', 'success');
+            loadDocuments();
+         updateDocumentsCount();
+
+        } else {
+            showAlert('❌ Eroare la ștergerea documentului: ' + data.error, 'danger');
+        }
+    } catch (error) {
+        showAlert('❌ Eroare de conexiune: ' + error.message, 'danger');
+    }
+}
+
+// Test descărcare document
+function testDownload(id) {
+    window.open(`${DOCUMENTS_API}?download=1&id=${id}`, '_blank');
+}
+
+// Actualizează contorul de documente
+async function updateDocumentsCount() {
+    try {
+        const response = await fetch(DOCUMENTS_API);
+        const data = await response.json();
+        
+        if (data.success) {
+            document.getElementById('documents-count').textContent = data.data.length;
+            
+            // Animație pentru numărul de documente
+            const countElement = document.getElementById('documents-count');
+            countElement.style.transform = 'scale(1.2)';
+            countElement.style.color = '#a8e6cf';
+            setTimeout(() => {
+                countElement.style.transform = 'scale(1)';
+                countElement.style.color = '';
+            }, 300);
+        } else {
+            document.getElementById('documents-count').textContent = '0';
+        }
+    } catch (error) {
+        console.error('Eroare la încărcarea documentelor:', error);
+        document.getElementById('documents-count').textContent = 'Eroare';
+    }
+}
+
+// Obține iconița documentului
+function getDocumentIcon(fileType) {
+    if (fileType.includes('pdf')) return '📄';
+    if (fileType.includes('word') || fileType.includes('document')) return '📝';
+    if (fileType.includes('excel') || fileType.includes('sheet')) return '📊';
+    if (fileType.includes('image')) return '🖼️';
+    return '📋';
+}
+
+// Formatează dimensiunea fișierului
+function formatFileSize(bytes) {
+    if (bytes >= 1073741824) {
+        return (bytes / 1073741824).toFixed(2) + ' GB';
+    } else if (bytes >= 1048576) {
+        return (bytes / 1048576).toFixed(2) + ' MB';
+    } else if (bytes >= 1024) {
+        return (bytes / 1024).toFixed(2) + ' KB';
+    } else {
+        return bytes + ' bytes';
+    }
+}
+
+// Event listeners pentru documente
+document.getElementById('documents-list-tab').addEventListener('click', () => {
+    if (documentsData.length === 0) {
+        loadDocuments();
+    }
+});
+
     </script>
+    <!-- MODAL PENTRU DOCUMENTE -->
+<div class="modal fade" id="documentsModal" tabindex="-1" aria-labelledby="documentsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header documents-header">
+                <h5 class="modal-title" id="documentsModalLabel">
+                    <i class="fas fa-folder-open me-3"></i>Gestionare Documente pentru Clienți
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" id="documentsTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active documents-tab" id="documents-upload-tab" data-bs-toggle="tab" data-bs-target="#upload-document" type="button" role="tab">
+                            <i class="fas fa-cloud-upload-alt me-2"></i>Încarcă Document Nou
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link documents-tab" id="documents-list-tab" data-bs-toggle="tab" data-bs-target="#list-documents" type="button" role="tab">
+                            <i class="fas fa-list-alt me-2"></i>Toate Documentele
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="documentsTabContent">
+                    <!-- Tab pentru Upload -->
+                    <div class="tab-pane fade show active" id="upload-document" role="tabpanel">
+                        <div class="row mt-4">
+                            <div class="col-lg-8">
+                                <form id="document-upload-form" enctype="multipart/form-data">
+                                    <div class="documents-upload-area" id="upload-area">
+                                        <div class="upload-icon">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                        </div>
+                                        <h4 class="text-documents mb-3">Încarcă un document</h4>
+                                        <p class="text-muted mb-3">Trage și plasează fișierul aici sau fă click pentru a selecta</p>
+                                        <p class="small text-muted">
+                                            Formate acceptate: PDF, Word, Excel, text, imagini<br>
+                                            Dimensiune maximă: 10MB
+                                        </p>
+                                        <input type="file" id="document-file" name="document" accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.jpeg,.png,.gif,.webp" style="display: none;">
+                                        
+                                        <div class="upload-progress">
+                                            <div class="progress-bar-documents"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="file-info" class="mt-3" style="display: none;">
+                                        <div class="alert alert-info">
+                                            <i class="fas fa-file me-2"></i>
+                                            <strong>Fișier selectat:</strong>
+                                            <span id="selected-file-name"></span>
+                                            (<span id="selected-file-size"></span>)
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row mt-4">
+                                        <div class="col-md-12">
+                                            <div class="form-floating documents mb-3">
+                                                <input type="text" class="form-control" id="document-title" placeholder="Ex: Ghid Alăptare pentru Începătoare" required>
+                                                <label for="document-title">
+                                                    <i class="fas fa-heading me-2"></i>Titlul Documentului *
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-8">
+                                            <div class="form-floating documents mb-3">
+                                                <textarea class="form-control" id="document-description" placeholder="Descrie documentul..." style="height: 100px;"></textarea>
+                                                <label for="document-description">
+                                                    <i class="fas fa-align-left me-2"></i>Descriere (opțional)
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-4">
+                                            <div class="form-floating documents mb-3">
+                                                <select class="form-select" id="document-category">
+                                                    <!-- CÂMPURI NOI PENTRU PREȚURI -->
+<div class="col-md-6">
+    <div class="form-floating documents mb-3">
+        <select class="form-select" id="document-type">
+            <option value="free">Gratuit</option>
+            <option value="paid">Cu plată</option>
+        </select>
+        <label for="document-type">
+            <i class="fas fa-tag me-2"></i>Tipul Documentului
+        </label>
+    </div>
+</div>
+
+<div class="col-md-6" id="price-container" style="display: none;">
+    <div class="form-floating documents mb-3">
+        <input type="number" class="form-control" id="document-price" placeholder="0.00" step="0.01" min="0">
+        <label for="document-price">
+            <i class="fas fa-euro-sign me-2"></i>Preț (RON)
+        </label>
+    </div>
+</div>
+                                                    <option value="general">General</option>
+                                                    <option value="ghiduri">Ghiduri</option>
+                                                    <option value="formulare">Formulare</option>
+                                                    <option value="resurse">Resurse</option>
+                                                    <option value="exercitii">Exerciții</option>
+                                                    <option value="planuri">Planuri Alimentare</option>
+                                                </select>
+                                                <label for="document-category">
+                                                    <i class="fas fa-folder me-2"></i>Categoria
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-check mb-4">
+                                        <input class="form-check-input" type="checkbox" id="document-featured">
+                                        <label class="form-check-label fw-bold text-warning" for="document-featured">
+                                            <i class="fas fa-star me-2"></i>Marchează ca document recomandat
+                                        </label>
+                                        <div class="form-text">Documentele recomandate apar primul în lista pentru clienți</div>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn-save-document">
+                                        <i class="fas fa-upload me-2"></i>Încarcă Documentul
+                                    </button>
+                                </form>
+                            </div>
+                            
+                            <div class="col-lg-4">
+                                <div class="card" style="border-radius: 20px; border: 2px solid #a8e6cf;">
+                                    <div class="card-header text-center" style="background: linear-gradient(135deg, #a8e6cf, #7fcdcd); color: white; border-radius: 18px 18px 0 0;">
+                                        <i class="fas fa-info-circle fa-2x mb-2"></i>
+                                        <h5 class="mb-0">Informații Importante</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <h6 class="text-documents">📋 Tipuri de documente</h6>
+                                            <ul class="small text-muted">
+                                                <li>Ghiduri de alăptare (PDF)</li>
+                                                <li>Formulare de consultație</li>
+                                                <li>Planuri alimentare</li>
+                                                <li>Exerciții și tehnici</li>
+                                                <li>Resurse educaționale</li>
+                                            </ul>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <h6 class="text-documents">⭐ Documente recomandate</h6>
+                                            <p class="small text-muted">Documentele marcate ca recomandate vor apărea primul în lista pentru clienți și vor avea o iconiță specială.</p>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <h6 class="text-documents">🔒 Securitate</h6>
+                                            <p class="small text-muted">Documentele sunt stocate securizat și accesibile doar clienților de pe site-ul tău.</p>
+                                        </div>
+                                        
+                                        <div class="alert alert-warning small">
+                                            <i class="fas fa-exclamation-triangle me-2"></i>
+                                            <strong>Notă:</strong> După încărcare, documentul va fi imediat disponibil pentru descărcare pe pagina principală.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab pentru Lista -->
+                    <div class="tab-pane fade" id="list-documents" role="tabpanel">
+                        <div class="d-flex justify-content-between align-items-center mt-4 mb-4">
+                            <h4 class="text-documents">
+                                <i class="fas fa-folder-open me-2"></i>Documentele Tale
+                            </h4>
+                            <div class="d-flex gap-2">
+                                <select class="form-select form-select-sm" id="filter-category" style="width: auto;">
+                                    <option value="">Toate categoriile</option>
+                                    <option value="general">General</option>
+                                    <option value="ghiduri">Ghiduri</option>
+                                    <option value="formulare">Formulare</option>
+                                    <option value="resurse">Resurse</option>
+                                    <option value="exercitii">Exerciții</option>
+                                    <option value="planuri">Planuri Alimentare</option>
+                                </select>
+                                <button class="btn btn-outline-primary btn-sm" onclick="loadDocuments()">
+                                    <i class="fas fa-sync-alt"></i> Reîncarcă
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div id="documents-loading" class="documents-loading" style="display: none;">
+                            <div class="spinner-border text-documents" role="status"></div>
+                            <p class="mt-3 text-muted">Se încarcă documentele...</p>
+                        </div>
+                        
+                        <div id="documents-list"></div>
+                        
+                        <div id="documents-empty" class="documents-empty" style="display: none;">
+                            <i class="fas fa-folder-open"></i>
+                            <h5 class="text-muted mb-3">Nu există documente încă</h5>
+                            <p class="text-muted">Adaugă primul document pentru a-l vedea aici și pe site</p>
+                            <button class="btn btn-outline-success" onclick="document.getElementById('documents-upload-tab').click()">
+                                <i class="fas fa-plus me-2"></i>Adaugă Primul Document
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

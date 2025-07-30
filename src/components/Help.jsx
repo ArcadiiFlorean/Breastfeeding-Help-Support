@@ -185,7 +185,7 @@ function Help() {
               {/* Multiple CTA buttons */}
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <a
-                  href="#preturi"
+                  href="#SupportPackages"
                   className="group inline-flex items-center justify-center bg-white text-[#b06b4c] font-bold text-lg px-8 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105"
                 >
                   <span>Vezi prețurile și pachetele</span>

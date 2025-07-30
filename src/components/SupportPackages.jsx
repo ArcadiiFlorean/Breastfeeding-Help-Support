@@ -436,9 +436,7 @@ function SupportPackages() {
                             {pkg.currency}
                           </span>
                         </div>
-                        <p className="text-gray-300 text-xs sm:text-sm">
-                          per sesiune
-                        </p>
+                      
                       </div>
                     </div>
 

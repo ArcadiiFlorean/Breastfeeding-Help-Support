@@ -160,7 +160,7 @@ function FAQSection() {
                 Programează o consultație personalizată pentru răspunsuri adaptate situației tale
               </p>
               <a
-                href="#booking"
+                href="BookingWizard"
                 className="
                   inline-block bg-white text-[#D39473] 
                   font-semibold text-sm sm:text-base
