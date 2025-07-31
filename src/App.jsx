@@ -17,7 +17,9 @@ import BookingWizard from './components/BookingWizard/BookingWizard';
 import ThankYou from "./components/ThankYou";
 import StepPayment from "./components/BookingWizard/steps/StepPayment";
 import BookingSuccess from './components/BookingSuccess';
-import EbookPage from "./components/EbookPage"; // ← NOUĂ PAGINĂ
+
+import EbookPage from "./components/EbookPage";
+
 
 // Stripe public key
 const stripePromise = loadStripe("pk_test_51RX5afGbmcCvmvOdy7YGcVdAVtbtFRb8K44iUc8PfSENZfS4VDgb8oRr1Ev8bL0s761UjSESgbeUErjbAFbf9szi000m7J4TA6");
@@ -49,7 +51,7 @@ function App() {
         <Route path="/thankyou" element={<ThankYou />} />
         <Route path="/payment" element={<StepPayment />} />
         <Route path="/booking-success" element={<BookingSuccess />} />
-        <Route path="/ebook" element={<EbookPage />} /> {/* ← RUTĂ NOUĂ */}
+  <Route path="/ebook" element={<EbookPage />} />
       </Routes>
     </Elements>
   );

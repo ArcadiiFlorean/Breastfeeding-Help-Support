@@ -1,273 +1,319 @@
 import React, { useState, useEffect } from 'react';
 
 const DocumentsPublic = () => {
-    const [documents, setDocuments] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [selectedCategory, setSelectedCategory] = useState('');
+  const [documents, setDocuments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('all');
 
-    const API_URL = '/admin/documents_public_api.php'; // Calea relativă cu proxy
+  // API endpoint pentru documentele publice
+  const DOCUMENTS_API = '/admin/documents_admin_api.php';
 
-    useEffect(() => {
-        fetchDocuments();
-    }, []);
+  // Categorii pentru filtrare
+  const categories = {
+    all: 'Toate documentele',
+    ghiduri: '📖 Ghiduri și Tutoriale',
+    formulare: '📋 Formulare',
+    resurse: '📚 Resurse Educaționale',
+    checklist: '✅ Checklist-uri',
+    general: '📁 General'
+  };
 
-    const fetchDocuments = async () => {
-        try {
-            setLoading(true);
-            console.log('🔍 Încearcă să acceseze:', API_URL);
-            
-            const response = await fetch(API_URL);
-            console.log('📡 Status răspuns:', response.status);
-            console.log('📡 Response OK:', response.ok);
-            
-            const data = await response.json();
-            console.log('📄 Date primite:', data);
-            
-            if (data.success) {
-                setDocuments(data.data);
-                console.log('✅ Documente setate:', data.data.length);
-            } else {
-                console.log('❌ API returnează eroare:', data.error);
-                setError('Eroare la încărcarea documentelor');
-            }
-        } catch (err) {
-            console.error('💥 Eroare fetch:', err);
-            setError('Eroare de conexiune: ' + err.message);
-        } finally {
-            setLoading(false);
+  // Încarcă documentele la mount
+  useEffect(() => {
+    fetchDocuments();
+  }, []);
+
+  // Funcție pentru încărcarea documentelor
+  const fetchDocuments = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const response = await fetch(DOCUMENTS_API, {
+        method: 'GET',
+        headers: {
+          'Cache-Control': 'no-cache'
         }
-    };
+      });
 
-    const handleDownload = (id, filename) => {
-        // Deschide link-ul de descărcare în tab nou
-        window.open(`${API_URL}?download=1&id=${id}`, '_blank');
-    };
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
 
-    const handlePreview = (id) => {
-        // Deschide previzualizarea în tab nou
-        window.open(`${API_URL}?preview=1&id=${id}`, '_blank');
-    };
+      const data = await response.json();
 
-    const handlePurchase = (id, price, title) => {
-        // Redirecționează către pagina de plată
-        const purchaseData = {
-            documentId: id,
-            price: price,
-            title: title,
-            type: 'document'
-        };
-        
-        // Salvează datele în localStorage pentru pagina de plată
-        localStorage.setItem('purchaseData', JSON.stringify(purchaseData));
-        
-        // Redirecționează către pagina de plată
-        window.location.href = '/payment';
-    };
-
-    const filteredDocuments = selectedCategory 
-        ? documents.filter(doc => doc.category === selectedCategory)
-        : documents;
-
-    const categories = [...new Set(documents.map(doc => doc.category))];
-
-    if (loading) {
-        return (
-            <section className="py-20 bg-gradient-to-b from-pink-50 to-white">
-                <div className="container mx-auto px-6 text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Se încarcă documentele...</p>
-                </div>
-            </section>
-        );
+      if (data.success) {
+        // Filtrează doar documentele active
+        const activeDocuments = data.data || [];
+        setDocuments(activeDocuments);
+        console.log('✅ Documente încărcate:', activeDocuments.length);
+      } else {
+        throw new Error(data.error || 'Eroare la încărcarea documentelor');
+      }
+    } catch (err) {
+      console.error('❌ Eroare fetch documente:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    if (error) {
-        return (
-            <section className="py-20 bg-gradient-to-b from-pink-50 to-white">
-                <div className="container mx-auto px-6 text-center">
-                    <p className="text-red-600">❌ {error}</p>
-                </div>
-            </section>
-        );
+  // Funcție pentru formatarea dimensiunii fișierului
+  const formatFileSize = (bytes) => {
+    if (!bytes || bytes === 0) return '0 B';
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
+
+  // Funcție pentru obținerea iconului documentului
+  const getDocumentIcon = (fileType) => {
+    if (!fileType) return '📋';
+    const type = fileType.toLowerCase();
+    
+    if (type.includes('pdf')) return '📄';
+    if (type.includes('word') || type.includes('msword')) return '📝';
+    if (type.includes('excel') || type.includes('spreadsheet')) return '📊';
+    if (type.includes('powerpoint') || type.includes('presentation')) return '📊';
+    if (type.includes('image')) return '🖼️';
+    if (type.includes('text')) return '📃';
+    
+    return '📋';
+  };
+
+  // Funcție pentru descărcarea documentului
+  const downloadDocument = async (documentId, filename) => {
+    try {
+      // Aici vei implementa logica de descărcare
+      // Pentru moment, afișăm un mesaj
+      console.log('Descărcare document:', documentId, filename);
+      
+      // Implementare simplă - redirect către fișier
+      // const downloadUrl = `/uploads/documents/${document.stored_filename}`;
+      // window.open(downloadUrl, '_blank');
+      
+      alert(`Descărcare ${filename} - Funcționalitatea va fi implementată complet.`);
+    } catch (error) {
+      console.error('Eroare la descărcare:', error);
+      alert('Eroare la descărcarea documentului');
     }
+  };
 
-    if (documents.length === 0) {
-        return null; // Nu afișa secțiunea dacă nu sunt documente
-    }
+  // Filtrează documentele pe baza categoriei selectate
+  const filteredDocuments = selectedCategory === 'all' 
+    ? documents 
+    : documents.filter(doc => doc.category === selectedCategory);
 
+  // Grupează documentele - featured la început
+  const featuredDocuments = filteredDocuments.filter(doc => doc.is_featured);
+  const regularDocuments = filteredDocuments.filter(doc => !doc.is_featured);
+  const sortedDocuments = [...featuredDocuments, ...regularDocuments];
+
+  if (loading) {
     return (
-        <section className="py-20 bg-gradient-to-b from-pink-50 to-white">
-            <div className="container mx-auto px-6">
-                {/* Header */}
-                <div className="text-center mb-16">
-                    <h2 className="text-4xl font-bold text-gray-800 mb-4">
-                        📚 Resurse Utile pentru Mamici
-                    </h2>
-                    <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Descarcă ghiduri, formulare și resurse educaționale pentru a-ți sprijini călătoria în alăptare
-                    </p>
-                </div>
+      <section className="py-16 bg-gradient-to-br from-white to-amber-50">
+        <div className="container mx-auto px-6">
+          <div className="text-center">
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[#b06b4c]"></div>
+            <p className="mt-4 text-gray-600">Se încarcă documentele...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
-                {/* Filtre categorii */}
-                {categories.length > 1 && (
-                    <div className="flex justify-center mb-12">
-                        <div className="flex flex-wrap gap-3">
-                            <button 
-                                onClick={() => setSelectedCategory('')}
-                                className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
-                                    selectedCategory === '' 
-                                        ? 'bg-pink-500 text-white shadow-lg' 
-                                        : 'bg-white text-gray-700 hover:bg-pink-100 border border-gray-200'
-                                }`}
-                            >
-                                Toate
-                            </button>
-                            {categories.map(category => (
-                                <button 
-                                    key={category}
-                                    onClick={() => setSelectedCategory(category)}
-                                    className={`px-6 py-3 rounded-full font-semibold capitalize transition-all duration-300 ${
-                                        selectedCategory === category 
-                                            ? 'bg-pink-500 text-white shadow-lg' 
-                                            : 'bg-white text-gray-700 hover:bg-pink-100 border border-gray-200'
-                                    }`}
-                                >
-                                    {category}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
+  if (error) {
+    return (
+      <section className="py-16 bg-gradient-to-br from-white to-amber-50">
+        <div className="container mx-auto px-6">
+          <div className="text-center bg-red-50 rounded-2xl p-8 max-w-2xl mx-auto">
+            <div className="text-6xl mb-4">😔</div>
+            <h3 className="text-xl font-bold text-red-600 mb-2">Eroare la încărcarea documentelor</h3>
+            <p className="text-red-500 mb-4">{error}</p>
+            <button 
+              onClick={fetchDocuments}
+              className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full transition-colors"
+            >
+              Încearcă din nou
+            </button>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="py-16 bg-gradient-to-br from-white to-amber-50">
+      <div className="container mx-auto px-6">
+        {/* Header secțiune */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#b06b4c] mb-4">
+            📁 Documentele Tale
+          </h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Descarcă toate resursele de care ai nevoie pentru o călătorie liniștită în alăptare
+          </p>
+        </div>
+
+        {/* Filtre categorii */}
+        <div className="flex flex-wrap justify-center gap-4 mb-12">
+          {Object.entries(categories).map(([key, label]) => (
+            <button
+              key={key}
+              onClick={() => setSelectedCategory(key)}
+              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
+                selectedCategory === key
+                  ? 'bg-[#b06b4c] text-white shadow-lg transform scale-105'
+                  : 'bg-white text-gray-600 hover:bg-amber-50 hover:text-[#b06b4c] shadow-md'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+
+        {/* Statistici rapide */}
+        <div className="flex flex-wrap justify-center gap-6 mb-12">
+          <div className="bg-white rounded-2xl p-6 shadow-lg text-center">
+            <div className="text-2xl font-bold text-[#b06b4c] mb-1">{documents.length}</div>
+            <div className="text-gray-600 text-sm">Total documente</div>
+          </div>
+          <div className="bg-white rounded-2xl p-6 shadow-lg text-center">
+            <div className="text-2xl font-bold text-green-600 mb-1">
+              {documents.filter(doc => doc.is_free).length}
+            </div>
+            <div className="text-gray-600 text-sm">Gratuite</div>
+          </div>
+          <div className="bg-white rounded-2xl p-6 shadow-lg text-center">
+            <div className="text-2xl font-bold text-amber-600 mb-1">
+              {documents.filter(doc => doc.is_featured).length}
+            </div>
+            <div className="text-gray-600 text-sm">Recomandate</div>
+          </div>
+        </div>
+
+        {/* Lista documentelor */}
+        {sortedDocuments.length === 0 ? (
+          <div className="text-center bg-gray-50 rounded-2xl p-12 max-w-2xl mx-auto">
+            <div className="text-6xl mb-4">📄</div>
+            <h3 className="text-xl font-bold text-gray-600 mb-2">
+              {selectedCategory === 'all' ? 'Nu există documente încă' : 'Nu există documente în această categorie'}
+            </h3>
+            <p className="text-gray-500">
+              {selectedCategory === 'all' 
+                ? 'Documentele vor apărea aici după ce sunt adăugate de administrator.'
+                : 'Încearcă să selectezi o altă categorie sau toate documentele.'
+              }
+            </p>
+          </div>
+        ) : (
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {sortedDocuments.map((document, index) => (
+              <div
+                key={document.id}
+                className={`bg-white rounded-3xl p-6 shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300 relative overflow-hidden ${
+                  document.is_featured ? 'ring-2 ring-amber-400' : ''
+                }`}
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                {/* Badge pentru featured */}
+                {document.is_featured && (
+                  <div className="absolute top-4 right-4 bg-gradient-to-r from-amber-400 to-orange-400 text-white px-3 py-1 rounded-full text-xs font-bold">
+                    ⭐ RECOMANDAT
+                  </div>
                 )}
 
-                {/* Documente Grid */}
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {filteredDocuments.map((doc, index) => (
-                        <div 
-                            key={doc.id} 
-                            className={`bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group hover:-translate-y-2 ${
-                                !doc.is_free ? 'ring-2 ring-amber-300' : ''
-                            }`}
-                            style={{ animationDelay: `${index * 0.1}s` }}
-                        >
-                            {/* Badges pentru featured și paid */}
-                            <div className="flex justify-between items-start mb-4">
-                                <div className="flex flex-wrap gap-2">
-                                    {doc.is_featured && (
-                                        <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-bold flex items-center">
-                                            ⭐ Recomandat
-                                        </span>
-                                    )}
-                                    {!doc.is_free && (
-                                        <span className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 py-1 rounded-full text-sm font-bold flex items-center">
-                                            💎 Premium
-                                        </span>
-                                    )}
-                                </div>
-                                
-                                {/* Preț */}
-                                <div className="text-right">
-                                    {doc.is_free ? (
-                                        <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-bold">
-                                            GRATUIT
-                                        </span>
-                                    ) : (
-                                        <div className="text-right">
-                                            <div className="text-2xl font-bold text-amber-600">
-                                                {doc.price} RON
-                                            </div>
-                                            <div className="text-xs text-gray-500">plată unică</div>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-
-                            {/* Icon și titlu */}
-                            <div className="text-center mb-6">
-                                <div className="text-6xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                                    {doc.icon}
-                                </div>
-                                <h3 className="text-xl font-bold text-gray-800 mb-2 line-clamp-2">
-                                    {doc.title}
-                                </h3>
-                                <span className="inline-block bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-sm font-semibold capitalize">
-                                    {doc.category}
-                                </span>
-                            </div>
-
-                            {/* Descriere */}
-                            {doc.description && (
-                                <p className="text-gray-600 text-center mb-6 line-clamp-3">
-                                    {doc.description}
-                                </p>
-                            )}
-
-                            {/* Info fișier */}
-                            <div className="flex justify-between items-center text-sm text-gray-500 mb-6">
-                                <span className="flex items-center">
-                                    📏 {doc.formatted_size}
-                                </span>
-                                <span className="flex items-center">
-                                    📅 {doc.created_at_formatted}
-                                </span>
-                            </div>
-
-                            {/* Downloads counter */}
-                            {doc.downloads_count > 0 && (
-                                <div className="text-center mb-4">
-                                    <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
-                                        📥 {doc.downloads_count} descărcări
-                                    </span>
-                                </div>
-                            )}
-
-                            {/* Buton descărcare/cumpărare */}
-                            {doc.is_free ? (
-                                <button 
-                                    onClick={() => handleDownload(doc.id, doc.original_filename)}
-                                    className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold py-4 px-6 rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center group"
-                                >
-                                    <span className="mr-2 group-hover:animate-bounce">⬇️</span>
-                                    Descarcă Gratuit
-                                </button>
-                            ) : (
-                                <div className="space-y-3">
-                                    {doc.preview_available && (
-                                        <button 
-                                            onClick={() => handlePreview(doc.id)}
-                                            className="w-full bg-gray-100 text-gray-700 font-semibold py-3 px-6 rounded-xl hover:bg-gray-200 transition-all duration-300 flex items-center justify-center"
-                                        >
-                                            <span className="mr-2">👁️</span>
-                                            Previzualizare gratuită
-                                        </button>
-                                    )}
-                                    <button 
-                                        onClick={() => handlePurchase(doc.id, doc.price, doc.title)}
-                                        className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold py-4 px-6 rounded-xl hover:from-amber-600 hover:to-orange-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center group"
-                                    >
-                                        <span className="mr-2 group-hover:animate-bounce">💳</span>
-                                        Cumpără pentru {doc.price} RON
-                                    </button>
-                                </div>
-                            )}
-                        </div>
-                    ))}
+                {/* Badge pentru preț */}
+                <div className="absolute top-4 left-4">
+                  {document.is_free ? (
+                    <span className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+                      💚 GRATUIT
+                    </span>
+                  ) : (
+                    <span className="bg-amber-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+                      💰 {document.price || 0} RON
+                    </span>
+                  )}
                 </div>
 
-                {/* Footer informativ */}
-                <div className="text-center mt-16">
-                    <div className="bg-gradient-to-r from-pink-100 to-rose-100 rounded-2xl p-8 max-w-4xl mx-auto">
-                        <p className="text-gray-700 text-lg">
-                            💡 <strong>Toate documentele sunt gratuite!</strong> Descarcă-le și folosește-le oricând ai nevoie de sprijin în călătoria ta de alăptare.
-                        </p>
-                        <p className="text-gray-600 mt-4">
-                            Ai întrebări despre documentele disponibile? <a href="#contact" className="text-pink-600 font-semibold hover:underline">Contactează-mă!</a>
-                        </p>
+                {/* Iconul documentului */}
+                <div className="text-center mb-6 mt-8">
+                  <div className="text-6xl mb-4 transform hover:scale-110 transition-transform">
+                    {getDocumentIcon(document.file_type)}
+                  </div>
+                  <h3 className="text-xl font-bold text-[#b06b4c] mb-2 leading-tight">
+                    {document.title}
+                  </h3>
+                  {document.description && (
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                      {document.description}
+                    </p>
+                  )}
+                </div>
+
+                {/* Detalii fișier */}
+                <div className="border-t pt-4 mb-6">
+                  <div className="flex justify-between items-center text-sm text-gray-500 mb-2">
+                    <span className="flex items-center">
+                      <span className="w-2 h-2 bg-blue-400 rounded-full mr-2"></span>
+                      {document.formatted_size || formatFileSize(document.file_size)}
+                    </span>
+                    <span className="flex items-center">
+                      <span className="w-2 h-2 bg-green-400 rounded-full mr-2"></span>
+                      {document.file_type?.split('/')[1]?.toUpperCase() || 'PDF'}
+                    </span>
+                  </div>
+                  {document.downloads_count > 0 && (
+                    <div className="text-xs text-gray-400">
+                      📥 {document.downloads_count} descărcări
                     </div>
+                  )}
                 </div>
+
+                {/* Buton descărcare */}
+                <button
+                  onClick={() => downloadDocument(document.id, document.original_filename)}
+                  className="w-full bg-gradient-to-r from-[#b06b4c] to-amber-600 hover:from-amber-600 hover:to-[#b06b4c] text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                >
+                  <span className="flex items-center justify-center">
+                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    Descarcă
+                  </span>
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Call to action final */}
+        {sortedDocuments.length > 0 && (
+          <div className="text-center mt-16">
+            <div className="bg-gradient-to-r from-amber-100 to-rose-100 rounded-2xl p-8 max-w-4xl mx-auto">
+              <h3 className="text-2xl font-bold text-[#b06b4c] mb-4">
+                🌟 Ai găsit ceea ce căutai?
+              </h3>
+              <p className="text-gray-700 mb-6">
+                Dacă ai întrebări despre documentele descărcate sau ai nevoie de consultanță personalizată, 
+                sunt aici să te ajut!
+              </p>
+              <div className="flex flex-wrap justify-center gap-4">
+                <button className="bg-[#b06b4c] hover:bg-amber-700 text-white font-bold py-3 px-8 rounded-full transition-colors">
+                  📞 Programează o consultație
+                </button>
+                <button className="bg-white hover:bg-gray-50 text-[#b06b4c] font-bold py-3 px-8 rounded-full border-2 border-[#b06b4c] transition-colors">
+                  💬 Contactează-mă
+                </button>
+              </div>
             </div>
-        </section>
-    );
+          </div>
+        )}
+      </div>
+    </section>
+  );
 };
 
 export default DocumentsPublic;

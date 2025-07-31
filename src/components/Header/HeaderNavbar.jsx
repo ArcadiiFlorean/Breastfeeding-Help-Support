@@ -22,7 +22,7 @@ function HeaderNavbar({ menuOpen, setMenuOpen }) {
   const navItems = [
     { href: "#page-0", label: "Acasă", icon: FaHome },
     { href: "#AboutMe", label: "Despre mine", icon: FaUser },
-    { href: "#SupportFeatures", label: "De ce eu?", icon: FaHeart },
+    
     { href: "#Help", label: "Cum ajut", icon: FaHandsHelping },
     { href: "#SupportPackages", label: "Servicii", icon: FaTags },
     { href: "#FAQSection", label: "Întrebări", icon: FaQuestionCircle },
